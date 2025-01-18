@@ -1,109 +1,81 @@
-[gd_scene load_steps=9 format=3 uid="uid://bi40akbu0hcyl"]
+[gd_scene load_steps=11 format=3 uid="uid://bi40akbu0hcyl"]
 
-[ext_resource type="Script" uid="uid://b1qqjj3erxy3i" path="res://player/player.gd" id="1_oul6g"]
-[ext_resource type="Script" uid="uid://cw2knxh8u7elo" path="res://addons/modular-settings-menu/scripts/settings-handler-scripts/camera_settings_handler.gd" id="6_g6k8r"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_kqu6x"]
 
-[sub_resource type="PhysicsMaterial" id="PhysicsMaterial_rkbax"]
-friction = 2.0
+[sub_resource type="SphereMesh" id="SphereMesh_kqu6x"]
+material = SubResource("StandardMaterial3D_kqu6x")
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_is63v"]
-height = 1.0
+[sub_resource type="SphereShape3D" id="SphereShape3D_oul6g"]
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_yw30f"]
-points = PackedVector3Array(-0.0914724, -0.488235, -0.0456884, 0.0915631, 0.488209, 0.045686, 0.121867, 0.472197, 0.106597, -0.426076, 0.0912406, 0.243499, -0.182322, 0.0911136, -0.455854, 0.471177, -0.106272, 0.121508, 0.0305735, -0.0917206, 0.48956, 0.303704, -0.0151281, -0.394854, -0.455852, 0.0911132, -0.182322, -0.347666, -0.317455, 0.166209, -0.196227, -0.31699, -0.332026, 0.257776, -0.424622, -0.0454172, 0.301529, 0.316643, -0.241261, -0.226526, 0.422868, -0.135878, 0.0606914, 0.318868, 0.379559, 0.121067, -0.378275, 0.30262, 0.394081, 0.166653, 0.257624, -0.2719, 0.377613, 0.181235, 0.0758621, -0.273123, -0.409636, 0.0606915, 0.318868, -0.37956, -0.228345, 0.0304269, 0.441524, 0.489895, -0.0152493, -0.0917834, -0.426119, -0.243524, -0.09125, 0.273668, -0.0760137, 0.410455, -0.166209, -0.317455, 0.347667, 0.362742, -0.256883, -0.226678, 0.394764, 0.303541, 0.0151247, -0.348882, -0.0758398, -0.348882, -0.0305735, -0.0917206, -0.48956, 0.347667, -0.317455, 0.166209, -0.473268, 0.152655, 0.0305118, 0.0912904, -0.425863, -0.243378)
+[sub_resource type="Curve" id="Curve_oul6g"]
+_limits = [-360.0, 360.0, 0.0, 1.0]
+_data = [Vector2(0, -360), 0.0, 0.0, 0, 0, Vector2(0.5, 360), 0.0, 0.0, 0, 0, Vector2(1, -360), 0.0, 0.0, 0, 0]
+point_count = 3
 
-[sub_resource type="SphereShape3D" id="SphereShape3D_rkbax"]
+[sub_resource type="CurveTexture" id="CurveTexture_kqu6x"]
+curve = SubResource("Curve_oul6g")
 
-[sub_resource type="GDScript" id="GDScript_oul6g"]
-resource_name = "Camera"
-script/source = "extends SpringArm3D
+[sub_resource type="Curve" id="Curve_kqu6x"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.206612, 1), 0.0, 0.0, 0, 0, Vector2(0.702479, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
 
-@export_range(0.1, 5.0, 0.05) var sensitivity : float
+[sub_resource type="CurveTexture" id="CurveTexture_oul6g"]
+curve = SubResource("Curve_kqu6x")
 
-var invert_y : bool = false
-var camera_input_dir : Vector2
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rkbax"]
+lifetime_randomness = 0.2
+particle_flag_rotate_y = true
+emission_shape = 2
+emission_sphere_radius = 1.0
+angle_curve = SubResource("CurveTexture_kqu6x")
+inherit_velocity_ratio = 1.0
+spread = 180.0
+initial_velocity_max = 2.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+gravity = Vector3(0, -0.01, 0)
+radial_accel_min = -40.0
+radial_accel_max = -20.0
+tangential_accel_min = -5.0
+tangential_accel_max = 5.0
+attractor_interaction_enabled = false
+scale_curve = SubResource("CurveTexture_oul6g")
 
-func _ready() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+[sub_resource type="BoxMesh" id="BoxMesh_kqu6x"]
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="GDScript" id="GDScript_kqu6x"]
+resource_name = "block_particles"
+script/source = "extends GPUParticles3D
 
 
-func _unhandled_input(event: InputEvent) -> void:
-	## gets the camera input direction
-	var is_camera_moving : bool = (
-		event is InputEventMouseMotion and 
-		Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED
-	)
-
-	if is_camera_moving:
-		camera_input_dir = event.screen_relative * sensitivity
-
-	if event.is_action_pressed(\"focus_click\"):
-		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
-
-
-func _process(delta: float) -> void:
-	position = owner.position
-	rotation.x -= camera_input_dir.y * delta\\
-	 * (-1.0 if invert_y else 1.0)
-	rotation.x = clampf(rotation.x, 
-			deg_to_rad(-80.0), deg_to_rad(80.0)
-	)
-	rotation.y -= camera_input_dir.x * delta
-	camera_input_dir = Vector2.ZERO
+func update_particles(change : int) -> void:
+	amount += change
 "
 
-[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_g6k8r"]
+[node name="Player" type="CharacterBody3D"]
+metadata/_edit_group_ = true
 
-[node name="Player" type="RigidBody3D"]
-collision_layer = 0
-physics_material_override = SubResource("PhysicsMaterial_rkbax")
-can_sleep = false
-angular_damp = 2.0
-script = ExtResource("1_oul6g")
-speed = 20.0
-top_speed = 30.0
-dash_impulse = 60.0
-
-[node name="Mesh" type="MeshInstance3D" parent="."]
+[node name="PlayerMesh" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-mesh = SubResource("CapsuleMesh_is63v")
-skeleton = NodePath("")
+mesh = SubResource("SphereMesh_kqu6x")
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-shape = SubResource("ConvexPolygonShape3D_yw30f")
+shape = SubResource("SphereShape3D_oul6g")
 
-[node name="SpringArm" type="SpringArm3D" parent="."]
-unique_name_in_owner = true
+[node name="BlockParticles" type="GPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
-top_level = true
-shape = SubResource("SphereShape3D_rkbax")
-spring_length = 5.0
-script = SubResource("GDScript_oul6g")
-sensitivity = 0.5
+amount = 24
+randomness = 0.2
+use_fixed_seed = true
+seed = 523478632
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_rkbax")
+draw_pass_1 = SubResource("BoxMesh_kqu6x")
+script = SubResource("GDScript_kqu6x")
 
-[node name="Camera" type="Camera3D" parent="SpringArm"]
-unique_name_in_owner = true
-physics_interpolation_mode = 1
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -0.5, 0)
-attributes = SubResource("CameraAttributesPractical_g6k8r")
+[node name="Timer" type="Timer" parent="."]
+autostart = true
 
-[node name="CoyoteTimer" type="Timer" parent="."]
-unique_name_in_owner = true
-wait_time = 0.1
-one_shot = true
-
-[node name="RunTimer" type="Timer" parent="."]
-unique_name_in_owner = true
-wait_time = 0.5
-one_shot = true
-
-[node name="StopRunTimer" type="Timer" parent="."]
-unique_name_in_owner = true
-wait_time = 0.2
-one_shot = true
-
-[node name="CameraSettingsHandler" type="Node" parent="." node_paths=PackedStringArray("CameraRef")]
-script = ExtResource("6_g6k8r")
-CameraRef = NodePath("../SpringArm/Camera")
+[connection signal="timeout" from="Timer" to="BlockParticles" method="_on_timer_timeout"]

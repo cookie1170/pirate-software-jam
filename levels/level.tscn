@@ -1,9 +1,10 @@
-[gd_scene load_steps=29 format=4 uid="uid://b311iowaksq5g"]
+[gd_scene load_steps=30 format=4 uid="uid://b311iowaksq5g"]
 
 [ext_resource type="Texture2D" uid="uid://dfyw2iwb4x2g1" path="res://textures/prototype_materials/Orange/texture_02.png" id="1_dhusm"]
 [ext_resource type="PackedScene" uid="uid://bi40akbu0hcyl" path="res://player/player.tscn" id="1_xhwim"]
 [ext_resource type="Texture2D" uid="uid://dlwvdwdq08fpw" path="res://textures/prototype_materials/Purple/texture_01.png" id="3_l2bkr"]
 [ext_resource type="PackedScene" uid="uid://cvdhnviri2bwk" path="res://THE GODOT PLUSH/godot_plush V2.blend" id="5_safpt"]
+[ext_resource type="PackedScene" uid="uid://vkj15iayrnau" path="res://enemies/basic_enemy.tscn" id="6_gjl0y"]
 [ext_resource type="Texture2D" uid="uid://cwtb4betwjcuu" path="res://textures/prototype_materials/Green/texture_02.png" id="6_wppc4"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wxewf"]
@@ -27,11 +28,11 @@ uv1_scale = Vector3(640, 0, 640)
 distance_fade_min_distance = 1.0
 distance_fade_max_distance = 1.0
 
-[sub_resource type="PlaneMesh" id="PlaneMesh_6ayo4"]
-size = Vector2(640, 640)
+[sub_resource type="BoxMesh" id="BoxMesh_gjl0y"]
+size = Vector3(640, 2, 640)
 
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_safpt"]
-data = PackedVector3Array(320, 0, 320, -320, 0, 320, 320, 0, -320, -320, 0, 320, -320, 0, -320, 320, 0, -320)
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gjl0y"]
+points = PackedVector3Array(-320, -1, -320, -320, 1, -320, 320, -1, -320, -320, -1, 320, -320, 1, 320, 320, 1, -320, 320, -1, 320, 320, 1, 320)
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t1gbn"]
 albedo_texture = ExtResource("3_l2bkr")
@@ -124,17 +125,17 @@ data = PackedVector3Array(-2, 0.5, 2, 2, 0.5, 2, -2, -0.5, 2, 2, 0.5, 2, 2, -0.5
 environment = SubResource("Environment_7ua0a")
 
 [node name="Player" parent="." groups=["player"] instance=ExtResource("1_xhwim")]
-metadata/_edit_group_ = true
 
 [node name="FloorPlane" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
 material_override = SubResource("StandardMaterial3D_vqdfr")
-mesh = SubResource("PlaneMesh_6ayo4")
+mesh = SubResource("BoxMesh_gjl0y")
 metadata/_edit_group_ = true
 
 [node name="StaticBody3D" type="StaticBody3D" parent="FloorPlane"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="FloorPlane/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_safpt")
+shape = SubResource("ConvexPolygonShape3D_gjl0y")
 
 [node name="GodotPlushPedestal" type="MeshInstance3D" parent="."]
 transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4, 5, -4)
@@ -241,3 +242,10 @@ skeleton = NodePath("../../MeshInstance3D")
 
 [node name="IT IS THE GODOT PLUSH" parent="." instance=ExtResource("5_safpt")]
 transform = Transform3D(2.58819, 0, -9.65925, 0, 10, 0, 9.65925, 0, 2.58819, -4, 10, -4)
+
+[node name="Enemy" parent="." instance=ExtResource("6_gjl0y")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 5)
+
+[node name="Camera3D" type="Camera3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 0.87401, 0.485908, 0, -0.485908, 0.87401, 0, 2, 2)
+fov = 69.721

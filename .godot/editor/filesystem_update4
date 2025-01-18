@@ -11,3 +11,5 @@ res://addons/modular-settings-menu/scenes/settings-sections/graphics.tscn
 res://addons/modular-settings-menu/scenes/settings-elements/graphics-elements/max_fps.tscn
 res://addons/modular-settings-menu/scenes/settings-elements/graphics-elements/display_mode.tscn
 res://player/player.gd
+res://enemies/basic_enemy.tscn
+res://enemies/basic_enemy.gd

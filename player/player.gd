@@ -16,8 +16,6 @@ func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
 		apply_force(Vector3(-linear_velocity.x * 0.5, 0, -linear_velocity.z * 0.5))
 	if Input.is_action_just_pressed("dash"):
 		apply_impulse(-camera.global_basis.z.normalized() * dash_impulse)
-	print(linear_velocity)
-
 
 func _get_move_dir() -> Vector2:
 	## gets the raw input and forward and right vectors based on camera rotation
