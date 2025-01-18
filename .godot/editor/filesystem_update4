@@ -1,5 +1,5 @@
-res://levels/level.tscn
 res://player/player.tscn
+res://levels/level.tscn
 res://addons/modular-settings-menu/scenes/settings.tscn
 res://common/pause_menu/pause_menu.tscn
 res://addons/modular-settings-menu/scenes/settings-sections/gameplay.tscn
@@ -10,4 +10,4 @@ res://addons/modular-settings-menu/scenes/settings-elements/controls-elements/se
 res://addons/modular-settings-menu/scenes/settings-sections/graphics.tscn
 res://addons/modular-settings-menu/scenes/settings-elements/graphics-elements/max_fps.tscn
 res://addons/modular-settings-menu/scenes/settings-elements/graphics-elements/display_mode.tscn
-res://player/player_common.gd
+res://player/player.gd

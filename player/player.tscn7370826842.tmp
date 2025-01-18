@@ -1,0 +1,227 @@
+[gd_scene load_steps=12 format=3 uid="uid://bi40akbu0hcyl"]
+
+[ext_resource type="Script" uid="uid://deipds2js04f4" path="res://player/player_common.gd" id="1_2ty25"]
+[ext_resource type="Script" uid="uid://bip1wtpm4ldpx" path="res://common/state_machine/state_machine.gd" id="2_jafdf"]
+[ext_resource type="Script" uid="uid://bxkowni5n5qeh" path="res://common/state_machine/state.gd" id="3_yw30f"]
+[ext_resource type="Script" uid="uid://cw2knxh8u7elo" path="res://addons/modular-settings-menu/scripts/settings-handler-scripts/camera_settings_handler.gd" id="6_g6k8r"]
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_is63v"]
+height = 1.0
+
+[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_yw30f"]
+points = PackedVector3Array(-0.0914724, -0.488235, -0.0456884, 0.0915631, 0.488209, 0.045686, 0.121867, 0.472197, 0.106597, -0.426076, 0.0912406, 0.243499, -0.182322, 0.0911136, -0.455854, 0.471177, -0.106272, 0.121508, 0.0305735, -0.0917206, 0.48956, 0.303704, -0.0151281, -0.394854, -0.455852, 0.0911132, -0.182322, -0.347666, -0.317455, 0.166209, -0.196227, -0.31699, -0.332026, 0.257776, -0.424622, -0.0454172, 0.301529, 0.316643, -0.241261, -0.226526, 0.422868, -0.135878, 0.0606914, 0.318868, 0.379559, 0.121067, -0.378275, 0.30262, 0.394081, 0.166653, 0.257624, -0.2719, 0.377613, 0.181235, 0.0758621, -0.273123, -0.409636, 0.0606915, 0.318868, -0.37956, -0.228345, 0.0304269, 0.441524, 0.489895, -0.0152493, -0.0917834, -0.426119, -0.243524, -0.09125, 0.273668, -0.0760137, 0.410455, -0.166209, -0.317455, 0.347667, 0.362742, -0.256883, -0.226678, 0.394764, 0.303541, 0.0151247, -0.348882, -0.0758398, -0.348882, -0.0305735, -0.0917206, -0.48956, 0.347667, -0.317455, 0.166209, -0.473268, 0.152655, 0.0305118, 0.0912904, -0.425863, -0.243378)
+
+[sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_g6k8r"]
+
+[sub_resource type="GDScript" id="GDScript_g6k8r"]
+resource_name = "grounded_state"
+script/source = "extends State
+
+@export var jumping_state : State
+@export var falling_state : State
+
+
+func _physics_process(_delta: float) -> void:
+	if not owner.is_on_floor():
+		emit_signal(\"state_changed\", falling_state)
+
+	if Input.is_action_just_pressed(\"jump\") or (owner.jump_buffered and Input.is_action_pressed(\"jump\")):
+		emit_signal(\"state_changed\", jumping_state)
+		owner.jump_buffered = false
+"
+
+[sub_resource type="GDScript" id="GDScript_yw30f"]
+resource_name = "jumping_state"
+script/source = "extends State
+
+@warning_ignore(\"unused_signal\")
+signal jump_cut
+
+@export var grounded_state : State
+@export var falling_state : State
+
+@onready var jump_velocity : float = (2.0 * owner.jump_height) / owner.peak_time_sec
+@onready var grav : float = (-2.0 * owner.jump_height) / (owner.peak_time_sec ** 2)
+
+func enter(_previous_state : State = null) -> void:
+	super()
+	owner.velocity.y = jump_velocity
+
+
+func _physics_process(delta: float) -> void:
+	owner.velocity.y += grav * delta
+	if owner.is_on_floor():
+		emit_signal(\"state_changed\", grounded_state)
+	if owner.velocity.y <= 0:
+		emit_signal(\"state_changed\", falling_state)
+	if Input.is_action_just_released(\"jump\"):
+		owner.velocity.y -= 4
+		emit_signal(\"jump_cut\")
+		emit_signal(\"state_changed\", falling_state)
+"
+
+[sub_resource type="GDScript" id="GDScript_qjkh3"]
+resource_name = "falling_state"
+script/source = "extends State
+
+@export var jumping_state : State
+@export var grounded_state : State
+
+@onready var coyote_timer: Timer = %CoyoteTimer
+@onready var hang_timer: Timer = %HangTimer
+@onready var grav : float = (-2.0 * owner.jump_height) / (owner.fall_time_sec ** 2)
+
+var jump_cut : bool = false
+
+func enter(previous_state : State = null) -> void:
+	super()
+	if previous_state == grounded_state:
+		coyote_timer.start()
+	if previous_state == jumping_state and not jump_cut:
+		hang_timer.start()
+	jump_cut = false
+
+
+func exit() -> void:
+	super()
+	if not hang_timer.is_stopped():
+		hang_timer.stop()
+
+func _physics_process(delta: float) -> void:
+	owner.velocity.y += grav * delta * _get_grav_mult()
+
+	if Input.is_action_just_pressed(\"jump\"):
+		if not coyote_timer.is_stopped():
+			emit_signal(\"state_changed\", jumping_state)
+		else:
+			owner.jump_buffered = true
+
+	if Input.is_action_just_released(\"jump\"):
+		owner.jump_buffered = false
+
+	if owner.is_on_floor():
+		emit_signal(\"state_changed\", grounded_state)
+
+
+func _get_grav_mult() -> float:
+	return (owner.hang_grav_mult if not hang_timer.is_stopped() else 1.0)
+
+
+func _on_jump_cut() -> void:
+	jump_cut = true
+"
+
+[sub_resource type="GDScript" id="GDScript_boad6"]
+resource_name = "dashing"
+script/source = "extends State
+
+@export var grounded_state : State
+@export var falling_state : State
+
+
+func enter(previous_state : State = null) -> void:
+	super()
+	owner.velocity = -owner.camera.global_basis.z.normalized() * 40
+
+func _physics_process(delta: float) -> void:
+	if owner.velocity <= Vector3(16, 16, 16):
+		emit_signal(\"state_changed\",\\
+		 grounded_state if owner.is_on_floor() else falling_state)
+"
+
+[node name="Player" type="CharacterBody3D"]
+collision_layer = 2
+script = ExtResource("1_2ty25")
+sensitivity = null
+walking_fov = null
+running_fov = null
+invert_y = null
+jump_height = 4.0
+peak_time_sec = 0.35
+fall_time_sec = 0.3
+hang_time = 0.15
+hang_vel_mult = 1.25
+hang_grav_mult = 0.5
+coyote_time = 0.2
+terminal_velocity = 16.0
+move_speed = 10.0
+running_speed = 16.0
+run_delay = 0.5
+accel_time_sec = 1.0
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+mesh = SubResource("CapsuleMesh_is63v")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+shape = SubResource("ConvexPolygonShape3D_yw30f")
+
+[node name="SpringArm" type="SpringArm3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
+spring_length = 5.0
+
+[node name="Camera" type="Camera3D" parent="SpringArm"]
+unique_name_in_owner = true
+attributes = SubResource("CameraAttributesPractical_g6k8r")
+
+[node name="CoyoteTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.1
+one_shot = true
+
+[node name="HangTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.15
+one_shot = true
+
+[node name="RunTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.5
+one_shot = true
+
+[node name="StopRunTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 0.2
+one_shot = true
+
+[node name="StateMachine" type="Node" parent="." node_paths=PackedStringArray("default_state")]
+script = ExtResource("2_jafdf")
+default_state = NodePath("Grounded")
+
+[node name="Grounded" type="Node" parent="StateMachine" node_paths=PackedStringArray("jumping_state", "falling_state")]
+script = SubResource("GDScript_g6k8r")
+jumping_state = NodePath("../Jumping")
+falling_state = NodePath("../Falling")
+metadata/_custom_type_script = ExtResource("3_yw30f")
+
+[node name="Jumping" type="Node" parent="StateMachine" node_paths=PackedStringArray("grounded_state", "falling_state")]
+script = SubResource("GDScript_yw30f")
+grounded_state = NodePath("../Grounded")
+falling_state = NodePath("../Falling")
+metadata/_custom_type_script = ExtResource("3_yw30f")
+
+[node name="Falling" type="Node" parent="StateMachine" node_paths=PackedStringArray("jumping_state", "grounded_state")]
+script = SubResource("GDScript_qjkh3")
+jumping_state = NodePath("../Jumping")
+grounded_state = NodePath("../Grounded")
+metadata/_custom_type_script = ExtResource("3_yw30f")
+
+[node name="Dashing" type="Node" parent="StateMachine" node_paths=PackedStringArray("grounded_state", "falling_state")]
+script = SubResource("GDScript_boad6")
+grounded_state = NodePath("../Grounded")
+falling_state = NodePath("../Falling")
+metadata/_custom_type_script = ExtResource("3_yw30f")
+
+[node name="CameraSettingsHandler" type="Node" parent="." node_paths=PackedStringArray("CameraRef")]
+script = ExtResource("6_g6k8r")
+CameraRef = NodePath("../SpringArm/Camera")
+
+[connection signal="timeout" from="RunTimer" to="." method="_on_run_timer_timeout"]
+[connection signal="timeout" from="StopRunTimer" to="." method="_on_stop_run_timer_timeout"]
+[connection signal="state_changed" from="StateMachine/Grounded" to="StateMachine" method="_change_state"]
+[connection signal="jump_cut" from="StateMachine/Jumping" to="StateMachine/Falling" method="_on_jump_cut"]
+[connection signal="state_changed" from="StateMachine/Jumping" to="StateMachine" method="_change_state"]
+[connection signal="state_changed" from="StateMachine/Falling" to="StateMachine" method="_change_state"]
+[connection signal="state_changed" from="StateMachine/Dashing" to="StateMachine" method="_change_state"]

@@ -12,12 +12,12 @@ func _ready():
 func apply_in_game_settings(section: String, element: String, value) -> void:
 	match element:
 		"FovWalk":
-			CameraRef.owner.set("walking_fov", value)
+			CameraRef.get_parent().set("walking_fov", value)
 			CameraRef.set_fov(value)
 		"FovRun":
-			CameraRef.owner.set("running_fov", value)
+			CameraRef.get_parent().set("running_fov", value)
 		"InvertY":
-			CameraRef.owner.set("invert_y", value)
+			CameraRef.set("invert_y", value)
 		"DepthOfField":
 			var enabled: bool = false if value == "Disabled" else true
 			# Disable/Enable DOF

@@ -3,7 +3,6 @@ class_name StateMachine
 
 @export var default_state : State
 
-var states := get_children()
 var current_state : State
 
 func _ready() -> void:
