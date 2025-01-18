@@ -24,6 +24,8 @@ fog_depth_curve = 0.148651
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vqdfr"]
 albedo_texture = ExtResource("1_dhusm")
 uv1_scale = Vector3(640, 0, 640)
+distance_fade_min_distance = 1.0
+distance_fade_max_distance = 1.0
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_6ayo4"]
 size = Vector2(640, 640)

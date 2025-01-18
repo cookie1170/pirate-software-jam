@@ -58,7 +58,7 @@ func _physics_process(delta: float) -> void:
 	var accel : float = _get_final_accel_value()
 
 	if move_dir:
-		if int(horizontal_vel.length()) in range(_get_final_speed() + 1)\
+		if horizontal_vel.length() < _get_final_speed() + 1\
 		or is_on_floor():
 			velocity.x = move_toward(velocity.x, move_dir.x * _get_final_speed(),\
 			accel * delta)
@@ -88,13 +88,21 @@ func _physics_process(delta: float) -> void:
 	)
 	spring_arm.rotation.y -= camera_input_dir.x * delta
 	camera_input_dir = Vector2.ZERO
-	
+
+	if horizontal_vel.length_squared() >= _get_final_speed() ** 2: # squared because more performant
+		if not horizontal_vel.normalized() == move_dir:
+			velocity.x = \
+			horizontal_vel.lerp(horizontal_vel.length() * move_dir, 20 * delta).x
+			velocity.z = \
+			horizontal_vel.lerp(horizontal_vel.length() * move_dir, 20 * delta).y
+
 	if Input.is_action_just_pressed("focus_click"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if Input.is_action_just_pressed("boost_temp"):
 		velocity += Vector3(40 * move_dir.x, 40, 40 * move_dir.y)
 
-	print(horizontal_vel.length())
+	print(horizontal_vel.length(), " vel")
+
 	move_and_slide()
 
 
@@ -117,10 +125,9 @@ func _get_final_speed() -> float:
 	 * (0.5 if Input.get_axis("back", "forw") < 0 else 1.0)
 
 func _get_final_accel_value() -> float:
-	return running_speed / accel_time_sec if running\
-	 else move_speed / accel_time_sec\
-	 * 2.0 if not horizontal_vel.normalized() == _get_move_dir() else 1.0
-
+	return (running_speed / accel_time_sec if running\
+	 else move_speed / accel_time_sec)\
+	 * (2.0 if not horizontal_vel.normalized() == _get_move_dir() else 1.0)
 
 func _is_slowed_down() -> bool:
 	return Input.get_axis("back", "forw") <= 0
