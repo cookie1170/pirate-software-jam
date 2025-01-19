@@ -28,11 +28,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if event.is_action_pressed("ui_cancel"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	if event.is_action_pressed("shoot"):
+	if (event.is_action_pressed("shoot") and 
+	Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED):
 		_shoot()
 
 
-func _physics_process(delta : float) -> void:
+func _physics_process(_delta : float) -> void:
 	_handle_movement()
 	_handle_camera_movement()
 	if Input.is_action_just_pressed("ui_up"):
@@ -51,20 +52,20 @@ func _get_hit(damage : int, hit_position : Vector3) -> void:
 	block_amount -= damage
 	block_particles.update_particles()
 	hurt_particles.amount = damage
+	hurt_particles.look_at(hit_position)
 	hurt_particles.restart()
 	_handle_block_changes()
 
 
 func _die() -> void:
-	pass
+	get_tree().reload_current_scene()
 
 
 func _handle_block_changes() -> void:
 	if block_amount <= 0:
 		_die()
 	var remapped_block_amount : float = remap(
-		block_amount, 0, 64,
-		1, 2
+		block_amount, 0, 64, 1, 2
 	)
 	block_particles.scale = Vector3(remapped_block_amount,
 	 remapped_block_amount,

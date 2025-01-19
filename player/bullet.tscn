@@ -1,24 +1,144 @@
-[gd_scene load_steps=5 format=3 uid="uid://ciy177ajnquy0"]
+[gd_scene load_steps=16 format=3 uid="uid://ciy177ajnquy0"]
 
 [ext_resource type="Script" uid="uid://bh4s8tbbuep0u" path="res://common/hitbox.gd" id="1_1y6ct"]
+[ext_resource type="Texture2D" uid="uid://b4mp0yqk1nqqq" path="res://player/block_particles/block_color_ramp.tres" id="1_j40gx"]
+[ext_resource type="BoxMesh" uid="uid://diyfhnaeex4bm" path="res://player/block_particles/block_0.tres" id="2_boyjm"]
+[ext_resource type="Gradient" uid="uid://doolqgh7pxcdh" path="res://player/block_particles/block_color_ramp_gradient.tres" id="3_42du2"]
+
+[sub_resource type="Shader" id="Shader_1y6ct"]
+code = "shader_type spatial;
+
+uniform sampler2D gradient;
+uniform float progress;
+
+void fragment() {
+	ALBEDO = texture(gradient, vec2(abs(sin(progress)))).rgb;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j40gx"]
+render_priority = 0
+shader = SubResource("Shader_1y6ct")
+shader_parameter/gradient = ExtResource("1_j40gx")
+shader_parameter/progress = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_6bq6f"]
+material = SubResource("ShaderMaterial_j40gx")
 size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="GDScript" id="GDScript_boyjm"]
+resource_name = "bullet_mesh"
+script/source = "extends MeshInstance3D
+
+
+func _process(_delta: float) -> void:
+	mesh.get_material().set_shader_parameter(\"progress\", 1.5 - %DespawnTimer.time_left)
+"
 
 [sub_resource type="BoxShape3D" id="BoxShape3D_6bq6f"]
 size = Vector3(0.5, 0.5, 0.5)
 
+[sub_resource type="Curve" id="Curve_boyjm"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.6, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_j40gx"]
 size = Vector3(0.75, 0.75, 0.75)
+
+[sub_resource type="GDScript" id="GDScript_j40gx"]
+resource_name = "bullet_despawn_timer"
+script/source = "extends Timer
+
+
+func _on_timeout() -> void:
+	%AnimationPlayer.play(\"despawn\")
+"
+
+[sub_resource type="Animation" id="Animation_42du2"]
+resource_name = "despawn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DespawnParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Mesh")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"hide"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_4kon0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DespawnParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4kon0"]
+_data = {
+&"RESET": SubResource("Animation_4kon0"),
+&"despawn": SubResource("Animation_42du2")
+}
 
 [node name="Bullet" type="RigidBody3D"]
 collision_layer = 0
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_6bq6f")
+script = SubResource("GDScript_boyjm")
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_6bq6f")
+
+[node name="DespawnParticles" type="CPUParticles3D" parent="."]
+emitting = false
+one_shot = true
+explosiveness = 0.85
+mesh = ExtResource("2_boyjm")
+particle_flag_align_y = true
+direction = Vector3(0, 1.775, 0)
+initial_velocity_min = 6.09
+initial_velocity_max = 6.09
+scale_amount_curve = SubResource("Curve_boyjm")
+color_ramp = ExtResource("3_42du2")
 
 [node name="Hitbox" type="Area3D" parent="."]
 script = ExtResource("1_1y6ct")
@@ -28,3 +148,18 @@ metadata/_custom_type_script = ExtResource("1_1y6ct")
 [node name="Collider" type="CollisionShape3D" parent="Hitbox"]
 shape = SubResource("BoxShape3D_j40gx")
 debug_color = Color(0.7, 0, 0.0116665, 0.419608)
+
+[node name="DespawnTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 1.5
+one_shot = true
+autostart = true
+script = SubResource("GDScript_j40gx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_4kon0")
+}
+
+[connection signal="timeout" from="DespawnTimer" to="DespawnTimer" method="_on_timeout"]

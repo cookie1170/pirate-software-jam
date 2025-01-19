@@ -134,7 +134,7 @@ func _process(delta: float) -> void:
 resource_name = "hurtbox_collider"
 script/source = "extends CollisionShape3D
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	scale = %Collider.scale
 "
 
@@ -215,7 +215,6 @@ script = SubResource("GDScript_g6k8r")
 [node name="Camera" type="Camera3D" parent="SpringArm"]
 unique_name_in_owner = true
 attributes = SubResource("CameraAttributesPractical_g6k8r")
-fov = 37.8493
 
 [node name="Hurtbox" type="Area3D" parent="."]
 script = ExtResource("5_qjkh3")

@@ -1,14 +1,14 @@
+CPUParticles3D
+AnimationPlayer
+Timer
 CollisionShape3D
 Hurtbox
 Hitbox
 MeshInstance3D
 RigidBody3D
-CPUParticles3D
 Node
 Area3D
 SpringArm3D
 Camera3D
 DirectionalLight3D
 OmniLight3D
-Timer
-MultiMeshInstance3D
