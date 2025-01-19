@@ -1,31 +1,38 @@
-extends RigidBody3D
+extends CharacterBody3D
 
-@onready var camera : Camera3D = %Camera
+@onready var block_particles: GPUParticles3D = %BlockParticles
+@onready var hurt_particles: CPUParticles3D = %HurtParticles
 
-@export_range(1, 30, 0.5) var speed : float
-@export_range(10, 40, 0.5) var top_speed : float
-@export_range(10, 60, 1) var dash_impulse : float
+var block_amount : int = 16
 
-func _integrate_forces(state: PhysicsDirectBodyState3D) -> void:
-	var final_force := Vector3.ZERO
-	final_force += Vector3(_get_move_dir().x, 0, _get_move_dir().y)
-	final_force *= speed
-	if linear_velocity.length() <= top_speed:
-		apply_force(final_force)
-	else:
-		apply_force(Vector3(-linear_velocity.x * 0.5, 0, -linear_velocity.z * 0.5))
-	if Input.is_action_just_pressed("dash"):
-		apply_impulse(-camera.global_basis.z.normalized() * dash_impulse)
 
-func _get_move_dir() -> Vector2:
-	## gets the raw input and forward and right vectors based on camera rotation
-	var raw_input := Input.get_vector("left", "right", "forw", "back")
-	var forward := camera.global_basis.z
-	var right := camera.global_basis.x
+func _physics_process(delta : float) -> void:
+	if Input.is_action_just_pressed("forw"):
+		collect_voxel(1)
+	if Input.is_action_just_pressed("back"):
+		block_amount -= 1
+		block_particles.update_particles()
+		hurt_particles.amount = 1
+		hurt_particles.restart()
+	if block_amount <= 0:
+		get_tree().reload_current_scene()
+	var remapped_block_amount : float = remap(
+		block_amount, 0, 64,\
+		1, 2
+	)
+	block_particles.scale = Vector3(remapped_block_amount,\
+	 remapped_block_amount,\
+	 remapped_block_amount)
+	%Collider.scale = block_particles.scale
 
-	## calculates the movement direction from the raw input and camera rotation
-	var move_dir := (forward * raw_input.y) + (right * raw_input.x)
-	move_dir.y = 0.0
-	move_dir = move_dir.normalized()
+	move_and_slide()
 
-	return Vector2(move_dir.x, move_dir.z)
+
+func collect_voxel(amount : int) -> void:
+	block_amount +=  amount
+	block_particles.update_particles()
+
+func get_hit(hitbox : Area3D) -> void:
+	block_amount -= hitbox.damage
+	block_particles.update_particles()
+	hurt_particles.restart()

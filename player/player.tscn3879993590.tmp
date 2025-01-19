@@ -1,0 +1,131 @@
+[gd_scene load_steps=19 format=3 uid="uid://bi40akbu0hcyl"]
+
+[ext_resource type="Script" uid="uid://b1qqjj3erxy3i" path="res://player/player.gd" id="1_oul6g"]
+[ext_resource type="Shader" uid="uid://v1f7l8gutjw0" path="res://player/player.gdshader" id="2_g1dw6"]
+[ext_resource type="Material" uid="uid://cy8o3t08d7ihi" path="res://player/block_material.tres" id="2_rkbax"]
+[ext_resource type="Texture2D" uid="uid://c617aiddleoep" path="res://textures/marble 13 - 256x256.png" id="3_yw30f"]
+
+[sub_resource type="Gradient" id="Gradient_yw30f"]
+colors = PackedColorArray(1, 0.831373, 0.639216, 1, 1, 0.92549, 0.839216, 1)
+
+[sub_resource type="GradientTexture1D" id="GradientTexture1D_qjkh3"]
+gradient = SubResource("Gradient_yw30f")
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_yw30f"]
+render_priority = 0
+shader = ExtResource("2_g1dw6")
+shader_parameter/noise_texture = ExtResource("3_yw30f")
+shader_parameter/gradient = SubResource("GradientTexture1D_qjkh3")
+
+[sub_resource type="SphereMesh" id="SphereMesh_kqu6x"]
+material = SubResource("ShaderMaterial_yw30f")
+radius = 0.25
+height = 0.5
+
+[sub_resource type="BoxMesh" id="BoxMesh_oul6g"]
+material = ExtResource("2_rkbax")
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="Curve" id="Curve_rkbax"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.202479, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.011236), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_oul6g"]
+_limits = [-360.0, 360.0, 0.0, 1.0]
+_data = [Vector2(0, -360), 0.0, 0.0, 0, 0, Vector2(0.5, 360), 0.0, 0.0, 0, 0, Vector2(1, -360), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="CurveTexture" id="CurveTexture_kqu6x"]
+curve = SubResource("Curve_oul6g")
+
+[sub_resource type="Curve" id="Curve_kqu6x"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.206612, 1), 0.0, 0.0, 0, 0, Vector2(0.702479, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="CurveTexture" id="CurveTexture_oul6g"]
+curve = SubResource("Curve_kqu6x")
+
+[sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rkbax"]
+lifetime_randomness = 0.2
+particle_flag_rotate_y = true
+emission_shape = 2
+emission_sphere_radius = 1.0
+angle_curve = SubResource("CurveTexture_kqu6x")
+inherit_velocity_ratio = 1.0
+spread = 180.0
+initial_velocity_max = 2.0
+angular_velocity_min = -720.0
+angular_velocity_max = 720.0
+gravity = Vector3(0, -0.01, 0)
+radial_accel_min = -40.0
+radial_accel_max = -20.0
+tangential_accel_min = -5.0
+tangential_accel_max = 5.0
+attractor_interaction_enabled = false
+scale_curve = SubResource("CurveTexture_oul6g")
+
+[sub_resource type="BoxMesh" id="BoxMesh_kqu6x"]
+material = ExtResource("2_rkbax")
+size = Vector3(0.2, 0.2, 0.2)
+
+[sub_resource type="GDScript" id="GDScript_kqu6x"]
+resource_name = "block_particles"
+script/source = "extends GPUParticles3D
+
+func _ready() -> void:
+	update_particles()
+
+
+func update_particles() -> void:
+	amount = owner.block_amount
+"
+
+[sub_resource type="SphereShape3D" id="SphereShape3D_oul6g"]
+radius = 0.25
+
+[node name="Player" type="CharacterBody3D"]
+script = ExtResource("1_oul6g")
+metadata/_edit_group_ = true
+
+[node name="PlayerMesh" type="MeshInstance3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+mesh = SubResource("SphereMesh_kqu6x")
+
+[node name="HurtParticles" type="CPUParticles3D" parent="PlayerMesh"]
+unique_name_in_owner = true
+emitting = false
+amount = 1
+one_shot = true
+explosiveness = 0.95
+lifetime_randomness = 0.2
+mesh = SubResource("BoxMesh_oul6g")
+particle_flag_align_y = true
+direction = Vector3(0, 2, 1)
+spread = 28.2
+initial_velocity_min = 3.55
+initial_velocity_max = 9.15
+damping_min = 0.658
+damping_max = 3.945
+scale_amount_curve = SubResource("Curve_rkbax")
+
+[node name="BlockParticles" type="GPUParticles3D" parent="PlayerMesh"]
+unique_name_in_owner = true
+amount = 16
+preprocess = 1.0
+randomness = 0.2
+use_fixed_seed = true
+seed = 523478632
+fixed_fps = 0
+process_material = SubResource("ParticleProcessMaterial_rkbax")
+draw_pass_1 = SubResource("BoxMesh_kqu6x")
+script = SubResource("GDScript_kqu6x")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
+shape = SubResource("SphereShape3D_oul6g")
+
+[node name="OmniLight3D" type="OmniLight3D" parent="."]
+light_color = Color(1, 0.92549, 0.839216, 1)
+light_energy = 0.5
+shadow_enabled = true

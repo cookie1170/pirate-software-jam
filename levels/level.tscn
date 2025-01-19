@@ -15,9 +15,10 @@ sky_material = SubResource("ProceduralSkyMaterial_wxewf")
 [sub_resource type="Environment" id="Environment_7ua0a"]
 background_mode = 2
 sky = SubResource("Sky_hlfcq")
+ambient_light_source = 3
 ambient_light_color = Color(1, 1, 1, 1)
-ambient_light_sky_contribution = 0.0
-ambient_light_energy = 1.5
+ambient_light_sky_contribution = 0.5
+ambient_light_energy = 1.2
 fog_mode = 1
 fog_density = 1.0
 fog_depth_curve = 0.148651
@@ -249,3 +250,8 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 5)
 [node name="Camera3D" type="Camera3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 0.87401, 0.485908, 0, -0.485908, 0.87401, 0, 2, 2)
 fov = 69.721
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
+transform = Transform3D(-0.551434, -0.724711, 0.413176, -0.219846, 0.604023, 0.766044, -0.804728, 0.331588, -0.492404, 0, 0, 0)
+light_energy = 1.5
+shadow_enabled = true

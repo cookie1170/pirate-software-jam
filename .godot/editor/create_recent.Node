@@ -1,6 +1,8 @@
+DirectionalLight3D
+OmniLight3D
+CPUParticles3D
 Timer
 Camera3D
-CPUParticles3D
 MeshInstance3D
 MultiMeshInstance3D
 CollisionShape3D
@@ -11,5 +13,3 @@ AnimationPlayer
 RigidBody3D
 State
 Node
-SpringArm3D
-Marker3D
