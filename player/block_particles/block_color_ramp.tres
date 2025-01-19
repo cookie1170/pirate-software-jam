@@ -1,0 +1,6 @@
+[gd_resource type="GradientTexture1D" load_steps=2 format=3 uid="uid://b4mp0yqk1nqqq"]
+
+[ext_resource type="Gradient" uid="uid://doolqgh7pxcdh" path="res://player/block_particles/block_color_ramp_gradient.tres" id="1_pkvf6"]
+
+[resource]
+gradient = ExtResource("1_pkvf6")

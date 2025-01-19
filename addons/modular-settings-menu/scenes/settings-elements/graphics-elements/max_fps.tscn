@@ -8,7 +8,7 @@ func init_element() -> void:
 	super.init_element()
 	# Increase UI max value by one for unlimited fps and decrease min for refresh rate
 	SliderRef.set_max(MAX_VALUE + 1)
-	SliderRef.set_min(MIN_VALUE - 1)
+	SliderRef.set_min(MIN_VALUE)
 	if ValueBoxRef is SpinBox:
 		ValueBoxRef.set_max(MAX_VALUE + 1)
 

@@ -15,3 +15,15 @@ res://addons/modular-settings-menu/scenes/settings-elements/graphics-elements/ma
 res://addons/modular-settings-menu/scenes/settings-elements/graphics-elements/display_mode.tscn
 res://player/player.gdshader
 res://player/block_material.tres
+res://player/block_color_ramp.tres
+res://player/block_particles/block_color_ramp.tres
+res://player/block_particles/block.tres
+res://player/block_particles/block_1.tres
+res://player/block_particles/block_2.tres
+res://player/block_particles/block_4.tres
+res://player/block_particles/block_3.tres
+res://common/hurtbox.gd
+res://common/hitbox.gd
+res://common/pause_menu/pause_menu.gd
+res://addons/modular-settings-menu/scripts/settings-handler-scripts/camera_settings_handler.gd
+res://addons/modular-settings-menu/scenes/settings-elements/gameplay-elements/fov_walk.tscn

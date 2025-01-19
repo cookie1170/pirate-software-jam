@@ -1,8 +1,7 @@
-[gd_scene load_steps=5 format=3 uid="uid://c66v42g6gs7gr"]
+[gd_scene load_steps=4 format=3 uid="uid://c66v42g6gs7gr"]
 
 [ext_resource type="Script" uid="uid://baqfhmtwye3w4" path="res://addons/modular-settings-menu/scripts/settings_section.gd" id="1_i11k5"]
 [ext_resource type="PackedScene" uid="uid://elu1vc0ox472" path="res://addons/modular-settings-menu/scenes/settings-elements/gameplay-elements/fov_walk.tscn" id="2_c8t76"]
-[ext_resource type="PackedScene" uid="uid://c556hfv7utdym" path="res://addons/modular-settings-menu/scenes/settings-elements/gameplay-elements/fov_run.tscn" id="3_wl4af"]
 
 [sub_resource type="StyleBoxEmpty" id="StyleBoxEmpty_e0spm"]
 
@@ -65,6 +64,4 @@ layout_mode = 2
 
 [node name="FovWalk" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/GeneralSettings/SubSectionElements" instance=ExtResource("2_c8t76")]
 layout_mode = 2
-
-[node name="FovRun" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/GeneralSettings/SubSectionElements" instance=ExtResource("3_wl4af")]
-layout_mode = 2
+IDENTIFIER = "Fov"

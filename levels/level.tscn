@@ -1,11 +1,11 @@
 [gd_scene load_steps=30 format=4 uid="uid://b311iowaksq5g"]
 
-[ext_resource type="Texture2D" uid="uid://dfyw2iwb4x2g1" path="res://textures/prototype_materials/Orange/texture_02.png" id="1_dhusm"]
 [ext_resource type="PackedScene" uid="uid://bi40akbu0hcyl" path="res://player/player.tscn" id="1_xhwim"]
+[ext_resource type="Texture2D" uid="uid://cl7rq0wh0fviv" path="res://textures/prototype_materials/Orange/texture_01.png" id="2_vnv7o"]
 [ext_resource type="Texture2D" uid="uid://dlwvdwdq08fpw" path="res://textures/prototype_materials/Purple/texture_01.png" id="3_l2bkr"]
-[ext_resource type="PackedScene" uid="uid://cvdhnviri2bwk" path="res://THE GODOT PLUSH/godot_plush V2.blend" id="5_safpt"]
 [ext_resource type="PackedScene" uid="uid://vkj15iayrnau" path="res://enemies/basic_enemy.tscn" id="6_gjl0y"]
 [ext_resource type="Texture2D" uid="uid://cwtb4betwjcuu" path="res://textures/prototype_materials/Green/texture_02.png" id="6_wppc4"]
+[ext_resource type="Script" uid="uid://dp4tgomuhuj1y" path="res://addons/modular-settings-menu/scripts/settings-handler-scripts/world_env_settings_handler.gd" id="7_vnv7o"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wxewf"]
 
@@ -23,11 +23,9 @@ fog_mode = 1
 fog_density = 1.0
 fog_depth_curve = 0.148651
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_vqdfr"]
-albedo_texture = ExtResource("1_dhusm")
-uv1_scale = Vector3(640, 0, 640)
-distance_fade_min_distance = 1.0
-distance_fade_max_distance = 1.0
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d5x7l"]
+albedo_texture = ExtResource("2_vnv7o")
+uv1_scale = Vector3(640, 640, 1)
 
 [sub_resource type="BoxMesh" id="BoxMesh_gjl0y"]
 size = Vector3(640, 2, 640)
@@ -37,7 +35,7 @@ points = PackedVector3Array(-320, -1, -320, -320, 1, -320, 320, -1, -320, -320, 
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t1gbn"]
 albedo_texture = ExtResource("3_l2bkr")
-uv1_scale = Vector3(5, 10, 5)
+uv1_scale = Vector3(5, 5, 10)
 
 [sub_resource type="BoxMesh" id="BoxMesh_leal2"]
 size = Vector3(5, 10, 5)
@@ -67,7 +65,7 @@ _surfaces = [{
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ecyyx"]
 albedo_texture = ExtResource("6_wppc4")
-uv1_scale = Vector3(4, 1, 4)
+uv1_scale = Vector3(4, 4, 1)
 distance_fade_min_distance = 1.0
 distance_fade_max_distance = 1.0
 
@@ -129,7 +127,7 @@ environment = SubResource("Environment_7ua0a")
 
 [node name="FloorPlane" type="MeshInstance3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -1, 0)
-material_override = SubResource("StandardMaterial3D_vqdfr")
+material_override = SubResource("StandardMaterial3D_d5x7l")
 mesh = SubResource("BoxMesh_gjl0y")
 metadata/_edit_group_ = true
 
@@ -241,17 +239,14 @@ shape = SubResource("ConcavePolygonShape3D_15o5p")
 mesh = SubResource("ArrayMesh_safpt")
 skeleton = NodePath("../../MeshInstance3D")
 
-[node name="IT IS THE GODOT PLUSH" parent="." instance=ExtResource("5_safpt")]
-transform = Transform3D(2.58819, 0, -9.65925, 0, 10, 0, 9.65925, 0, 2.58819, -4, 10, -4)
-
 [node name="Enemy" parent="." instance=ExtResource("6_gjl0y")]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 4, 0, 5)
-
-[node name="Camera3D" type="Camera3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 0.87401, 0.485908, 0, -0.485908, 0.87401, 0, 2, 2)
-fov = 69.721
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.551434, -0.724711, 0.413176, -0.219846, 0.604023, 0.766044, -0.804728, 0.331588, -0.492404, 0, 0, 0)
 light_energy = 1.5
 shadow_enabled = true
+
+[node name="EnvironmentSettingsHandler" type="Node" parent="." node_paths=PackedStringArray("WorldEnvRef")]
+script = ExtResource("7_vnv7o")
+WorldEnvRef = NodePath("../WorldEnvironment")
