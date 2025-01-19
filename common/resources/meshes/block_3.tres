@@ -1,6 +1,6 @@
 [gd_resource type="BoxMesh" load_steps=2 format=3 uid="uid://bmjjnfg1hiqso"]
 
-[ext_resource type="Material" uid="uid://cy8o3t08d7ihi" path="res://player/block_particles/block_material.tres" id="1_rb1wb"]
+[ext_resource type="Material" uid="uid://cy8o3t08d7ihi" path="res://common/resources/meshes/block_material.tres" id="1_rb1wb"]
 
 [resource]
 material = ExtResource("1_rb1wb")

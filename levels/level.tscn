@@ -1,10 +1,11 @@
-[gd_scene load_steps=30 format=4 uid="uid://b311iowaksq5g"]
+[gd_scene load_steps=31 format=4 uid="uid://b311iowaksq5g"]
 
 [ext_resource type="PackedScene" uid="uid://bi40akbu0hcyl" path="res://player/player.tscn" id="1_xhwim"]
 [ext_resource type="Texture2D" uid="uid://cl7rq0wh0fviv" path="res://textures/prototype_materials/Orange/texture_01.png" id="2_vnv7o"]
 [ext_resource type="Texture2D" uid="uid://dlwvdwdq08fpw" path="res://textures/prototype_materials/Purple/texture_01.png" id="3_l2bkr"]
 [ext_resource type="PackedScene" uid="uid://vkj15iayrnau" path="res://enemies/basic_enemy.tscn" id="6_gjl0y"]
 [ext_resource type="Texture2D" uid="uid://cwtb4betwjcuu" path="res://textures/prototype_materials/Green/texture_02.png" id="6_wppc4"]
+[ext_resource type="PackedScene" uid="uid://bo07g2k1wcqxk" path="res://common/collectible_block/collectible_block.tscn" id="7_d5x7l"]
 [ext_resource type="Script" uid="uid://dp4tgomuhuj1y" path="res://addons/modular-settings-menu/scripts/settings-handler-scripts/world_env_settings_handler.gd" id="7_vnv7o"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wxewf"]
@@ -250,3 +251,30 @@ shadow_enabled = true
 [node name="EnvironmentSettingsHandler" type="Node" parent="." node_paths=PackedStringArray("WorldEnvRef")]
 script = ExtResource("7_vnv7o")
 WorldEnvRef = NodePath("../WorldEnvironment")
+
+[node name="Collectible" parent="." instance=ExtResource("7_d5x7l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 1)
+
+[node name="Collectible2" parent="." instance=ExtResource("7_d5x7l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, -1)
+
+[node name="Collectible3" parent="." instance=ExtResource("7_d5x7l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, -1)
+
+[node name="Collectible4" parent="." instance=ExtResource("7_d5x7l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 1)
+
+[node name="Collectible5" parent="." instance=ExtResource("7_d5x7l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 3, 0, 3)
+
+[node name="Collectible6" parent="." instance=ExtResource("7_d5x7l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 5, 0, 3)
+
+[node name="Collectible7" parent="." instance=ExtResource("7_d5x7l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 3)
+
+[node name="Collectible8" parent="." instance=ExtResource("7_d5x7l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, 1)
+
+[node name="Collectible9" parent="." instance=ExtResource("7_d5x7l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 7, 0, -1)

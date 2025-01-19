@@ -71,6 +71,8 @@ func _handle_block_changes() -> void:
 	 remapped_block_amount,
 	 remapped_block_amount)
 	%Collider.scale = block_particles.scale
+	%Hurtbox.scale = block_particles.scale
+	%Collectiblebox.scale = block_particles.scale
 	spring_arm.spring_length = remap(
 		remapped_block_amount, 1, 5, 5, 10
 	)
@@ -117,3 +119,8 @@ func _shoot() -> void:
 	get_parent().add_child(bullet_instance)
 	bullet_instance.apply_impulse(-camera.global_basis.z * 30)
 	_change_voxel_amt(-1)
+
+
+func _pickup_collectible(collectible : Collectible) -> void:
+	_change_voxel_amt(collectible.amount)
+	collectible.animation_player.play("collect")

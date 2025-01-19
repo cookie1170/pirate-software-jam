@@ -1,9 +1,9 @@
 [gd_scene load_steps=18 format=4 uid="uid://ciy177ajnquy0"]
 
 [ext_resource type="Script" uid="uid://bh4s8tbbuep0u" path="res://common/hitbox.gd" id="1_1y6ct"]
-[ext_resource type="Texture2D" uid="uid://b4mp0yqk1nqqq" path="res://player/block_particles/block_color_ramp.tres" id="1_j40gx"]
-[ext_resource type="BoxMesh" uid="uid://diyfhnaeex4bm" path="res://player/block_particles/block_0.tres" id="2_boyjm"]
-[ext_resource type="Gradient" uid="uid://doolqgh7pxcdh" path="res://player/block_particles/block_color_ramp_gradient.tres" id="3_42du2"]
+[ext_resource type="Texture2D" uid="uid://b4mp0yqk1nqqq" path="res://common/resources/gradients/gradient1d_blue.tres" id="1_j40gx"]
+[ext_resource type="BoxMesh" uid="uid://diyfhnaeex4bm" path="res://common/resources/meshes/block_0.tres" id="2_boyjm"]
+[ext_resource type="Gradient" uid="uid://doolqgh7pxcdh" path="res://common/resources/gradients/gradient_blue.tres" id="3_42du2"]
 
 [sub_resource type="Shader" id="Shader_1y6ct"]
 code = "shader_type spatial;
@@ -85,6 +85,18 @@ tracks/0/keys = {
 "update": 1,
 "values": [false]
 }
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hitbox:monitorable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_42du2"]
 resource_name = "despawn"
@@ -127,6 +139,18 @@ tracks/2/keys = {
 "args": [],
 "method": &"queue_free"
 }]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hitbox:monitorable")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4kon0"]
