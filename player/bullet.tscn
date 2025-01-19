@@ -1,0 +1,30 @@
+[gd_scene load_steps=5 format=3 uid="uid://ciy177ajnquy0"]
+
+[ext_resource type="Script" uid="uid://bh4s8tbbuep0u" path="res://common/hitbox.gd" id="1_1y6ct"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_6bq6f"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6bq6f"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j40gx"]
+size = Vector3(0.75, 0.75, 0.75)
+
+[node name="Bullet" type="RigidBody3D"]
+collision_layer = 0
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_6bq6f")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_6bq6f")
+
+[node name="Hitbox" type="Area3D" parent="."]
+script = ExtResource("1_1y6ct")
+type = "Player"
+metadata/_custom_type_script = ExtResource("1_1y6ct")
+
+[node name="Collider" type="CollisionShape3D" parent="Hitbox"]
+shape = SubResource("BoxShape3D_j40gx")
+debug_color = Color(0.7, 0, 0.0116665, 0.419608)

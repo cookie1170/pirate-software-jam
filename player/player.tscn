@@ -1,6 +1,7 @@
-[gd_scene load_steps=26 format=4 uid="uid://bi40akbu0hcyl"]
+[gd_scene load_steps=27 format=4 uid="uid://bi40akbu0hcyl"]
 
 [ext_resource type="Script" uid="uid://b1qqjj3erxy3i" path="res://player/player.gd" id="1_oul6g"]
+[ext_resource type="PackedScene" uid="uid://ciy177ajnquy0" path="res://player/bullet.tscn" id="2_boad6"]
 [ext_resource type="Texture2D" uid="uid://b4mp0yqk1nqqq" path="res://player/block_particles/block_color_ramp.tres" id="2_g1dw6"]
 [ext_resource type="BoxMesh" uid="uid://diyfhnaeex4bm" path="res://player/block_particles/block_0.tres" id="3_yw30f"]
 [ext_resource type="Gradient" uid="uid://doolqgh7pxcdh" path="res://player/block_particles/block_color_ramp_gradient.tres" id="4_yw30f"]
@@ -142,6 +143,7 @@ collision_layer = 0
 script = ExtResource("1_oul6g")
 max_speed = 8.0
 accel_sec = 0.3
+bullet_scene = ExtResource("2_boad6")
 metadata/_edit_group_ = true
 
 [node name="PlayerMesh" type="MeshInstance3D" parent="."]
@@ -205,7 +207,7 @@ shape = SubResource("SphereShape3D_oul6g")
 
 [node name="SpringArm" type="SpringArm3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 0, 0)
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0.5, 1.5, 0)
 top_level = true
 spring_length = 5.0
 script = SubResource("GDScript_g6k8r")

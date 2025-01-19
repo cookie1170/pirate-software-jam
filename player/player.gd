@@ -4,6 +4,7 @@ extends CharacterBody3D
 @export_range(0.1, 2.0, 0.05) var sensitivity : float = 0.5
 @export_range(1, 16, 0.5) var max_speed : float
 @export_range(0.1, 2, 0.05) var accel_sec : float
+@export var bullet_scene : PackedScene
 
 @onready var block_particles: GPUParticles3D = %BlockParticles
 @onready var hurt_particles: CPUParticles3D = %HurtParticles
@@ -27,24 +28,26 @@ func _unhandled_input(event: InputEvent) -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if event.is_action_pressed("ui_cancel"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
+	if event.is_action_pressed("shoot"):
+		_shoot()
 
 
 func _physics_process(delta : float) -> void:
 	_handle_movement()
 	_handle_camera_movement()
 	if Input.is_action_just_pressed("ui_up"):
-		collect_voxel(1)
+		_change_voxel_amt(1)
 	if Input.is_action_just_pressed("ui_down"):
-		get_hit(1, position)
+		_get_hit(1, position)
 
 
-func collect_voxel(amount : int) -> void:
+func _change_voxel_amt(amount : int) -> void:
 	block_amount +=  amount
 	block_particles.update_particles()
 	_handle_block_changes()
 
 
-func get_hit(damage : int, hit_position : Vector3) -> void:
+func _get_hit(damage : int, hit_position : Vector3) -> void:
 	block_amount -= damage
 	block_particles.update_particles()
 	hurt_particles.amount = damage
@@ -52,13 +55,13 @@ func get_hit(damage : int, hit_position : Vector3) -> void:
 	_handle_block_changes()
 
 
-func die() -> void:
+func _die() -> void:
 	pass
 
 
 func _handle_block_changes() -> void:
 	if block_amount <= 0:
-		die()
+		_die()
 	var remapped_block_amount : float = remap(
 		block_amount, 0, 64,
 		1, 2
@@ -69,7 +72,6 @@ func _handle_block_changes() -> void:
 	%Collider.scale = block_particles.scale
 	spring_arm.spring_length = remap(
 		remapped_block_amount, 1, 5, 5, 10
-		
 	)
 
 
@@ -106,3 +108,11 @@ func _get_move_dir() -> Vector2:
 	move_dir = move_dir.normalized()
 
 	return Vector2(move_dir.x, move_dir.z)
+
+
+func _shoot() -> void:
+	var bullet_instance : RigidBody3D = bullet_scene.instantiate()
+	bullet_instance.position = spring_arm.global_position + Vector3.UP * 1.5
+	get_parent().add_child(bullet_instance)
+	bullet_instance.apply_impulse(-camera.global_basis.z * 30)
+	_change_voxel_amt(-1)

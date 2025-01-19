@@ -1,8 +1,10 @@
-CPUParticles3D
-MeshInstance3D
-Node
 CollisionShape3D
 Hurtbox
+Hitbox
+MeshInstance3D
+RigidBody3D
+CPUParticles3D
+Node
 Area3D
 SpringArm3D
 Camera3D
@@ -10,5 +12,3 @@ DirectionalLight3D
 OmniLight3D
 Timer
 MultiMeshInstance3D
-CharacterBody3D
-Enemy

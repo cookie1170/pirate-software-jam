@@ -1,6 +1,7 @@
-[gd_scene load_steps=11 format=4 uid="uid://vkj15iayrnau"]
+[gd_scene load_steps=12 format=4 uid="uid://vkj15iayrnau"]
 
 [ext_resource type="Script" uid="uid://bsmce2pk6wm0s" path="res://enemies/basic_enemy.gd" id="1_ubayq"]
+[ext_resource type="Script" uid="uid://cueoxdgpqrre6" path="res://common/hurtbox.gd" id="2_6ofcp"]
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_7olet"]
 
@@ -80,7 +81,7 @@ size = Vector3(0.2, 0.2, 0.2)
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0785124, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_ubayq"]
+[sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5xrap"]
 radius = 0.75
 height = 2.5
 
@@ -92,7 +93,7 @@ script = ExtResource("1_ubayq")
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_7olet")
 
-[node name="MeshInstance3D" type="MeshInstance3D" parent="Mesh"]
+[node name="OutlineMesh" type="MeshInstance3D" parent="Mesh"]
 mesh = SubResource("ArrayMesh_ubayq")
 
 [node name="Collider" type="CollisionShape3D" parent="."]
@@ -117,6 +118,7 @@ lifetime_randomness = 0.13
 mesh = SubResource("BoxMesh_ubayq")
 emission_shape = 3
 emission_box_extents = Vector3(0.2, 0.5, 0.2)
+particle_flag_align_y = true
 direction = Vector3(0, 1, 1)
 spread = 16.0
 initial_velocity_min = 5.0
@@ -126,11 +128,10 @@ angular_velocity_max = 140.15
 scale_amount_curve = SubResource("Curve_ubayq")
 
 [node name="Hurtbox" type="Area3D" parent="."]
-collision_layer = 0
-collision_mask = 4
+script = ExtResource("2_6ofcp")
+type = "Enemy"
+metadata/_custom_type_script = ExtResource("2_6ofcp")
 
 [node name="Collider" type="CollisionShape3D" parent="Hurtbox"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-shape = SubResource("CapsuleShape3D_ubayq")
-
-[connection signal="area_entered" from="Hurtbox" to="." method="die"]
+shape = SubResource("CapsuleShape3D_5xrap")

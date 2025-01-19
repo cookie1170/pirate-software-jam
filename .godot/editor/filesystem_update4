@@ -27,3 +27,4 @@ res://common/hitbox.gd
 res://common/pause_menu/pause_menu.gd
 res://addons/modular-settings-menu/scripts/settings-handler-scripts/camera_settings_handler.gd
 res://addons/modular-settings-menu/scenes/settings-elements/gameplay-elements/fov_walk.tscn
+res://player/bullet.tscn
