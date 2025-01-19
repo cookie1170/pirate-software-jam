@@ -1,4 +1,4 @@
-[gd_scene load_steps=16 format=3 uid="uid://ciy177ajnquy0"]
+[gd_scene load_steps=18 format=4 uid="uid://ciy177ajnquy0"]
 
 [ext_resource type="Script" uid="uid://bh4s8tbbuep0u" path="res://common/hitbox.gd" id="1_1y6ct"]
 [ext_resource type="Texture2D" uid="uid://b4mp0yqk1nqqq" path="res://player/block_particles/block_color_ramp.tres" id="1_j40gx"]
@@ -35,6 +35,23 @@ func _process(_delta: float) -> void:
 	mesh.get_material().set_shader_parameter(\"progress\", 1.5 - %DespawnTimer.time_left)
 "
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_42du2"]
+albedo_color = Color(0.12549, 0.0823529, 0.2, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_42du2"]
+_surfaces = [{
+"aabb": AABB(-0.307735, -0.307735, -0.307735, 0.61547, 0.61547, 0.61547),
+"attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
+"material": SubResource("StandardMaterial3D_42du2"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("co+dvnKPnT5yj50+co+dPnKPnT5yj52+co+dPnKPnT5yj50+co+dvnKPnT5yj52+co+dvnKPnb5yj50+co+dPnKPnb5yj52+co+dPnKPnb5yj50+co+dvnKPnb5yj52+co+dPnKPnT5yj50+co+dvnKPnT5yj52+co+dPnKPnT5yj52+co+dvnKPnT5yj50+co+dPnKPnb5yj50+co+dvnKPnb5yj52+co+dPnKPnb5yj52+co+dvnKPnb5yj50+co+dPnKPnT5yj50+co+dvnKPnb5yj50+co+dvnKPnT5yj50+co+dPnKPnb5yj50+co+dPnKPnT5yj52+co+dvnKPnb5yj52+co+dvnKPnT5yj52+co+dPnKPnb5yj52+/3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
+}]
+
 [sub_resource type="BoxShape3D" id="BoxShape3D_6bq6f"]
 size = Vector3(0.5, 0.5, 0.5)
 
@@ -53,6 +70,21 @@ script/source = "extends Timer
 func _on_timeout() -> void:
 	%AnimationPlayer.play(\"despawn\")
 "
+
+[sub_resource type="Animation" id="Animation_4kon0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DespawnParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
 
 [sub_resource type="Animation" id="Animation_42du2"]
 resource_name = "despawn"
@@ -97,21 +129,6 @@ tracks/2/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_4kon0"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("DespawnParticles:emitting")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_4kon0"]
 _data = {
 &"RESET": SubResource("Animation_4kon0"),
@@ -124,6 +141,9 @@ collision_layer = 0
 [node name="Mesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_6bq6f")
 script = SubResource("GDScript_boyjm")
+
+[node name="OutlineMesh" type="MeshInstance3D" parent="Mesh"]
+mesh = SubResource("ArrayMesh_42du2")
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_6bq6f")

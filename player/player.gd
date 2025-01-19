@@ -14,6 +14,10 @@ extends CharacterBody3D
 var block_amount : int = 16
 var camera_input_dir : Vector2
 
+func _ready() -> void:
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+
+
 func _unhandled_input(event: InputEvent) -> void:
 	## gets the camera input direction
 	var is_camera_moving : bool = (
@@ -36,10 +40,6 @@ func _unhandled_input(event: InputEvent) -> void:
 func _physics_process(_delta : float) -> void:
 	_handle_movement()
 	_handle_camera_movement()
-	if Input.is_action_just_pressed("ui_up"):
-		_change_voxel_amt(1)
-	if Input.is_action_just_pressed("ui_down"):
-		_get_hit(1, position)
 
 
 func _change_voxel_amt(amount : int) -> void:
@@ -48,11 +48,11 @@ func _change_voxel_amt(amount : int) -> void:
 	_handle_block_changes()
 
 
-func _get_hit(damage : int, hit_position : Vector3) -> void:
-	block_amount -= damage
+func _get_hit(hitbox : Hitbox) -> void:
+	block_amount -= hitbox.damage
 	block_particles.update_particles()
-	hurt_particles.amount = damage
-	hurt_particles.look_at(hit_position)
+	hurt_particles.amount = hitbox.damage
+	hurt_particles.look_at(hitbox.global_position)
 	hurt_particles.restart()
 	_handle_block_changes()
 

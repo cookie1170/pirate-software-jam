@@ -9,4 +9,4 @@ func _ready() -> void:
 	collision_mask = (8 if type == "Player" else 4)
 
 func _get_hit(hitbox : Hitbox):
-	owner._get_hit(hitbox.damage, hitbox.position)
+	owner._get_hit(hitbox)

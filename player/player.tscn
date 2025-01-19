@@ -169,7 +169,6 @@ script = SubResource("GDScript_kqu6x")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
 emitting = false
-amount = 1
 one_shot = true
 explosiveness = 0.95
 lifetime_randomness = 0.2
@@ -179,14 +178,13 @@ direction = Vector3(0, 2, 1)
 spread = 28.2
 initial_velocity_min = 3.55
 initial_velocity_max = 9.15
-damping_min = 0.658
-damping_max = 3.945
+damping_min = 4.233
+damping_max = 5.32
 scale_amount_curve = SubResource("Curve_rkbax")
 color_ramp = ExtResource("4_yw30f")
 
 [node name="TrailParticles" type="CPUParticles3D" parent="."]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
-amount = 16
+amount = 32
 lifetime = 0.75
 randomness = 0.2
 lifetime_randomness = 0.2

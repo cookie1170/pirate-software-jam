@@ -75,7 +75,7 @@ _data = {
 }
 
 [sub_resource type="BoxMesh" id="BoxMesh_ubayq"]
-size = Vector3(0.2, 0.2, 0.2)
+size = Vector3(0.3, 0.3, 0.3)
 
 [sub_resource type="Curve" id="Curve_ubayq"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0785124, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
@@ -114,17 +114,19 @@ amount = 24
 one_shot = true
 explosiveness = 0.85
 randomness = 0.17
-lifetime_randomness = 0.13
+lifetime_randomness = 0.2
 mesh = SubResource("BoxMesh_ubayq")
 emission_shape = 3
 emission_box_extents = Vector3(0.2, 0.5, 0.2)
 particle_flag_align_y = true
 direction = Vector3(0, 1, 1)
-spread = 16.0
+spread = 27.3
 initial_velocity_min = 5.0
 initial_velocity_max = 10.0
 angular_velocity_min = 140.15
 angular_velocity_max = 140.15
+damping_min = 4.115
+damping_max = 4.115
 scale_amount_curve = SubResource("Curve_ubayq")
 
 [node name="Hurtbox" type="Area3D" parent="."]
