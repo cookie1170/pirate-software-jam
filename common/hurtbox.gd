@@ -10,3 +10,6 @@ func _ready() -> void:
 
 func _get_hit(hitbox : Hitbox):
 	owner._get_hit(hitbox)
+	hitbox.pierce -= 1
+	if hitbox.pierce <= 0:
+		hitbox.owner.get_node("AnimationPlayer").play("despawn")

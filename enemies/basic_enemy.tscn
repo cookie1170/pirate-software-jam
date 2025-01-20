@@ -1,9 +1,14 @@
-[gd_scene load_steps=13 format=4 uid="uid://vkj15iayrnau"]
+[gd_scene load_steps=15 format=4 uid="uid://vkj15iayrnau"]
 
 [ext_resource type="Script" uid="uid://bsmce2pk6wm0s" path="res://enemies/basic_enemy.gd" id="1_ubayq"]
 [ext_resource type="Script" uid="uid://cueoxdgpqrre6" path="res://common/hurtbox.gd" id="2_6ofcp"]
 
-[sub_resource type="CapsuleMesh" id="CapsuleMesh_7olet"]
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ofcp"]
+resource_local_to_scene = true
+
+[sub_resource type="CapsuleMesh" id="CapsuleMesh_5xrap"]
+resource_local_to_scene = true
+material = SubResource("StandardMaterial3D_6ofcp")
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_ubayq"]
 albedo_color = Color(0, 0, 0, 1)
@@ -93,10 +98,40 @@ tracks/2/keys = {
 "values": [true]
 }
 
+[sub_resource type="Animation" id="Animation_5xrap"]
+resource_name = "hurt"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HurtParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath(".")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [Color(1, 0.420723, 0.397556, 1)],
+"method": &"flash"
+}]
+}
+
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6ofcp"]
 _data = {
 &"RESET": SubResource("Animation_6ofcp"),
-&"die": SubResource("Animation_ubayq")
+&"die": SubResource("Animation_ubayq"),
+&"hurt": SubResource("Animation_5xrap")
 }
 
 [node name="Enemy" type="CharacterBody3D"]
@@ -104,8 +139,9 @@ collision_layer = 0
 script = ExtResource("1_ubayq")
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
+unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
-mesh = SubResource("CapsuleMesh_7olet")
+mesh = SubResource("CapsuleMesh_5xrap")
 
 [node name="OutlineMesh" type="MeshInstance3D" parent="Mesh"]
 mesh = SubResource("ArrayMesh_ubayq")

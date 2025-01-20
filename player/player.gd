@@ -1,21 +1,39 @@
 extends CharacterBody3D
 
+#region exports
 @export var invert_y : bool = false
 @export_range(0.1, 2.0, 0.05) var sensitivity : float = 0.5
-@export_range(1, 16, 0.5) var max_speed : float
-@export_range(0.1, 2, 0.05) var accel_sec : float
+@export_range(1, 16, 0.5) var base_move_speed : float
+@export_range(0.1, 2.0, 0.05) var accel_sec : float
+@export_range(0.1, 2.0) var base_attack_speed : float
+@export_range(1, 40) var base_damage : int
+@export_range(1, 5) var base_pierce : int = 1
 @export var bullet_scene : PackedScene
+#endregion
 
+#region nodes
 @onready var block_particles: GPUParticles3D = %BlockParticles
 @onready var hurt_particles: CPUParticles3D = %HurtParticles
 @onready var spring_arm: SpringArm3D = %SpringArm
 @onready var camera: Camera3D = %Camera
+@onready var shooting_cooldown: Timer = %ShootingCooldown
+#endregion
+@onready var attack_cooldown : float = 1.0 / clampf(attack_speed, 0.1, 20.0)
 
+#region variables
 var block_amount : int = 16
 var camera_input_dir : Vector2
+var attack_speed : float
+var move_speed : float
+var bullet_save_chance : float
+var damage : int
+var pierce : int
+@export var upgrades : Array[Upgrade]
+#endregion
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+	apply_upgrades()
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -32,14 +50,12 @@ func _unhandled_input(event: InputEvent) -> void:
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if event.is_action_pressed("ui_cancel"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
-	if (event.is_action_pressed("shoot") and 
-	Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED):
-		_shoot()
 
 
 func _physics_process(_delta : float) -> void:
 	_handle_movement()
 	_handle_camera_movement()
+	_handle_shooting()
 
 
 func _change_voxel_amt(amount : int) -> void:
@@ -81,10 +97,10 @@ func _handle_block_changes() -> void:
 func _handle_movement() -> void:
 	var move_dir := _get_move_dir()
 
-	velocity.x = move_toward(velocity.x, move_dir.x * max_speed,
-	 max_speed / accel_sec * get_physics_process_delta_time())
-	velocity.z = move_toward(velocity.z, move_dir.y * max_speed,
-	 max_speed / accel_sec * get_physics_process_delta_time())
+	velocity.x = move_toward(velocity.x, move_dir.x * move_speed,
+	 move_speed / accel_sec * get_physics_process_delta_time())
+	velocity.z = move_toward(velocity.z, move_dir.y * move_speed,
+	 move_speed / accel_sec * get_physics_process_delta_time())
 
 	move_and_slide()
 
@@ -97,6 +113,13 @@ func _handle_camera_movement() -> void:
 	)
 	spring_arm.rotation.y -= camera_input_dir.x * get_physics_process_delta_time()
 	camera_input_dir = Vector2.ZERO
+
+
+func _handle_shooting() -> void:
+	if (Input.is_action_pressed("shoot") and
+	Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and
+	shooting_cooldown.is_stopped()):
+		_shoot()
 
 
 func _get_move_dir() -> Vector2:
@@ -116,11 +139,30 @@ func _get_move_dir() -> Vector2:
 func _shoot() -> void:
 	var bullet_instance : RigidBody3D = bullet_scene.instantiate()
 	bullet_instance.position = spring_arm.global_position + Vector3.UP * 1.5
+	bullet_instance.get_node("Hitbox").damage = damage
+	bullet_instance.get_node("Hitbox").pierce = pierce
 	get_parent().add_child(bullet_instance)
 	bullet_instance.apply_impulse(-camera.global_basis.z * 30)
-	_change_voxel_amt(-1)
+	if randf_range(0.0, 1.0) > bullet_save_chance:
+		_change_voxel_amt(-1)
+	shooting_cooldown.start()
 
 
 func _pickup_collectible(collectible : Collectible) -> void:
 	_change_voxel_amt(collectible.amount)
 	collectible.animation_player.play("collect")
+
+
+func apply_upgrades() -> void:
+	attack_speed = base_attack_speed
+	damage = base_damage
+	move_speed = base_move_speed
+	pierce = base_pierce
+	bullet_save_chance = 0
+	for upgrade : Upgrade in upgrades:
+		attack_speed += upgrade.attack_speed_change
+		move_speed += upgrade.move_speed_increase
+		damage += upgrade.damage_increase
+		pierce += upgrade.pierce_increase
+		bullet_save_chance += upgrade.bullet_save_chance
+	shooting_cooldown.wait_time = 1.0 / clampf(attack_speed, 0.01, 20)

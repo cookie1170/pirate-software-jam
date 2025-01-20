@@ -161,6 +161,7 @@ _data = {
 
 [node name="Bullet" type="RigidBody3D"]
 collision_layer = 0
+gravity_scale = 0.5
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 mesh = SubResource("BoxMesh_6bq6f")
