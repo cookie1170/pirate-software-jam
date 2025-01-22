@@ -23,7 +23,8 @@ config/icon="res://icon.svg"
 [autoload]
 
 SettingsDataManager="*res://addons/modular-settings-menu/singletons/settings_data_manager.gd"
-PauseMenu="*res://common/pause_menu/pause_menu.tscn"
+PauseMenu="*res://common/ui/pause_menu/pause_menu.tscn"
+Hud="*res://common/ui/hud/hud.tscn"
 
 [display]
 

@@ -147,7 +147,7 @@ func update_particles() -> void:
 	else:
 		emitting = false
 	if int(scale.x) < 6:
-		set_draw_pass_mesh(0, BLOCKS[int(scale.x)])
+		set_draw_pass_mesh(0, BLOCKS[int(clampf(scale.x, 1, 5))])
 "
 
 [sub_resource type="Curve" id="Curve_rkbax"]
@@ -182,7 +182,7 @@ radius = 0.75
 collision_layer = 0
 script = ExtResource("1_oul6g")
 base_move_speed = 10.0
-accel_sec = 0.25
+accel_sec = 0.15
 base_attack_speed = 2.0
 base_damage = 20
 base_accuracy = 1.0

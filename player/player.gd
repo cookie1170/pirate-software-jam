@@ -33,6 +33,7 @@ var pierce : int
 var accuracy : float
 var bullet_amount : int = 3
 var is_one_hit : bool = false
+var coins : int = 0
 @export var upgrades : Array[Upgrade]
 #endregion
 

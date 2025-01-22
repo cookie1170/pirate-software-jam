@@ -10,6 +10,10 @@ extends CharacterBody3D
 var target_pos : Vector3
 
 
+func _ready() -> void:
+	_on_path_update()
+
+
 func _physics_process(delta: float) -> void:
 	var direction : Vector3 = nav.get_next_path_position() - global_position
 	direction = direction.normalized()
@@ -19,14 +23,8 @@ func _physics_process(delta: float) -> void:
 	velocity.z = move_toward(
 		velocity.z, direction.z * max_speed, 1.0 / accel_sec * delta
 	)
+	velocity.y -= 15 * delta
 	move_and_slide()
-
-
-func _process(_delta: float) -> void:
-	if not %DissolveTimer.is_stopped():
-		var dissolve_amount : float 
-		dissolve_amount = (0.5 - %DissolveTimer.time_left) * 2
-		%Mesh.mesh.material.set_shader_parameter("dissolve_amount", dissolve_amount)
 
 
 func _get_hit(hitbox : Hitbox) -> void:
@@ -39,20 +37,22 @@ func _get_hit(hitbox : Hitbox) -> void:
 		1,
 		hitbox_horizontal_vel.y
 		)
+	velocity = Vector3(
+		hitbox_horizontal_vel.x * hitbox.knockback,
+		5 * clampf(hitbox.knockback, 0, 1),
+		hitbox_horizontal_vel.y * hitbox.knockback,
+	)
 
 	health -= hitbox.damage
 	if health <= 0:
+		%AnimationPlayer.stop()
 		%AnimationPlayer.play("die")
 	else:
+		%AnimationPlayer.stop()
 		%AnimationPlayer.play("hurt")
-
-
-func flash(flash_color : Color) -> void:
-	%Mesh.mesh.material.set_shader_parameter("albedo", flash_color)
-	await get_tree().create_timer(0.2).timeout
-	%Mesh.mesh.material.set_shader_parameter("albedo", prev_color)
 
 
 func _on_path_update() -> void:
 	target_pos = player.global_position
 	nav.target_position = target_pos
+	%NavTimer.wait_time = randf_range(0.01, 0.01)

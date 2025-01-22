@@ -1,4 +1,4 @@
-[gd_scene load_steps=20 format=4 uid="uid://vkj15iayrnau"]
+[gd_scene load_steps=22 format=4 uid="uid://vkj15iayrnau"]
 
 [ext_resource type="Script" uid="uid://bsmce2pk6wm0s" path="res://enemies/basic_enemy.gd" id="1_ubayq"]
 [ext_resource type="Script" uid="uid://cueoxdgpqrre6" path="res://common/hurtbox.gd" id="2_6ofcp"]
@@ -31,6 +31,9 @@ uniform vec3 uv2_offset;
 
 uniform sampler2D dissolve_noise_texture;
 uniform float dissolve_amount : hint_range(0.0, 1.0, 0.05);
+uniform float flash_amount : hint_range(0.0, 1.0 ,0.05);
+uniform vec4 flash_color : source_color;
+uniform vec4 dissolve_color : source_color;
 
 void vertex() {
 	UV = UV * uv1_scale.xy + uv1_offset.xy;
@@ -53,6 +56,11 @@ void fragment() {
 		if (texture(dissolve_noise_texture, UV).r < dissolve_amount){
 		ALPHA = 0.0;
 	}
+		if (texture(dissolve_noise_texture, UV).r < dissolve_amount + 0.1 && dissolve_amount > 0.0){
+			ALBEDO = dissolve_color.rgb;
+		}
+
+	ALBEDO = mix(ALBEDO, flash_color.rgb, flash_amount);
 }
 "
 
@@ -60,6 +68,7 @@ void fragment() {
 seed = 12
 
 [sub_resource type="NoiseTexture2D" id="NoiseTexture2D_li1hj"]
+seamless = true
 noise = SubResource("FastNoiseLite_5xrap")
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_qjw0p"]
@@ -79,6 +88,9 @@ shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/dissolve_noise_texture = SubResource("NoiseTexture2D_li1hj")
 shader_parameter/dissolve_amount = 0.0
+shader_parameter/flash_amount = 0.0
+shader_parameter/flash_color = Color(0.47, 0, 0, 1)
+shader_parameter/dissolve_color = Color(1, 0.666667, 0.368627, 1)
 
 [sub_resource type="CapsuleMesh" id="CapsuleMesh_qjw0p"]
 resource_local_to_scene = true
@@ -104,12 +116,20 @@ _surfaces = [{
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_6ofcp"]
 
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_5xrap"]
+vertex_color_use_as_albedo = true
+
 [sub_resource type="BoxMesh" id="BoxMesh_ubayq"]
+material = SubResource("StandardMaterial3D_5xrap")
 size = Vector3(0.3, 0.3, 0.3)
 
 [sub_resource type="Curve" id="Curve_ubayq"]
-_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.0785124, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
-point_count = 3
+_data = [Vector2(0, 1), 0.0, -1.0, 0, 1, Vector2(1, 0), 0.0, -4.24561, 0, 1]
+point_count = 2
+
+[sub_resource type="Gradient" id="Gradient_5xrap"]
+offsets = PackedFloat32Array(0, 0.87963)
+colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5xrap"]
 radius = 0.75
@@ -143,9 +163,35 @@ tracks/1/keys = {
 "update": 1,
 "values": [true]
 }
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("Mesh:mesh:material:shader_parameter/flash_amount")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Mesh:mesh:material:shader_parameter/dissolve_amount")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [0.0]
+}
 
 [sub_resource type="Animation" id="Animation_ubayq"]
 resource_name = "die"
+length = 0.5
+step = 0.1
 tracks/0/type = "method"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -153,7 +199,7 @@ tracks/0/path = NodePath(".")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0, 1),
+"times": PackedFloat32Array(0, 0.5),
 "transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [false],
@@ -187,24 +233,23 @@ tracks/2/keys = {
 "update": 1,
 "values": [false]
 }
-tracks/3/type = "method"
+tracks/3/type = "value"
 tracks/3/imported = false
 tracks/3/enabled = true
-tracks/3/path = NodePath("DissolveTimer")
+tracks/3/path = NodePath("Mesh:mesh:material:shader_parameter/dissolve_amount")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [-1],
-"method": &"start"
-}]
+"times": PackedFloat32Array(0, 0.4),
+"transitions": PackedFloat32Array(1, 1),
+"update": 0,
+"values": [0.0, 1.0]
 }
 
 [sub_resource type="Animation" id="Animation_5xrap"]
 resource_name = "hurt"
-length = 0.001
+length = 0.3
+step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
 tracks/0/enabled = true
@@ -217,18 +262,30 @@ tracks/0/keys = {
 "update": 1,
 "values": [true]
 }
-tracks/1/type = "method"
+tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath(".")
+tracks/1/path = NodePath("Mesh:mesh:material:shader_parameter/flash_amount")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
+"times": PackedFloat32Array(0, 0.05, 0.25, 0.3),
+"transitions": PackedFloat32Array(1, 1, 1, 1),
+"update": 0,
+"values": [0.0, 0.9, 0.9, 0.0]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("HurtParticles")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "values": [{
-"args": [Color(1, 0.420723, 0.397556, 1)],
-"method": &"flash"
+"args": [false],
+"method": &"restart"
 }]
 }
 
@@ -243,6 +300,7 @@ _data = {
 collision_layer = 0
 script = ExtResource("1_ubayq")
 max_speed = 8.0
+accel_sec = 0.1
 
 [node name="NavAgent" type="NavigationAgent3D" parent="."]
 unique_name_in_owner = true
@@ -267,24 +325,26 @@ shape = SubResource("CapsuleShape3D_6ofcp")
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 emitting = false
-amount = 24
+amount = 32
+lifetime = 0.7
 one_shot = true
-explosiveness = 0.85
+preprocess = 0.1
+explosiveness = 0.87
 randomness = 0.17
-lifetime_randomness = 0.2
+lifetime_randomness = 1.0
 mesh = SubResource("BoxMesh_ubayq")
-emission_shape = 3
-emission_box_extents = Vector3(0.2, 0.5, 0.2)
 particle_flag_align_y = true
-direction = Vector3(0, 1, 1)
-spread = 27.3
-initial_velocity_min = 5.0
-initial_velocity_max = 10.0
-angular_velocity_min = 140.15
-angular_velocity_max = 140.15
-damping_min = 4.115
-damping_max = 4.115
+direction = Vector3(0, 0.7, 1)
+spread = 17.31
+initial_velocity_min = 7.5
+initial_velocity_max = 12.5
+damping_min = 3.505
+damping_max = 9.274
 scale_amount_curve = SubResource("Curve_ubayq")
+color = Color(1, 0, 0, 1)
+color_ramp = SubResource("Gradient_5xrap")
+hue_variation_min = -1.0
+hue_variation_max = 1.0
 
 [node name="Hurtbox" type="Area3D" parent="."]
 script = ExtResource("2_6ofcp")
@@ -312,13 +372,10 @@ libraries = {
 &"": SubResource("AnimationLibrary_6ofcp")
 }
 
-[node name="DissolveTimer" type="Timer" parent="."]
+[node name="NavTimer" type="Timer" parent="."]
 unique_name_in_owner = true
 wait_time = 0.5
-one_shot = true
-
-[node name="PathUpdateTimer" type="Timer" parent="."]
 autostart = true
 
 [connection signal="navigation_finished" from="NavAgent" to="." method="_on_path_update"]
-[connection signal="timeout" from="PathUpdateTimer" to="." method="_on_path_update"]
+[connection signal="timeout" from="NavTimer" to="." method="_on_path_update"]
