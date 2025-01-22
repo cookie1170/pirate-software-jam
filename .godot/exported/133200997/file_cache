@@ -1,5 +1,5 @@
-res://levels/level.tscn::ee8ff3b210dce09d8f511c5d2de3ec62::1737293750::res://.godot/exported/133200997/export-2ba9609e68cc8875d848c4125928a176-level.scn
-res://player/player.tscn::126829a6e08ac46bb054c831f9448fab::1737293750::res://.godot/exported/133200997/export-753d15e03e0182f9d550ac833b42bb41-player.scn
+res://levels/level.tscn::6b3aca4641ffc15f48515822d7d50698::1737447807::res://.godot/exported/133200997/export-2ba9609e68cc8875d848c4125928a176-level.scn
+res://player/player.tscn::56f1df3ea00c7d6dbc6d32d479eb3ac3::1737447807::res://.godot/exported/133200997/export-753d15e03e0182f9d550ac833b42bb41-player.scn
 res://addons/modular-settings-menu/scenes/settings-elements/audio-elements/master_volume.tscn::14fe6bc08ff535f41f8c491eeee5e98c::1736662953::res://.godot/exported/133200997/export-ec8064b6abd41acba29dfad592096741-master_volume.scn
 res://addons/modular-settings-menu/scenes/settings-elements/audio-elements/music_volume.tscn::f3024170b85fdd1bfa1c9d00a18c589d::1736662953::res://.godot/exported/133200997/export-656d5b32b05c633272823f52c1f2404e-music_volume.scn
 res://addons/modular-settings-menu/scenes/settings-elements/audio-elements/sfx_volume.tscn::86f9208e9d9c3ea2d2bc316ecdeed25d::1736662953::res://.godot/exported/133200997/export-84b8b4a9f58af4e08c24e56f14bee248-sfx_volume.scn
@@ -41,10 +41,10 @@ res://addons/modular-settings-menu/scenes/settings-sections/gameplay.tscn::54f08
 res://addons/modular-settings-menu/scenes/settings-sections/graphics.tscn::fb7bb872c85095151285e6c5f4869283::1737291771::res://.godot/exported/133200997/export-6233b0d65a485e496aff3e1aa820cb97-graphics.scn
 res://addons/modular-settings-menu/scenes/settings.tscn::c31d6913292f64a55d75ab1b3f8a3552::1737291771::res://.godot/exported/133200997/export-10ba8d00df31c90ac289b0f4dade2a31-settings.scn
 res://common/pause_menu/pause_menu.tscn::849020338e6531409d3e7a15d39f4f1c::1737291771::res://.godot/exported/133200997/export-bb6c486f2e92df1aa5c981594991103c-pause_menu.scn
-res://enemies/basic_enemy.tscn::1fef2f869001809fafb0ea0f7a7f1eac::1737293751::res://.godot/exported/133200997/export-9524b9ed43798754a4e889d505e04969-basic_enemy.scn
-res://common/collectible_block/collectible_block.tscn::59609331cd14352546538c25ff714940::1737293751::res://.godot/exported/133200997/export-13c02367bfd134cd867ca5aced110bad-collectible_block.scn
-res://common/resources/gradients/gradient1d_blue.tres::2f2ce7f8c20842f2f408787144c255ab::1737293266::res://.godot/exported/133200997/export-7c57920ee3aa81d584885bac0473540e-gradient1d_blue.res
-res://common/resources/gradients/gradient1d_orange.tres::8cfd7705e70cb2fb8d9f7977511a7b66::1737293266::res://.godot/exported/133200997/export-a3ee4911c183859a45bbfedc6f5c9b46-gradient1d_orange.res
+res://enemies/basic_enemy.tscn::612775a0d873d1851b9579c2b83adbd6::1737447807::res://.godot/exported/133200997/export-9524b9ed43798754a4e889d505e04969-basic_enemy.scn
+res://common/collectible_block/collectible_block.tscn::fe9b80e13825a0505560b3499d3a6744::1737447808::res://.godot/exported/133200997/export-13c02367bfd134cd867ca5aced110bad-collectible_block.scn
+res://common/resources/gradients/gradient1d_blue.tres::2f2ce7f8c20842f2f408787144c255ab::1737437975::res://.godot/exported/133200997/export-7c57920ee3aa81d584885bac0473540e-gradient1d_blue.res
+res://common/resources/gradients/gradient1d_orange.tres::8cfd7705e70cb2fb8d9f7977511a7b66::1737437975::res://.godot/exported/133200997/export-a3ee4911c183859a45bbfedc6f5c9b46-gradient1d_orange.res
 res://common/resources/gradients/gradient_blue.tres::547b0ade76863a9ae2ad5e03228342f9::1737287149::res://.godot/exported/133200997/export-3069cab69bf9ee02bda5baf76e3c81cf-gradient_blue.res
 res://common/resources/gradients/gradient_orange.tres::0c0f97c93c28044f6b5451123861670a::1737290144::res://.godot/exported/133200997/export-8727b03a3a28b10b1317c14ac5140ec5-gradient_orange.res
 res://common/resources/meshes/block_0.tres::d795fd89355d8622e933f03699b5ea27::1737290342::res://.godot/exported/133200997/export-935de4db9333e0e6c995a1e92cfb0bcd-block_0.res
@@ -53,4 +53,5 @@ res://common/resources/meshes/block_2.tres::d3c1a82fd1448312fb420f10bc2f992a::17
 res://common/resources/meshes/block_3.tres::cc46cf3ddd1a95cfb666bf06d1a31bef::1737290342::res://.godot/exported/133200997/export-6c22e2833aba609539917eee521751df-block_3.res
 res://common/resources/meshes/block_4.tres::698ffc2965c3ba819a1b66d9dfcf3eb3::1737290343::res://.godot/exported/133200997/export-0d237763b7f49c12bd3260e45e301abc-block_4.res
 res://common/resources/meshes/block_material.tres::6c526119fdb42795ca5d7b1716fb89df::1737289874::res://.godot/exported/133200997/export-b811f7b45d44d48d849242941e8271e3-block_material.res
-res://player/bullet.tscn::3a8b47f8dabf126674d5d9aebdf7eeb8::1737293751::res://.godot/exported/133200997/export-ccbd35e6f72058f9e5d89a0d1cb3e691-bullet.scn
+res://player/bullet.tscn::43c6b8b7c9adadb6a38424d2dfa4b10d::1737447808::res://.godot/exported/133200997/export-ccbd35e6f72058f9e5d89a0d1cb3e691-bullet.scn
+res://common/upgrades/upgrades_menu.tscn::9b0687aac34fa15634ed770d6cb49a1a::1737447808::res://.godot/exported/133200997/export-7233d7f3d531fce78046f68f0643f059-upgrades_menu.scn

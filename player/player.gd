@@ -1,3 +1,4 @@
+class_name Player
 extends CharacterBody3D
 
 #region exports
@@ -8,6 +9,7 @@ extends CharacterBody3D
 @export_range(0.1, 2.0) var base_attack_speed : float
 @export_range(1, 40) var base_damage : int
 @export_range(1, 5) var base_pierce : int = 1
+@export_range(0.1, 10, 0.1) var base_accuracy : float
 @export var bullet_scene : PackedScene
 #endregion
 
@@ -28,6 +30,9 @@ var move_speed : float
 var bullet_save_chance : float
 var damage : int
 var pierce : int
+var accuracy : float
+var bullet_amount : int = 3
+var is_one_hit : bool = false
 @export var upgrades : Array[Upgrade]
 #endregion
 
@@ -47,6 +52,7 @@ func _unhandled_input(event: InputEvent) -> void:
 		camera_input_dir = event.screen_relative * sensitivity
 
 	if event.is_action_pressed("focus_click"):
+		await get_tree().create_timer(0.1).timeout
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if event.is_action_pressed("ui_cancel"):
 		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE)
@@ -56,6 +62,7 @@ func _physics_process(_delta : float) -> void:
 	_handle_movement()
 	_handle_camera_movement()
 	_handle_shooting()
+	apply_upgrades()
 
 
 func _change_voxel_amt(amount : int) -> void:
@@ -65,21 +72,27 @@ func _change_voxel_amt(amount : int) -> void:
 
 
 func _get_hit(hitbox : Hitbox) -> void:
+	if is_one_hit:
+		_die()
 	block_amount -= hitbox.damage
 	block_particles.update_particles()
 	hurt_particles.amount = hitbox.damage
-	hurt_particles.look_at(hitbox.global_position)
+	hurt_particles.direction.x = hitbox.owner.velocity.x
+	hurt_particles.direction.y = 10
+	hurt_particles.direction.z = hitbox.owner.velocity.z
 	hurt_particles.restart()
+	#Engine.set_time_scale(0.2)
+	#await get_tree().create_timer(0.1 / 0.2)
+	#Engine.set_time_scale(1.0)
 	_handle_block_changes()
 
 
 func _die() -> void:
-	get_tree().reload_current_scene()
+	get_tree().call_deferred("reload_current_scene")
 
 
 func _handle_block_changes() -> void:
-	if block_amount <= 0:
-		_die()
+	is_one_hit = (block_amount <= 0)
 	var remapped_block_amount : float = remap(
 		block_amount, 0, 64, 1, 2
 	)
@@ -116,10 +129,13 @@ func _handle_camera_movement() -> void:
 
 
 func _handle_shooting() -> void:
+	if block_amount <= 0:
+		return
 	if (Input.is_action_pressed("shoot") and
 	Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and
 	shooting_cooldown.is_stopped()):
-		_shoot()
+		for i in clampf(bullet_amount, 1, INF):
+			_shoot()
 
 
 func _get_move_dir() -> Vector2:
@@ -138,11 +154,16 @@ func _get_move_dir() -> Vector2:
 
 func _shoot() -> void:
 	var bullet_instance : RigidBody3D = bullet_scene.instantiate()
-	bullet_instance.position = spring_arm.global_position + Vector3.UP * 1.5
+	var spread : float = 1.0 / clampf(accuracy, 0.1, INF)
+	get_parent().add_child(bullet_instance)
+	bullet_instance.global_position = spring_arm.global_position + Vector3.UP * 1.5
 	bullet_instance.get_node("Hitbox").damage = damage
 	bullet_instance.get_node("Hitbox").pierce = pierce
-	get_parent().add_child(bullet_instance)
-	bullet_instance.apply_impulse(-camera.global_basis.z * 30)
+	bullet_instance.apply_impulse(-camera.global_basis.z * 30 + Vector3(
+		randf_range(0.0 - spread, 0.0 + spread),
+		randf_range(0.0 - spread, 0.0 + spread),
+		randf_range(0.0 - spread, 0.0 + spread)
+	))
 	if randf_range(0.0, 1.0) > bullet_save_chance:
 		_change_voxel_amt(-1)
 	shooting_cooldown.start()
@@ -159,10 +180,16 @@ func apply_upgrades() -> void:
 	move_speed = base_move_speed
 	pierce = base_pierce
 	bullet_save_chance = 0
+	accuracy = base_accuracy
+	bullet_amount = 1
 	for upgrade : Upgrade in upgrades:
 		attack_speed += upgrade.attack_speed_change
 		move_speed += upgrade.move_speed_increase
 		damage += upgrade.damage_increase
 		pierce += upgrade.pierce_increase
 		bullet_save_chance += upgrade.bullet_save_chance
-	shooting_cooldown.wait_time = 1.0 / clampf(attack_speed, 0.01, 20)
+		accuracy += upgrade.accuracy_change
+		bullet_amount += upgrade.bullet_amt_change
+	shooting_cooldown.wait_time = 1.0 / clampf(attack_speed, 0.01, INF)
+	if is_one_hit:
+		move_speed *= 1.5

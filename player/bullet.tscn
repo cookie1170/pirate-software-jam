@@ -17,12 +17,14 @@ void fragment() {
 "
 
 [sub_resource type="ShaderMaterial" id="ShaderMaterial_j40gx"]
+resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_1y6ct")
 shader_parameter/gradient = ExtResource("1_j40gx")
 shader_parameter/progress = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_6bq6f"]
+resource_local_to_scene = true
 material = SubResource("ShaderMaterial_j40gx")
 size = Vector3(0.5, 0.5, 0.5)
 
@@ -36,9 +38,11 @@ func _process(_delta: float) -> void:
 "
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_42du2"]
+resource_local_to_scene = true
 albedo_color = Color(0.12549, 0.0823529, 0.2, 1)
 
 [sub_resource type="ArrayMesh" id="ArrayMesh_42du2"]
+resource_local_to_scene = true
 _surfaces = [{
 "aabb": AABB(-0.307735, -0.307735, -0.307735, 0.61547, 0.61547, 0.61547),
 "attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
