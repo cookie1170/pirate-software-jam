@@ -78,13 +78,18 @@ func _get_hit(hitbox : Hitbox) -> void:
 	block_amount -= hitbox.damage
 	block_particles.update_particles()
 	hurt_particles.amount = hitbox.damage
-	hurt_particles.direction.x = hitbox.owner.velocity.x
-	hurt_particles.direction.y = 10
-	hurt_particles.direction.z = hitbox.owner.velocity.z
+	if "linear_velocity" in hitbox.owner:
+		hurt_particles.direction.x = hitbox.owner.linear_velocity.x
+		hurt_particles.direction.y = 10
+		hurt_particles.direction.z = hitbox.owner.linear_velocity.z
+	elif "velocity" in hitbox.owner:
+		hurt_particles.direction.x = hitbox.owner.velocity.x
+		hurt_particles.direction.y = 10
+		hurt_particles.direction.z = hitbox.owner.velocity.z
 	hurt_particles.restart()
-	#Engine.set_time_scale(0.2)
-	#await get_tree().create_timer(0.1 / 0.2)
-	#Engine.set_time_scale(1.0)
+	Engine.set_time_scale(0.2)
+	await get_tree().create_timer(0.1 / 0.2)
+	Engine.set_time_scale(1.0)
 	_handle_block_changes()
 
 
@@ -136,7 +141,7 @@ func _handle_shooting() -> void:
 	Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and
 	shooting_cooldown.is_stopped()):
 		for i in clampf(bullet_amount, 1, INF):
-			_shoot()
+			shoot()
 
 
 func _get_move_dir() -> Vector2:
@@ -153,7 +158,7 @@ func _get_move_dir() -> Vector2:
 	return Vector2(move_dir.x, move_dir.z)
 
 
-func _shoot() -> void:
+func shoot() -> void:
 	var bullet_instance : RigidBody3D = bullet_scene.instantiate()
 	var spread : float = 1.0 / clampf(accuracy, 0.1, INF)
 	get_parent().add_child(bullet_instance)

@@ -1,0 +1,214 @@
+[gd_scene load_steps=18 format=4 uid="uid://ciy177ajnquy0"]
+
+[ext_resource type="Texture2D" uid="uid://b4mp0yqk1nqqq" path="res://common/resources/gradients/gradient1d_blue.tres" id="1_q1i2o"]
+[ext_resource type="BoxMesh" uid="uid://diyfhnaeex4bm" path="res://common/resources/meshes/block_0.tres" id="2_vw26v"]
+[ext_resource type="Gradient" uid="uid://doolqgh7pxcdh" path="res://common/resources/gradients/gradient_blue.tres" id="3_ma2uj"]
+[ext_resource type="Script" uid="uid://bh4s8tbbuep0u" path="res://common/scripts/hitbox.gd" id="4_vb0ah"]
+
+[sub_resource type="Shader" id="Shader_1y6ct"]
+code = "shader_type spatial;
+
+uniform sampler2D gradient;
+uniform float progress;
+
+void fragment() {
+	ALBEDO = texture(gradient, vec2(abs(sin(progress)))).rgb;
+}
+"
+
+[sub_resource type="ShaderMaterial" id="ShaderMaterial_j40gx"]
+resource_local_to_scene = true
+render_priority = 0
+shader = SubResource("Shader_1y6ct")
+shader_parameter/gradient = ExtResource("1_q1i2o")
+shader_parameter/progress = 0.0
+
+[sub_resource type="BoxMesh" id="BoxMesh_6bq6f"]
+resource_local_to_scene = true
+material = SubResource("ShaderMaterial_j40gx")
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="GDScript" id="GDScript_boyjm"]
+resource_name = "bullet_mesh"
+script/source = "extends MeshInstance3D
+
+
+func _process(_delta: float) -> void:
+	mesh.get_material().set_shader_parameter(\"progress\", 1.5 - %DespawnTimer.time_left)
+"
+
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_42du2"]
+resource_local_to_scene = true
+albedo_color = Color(0.12549, 0.0823529, 0.2, 1)
+
+[sub_resource type="ArrayMesh" id="ArrayMesh_42du2"]
+resource_local_to_scene = true
+_surfaces = [{
+"aabb": AABB(-0.307735, -0.307735, -0.307735, 0.61547, 0.61547, 0.61547),
+"attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
+"format": 34359742487,
+"index_count": 36,
+"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
+"material": SubResource("StandardMaterial3D_42du2"),
+"primitive": 3,
+"uv_scale": Vector4(0, 0, 0, 0),
+"vertex_count": 24,
+"vertex_data": PackedByteArray("co+dvnKPnT5yj50+co+dPnKPnT5yj52+co+dPnKPnT5yj50+co+dvnKPnT5yj52+co+dvnKPnb5yj50+co+dPnKPnb5yj52+co+dPnKPnb5yj50+co+dvnKPnb5yj52+co+dPnKPnT5yj50+co+dvnKPnT5yj52+co+dPnKPnT5yj52+co+dvnKPnT5yj50+co+dPnKPnb5yj50+co+dvnKPnb5yj52+co+dPnKPnb5yj52+co+dvnKPnb5yj50+co+dPnKPnT5yj50+co+dvnKPnb5yj50+co+dvnKPnT5yj50+co+dPnKPnb5yj50+co+dPnKPnT5yj52+co+dvnKPnb5yj52+co+dvnKPnT5yj52+co+dPnKPnb5yj52+/3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
+}]
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_6bq6f"]
+size = Vector3(0.5, 0.5, 0.5)
+
+[sub_resource type="Curve" id="Curve_boyjm"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.6, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="BoxShape3D" id="BoxShape3D_j40gx"]
+size = Vector3(0.75, 0.75, 0.75)
+
+[sub_resource type="GDScript" id="GDScript_j40gx"]
+resource_name = "bullet_despawn_timer"
+script/source = "extends Timer
+
+
+func _on_timeout() -> void:
+	%AnimationPlayer.play(\"despawn\")
+"
+
+[sub_resource type="Animation" id="Animation_4kon0"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DespawnParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Hitbox:monitorable")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="Animation" id="Animation_42du2"]
+resource_name = "despawn"
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("DespawnParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "method"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("Mesh")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"hide"
+}]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Hitbox:monitorable")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_4kon0"]
+_data = {
+&"RESET": SubResource("Animation_4kon0"),
+&"despawn": SubResource("Animation_42du2")
+}
+
+[node name="Bullet" type="RigidBody3D"]
+collision_layer = 0
+gravity_scale = 0.5
+
+[node name="Mesh" type="MeshInstance3D" parent="."]
+mesh = SubResource("BoxMesh_6bq6f")
+script = SubResource("GDScript_boyjm")
+
+[node name="OutlineMesh" type="MeshInstance3D" parent="Mesh"]
+mesh = SubResource("ArrayMesh_42du2")
+
+[node name="Collider" type="CollisionShape3D" parent="."]
+shape = SubResource("BoxShape3D_6bq6f")
+
+[node name="DespawnParticles" type="CPUParticles3D" parent="."]
+emitting = false
+one_shot = true
+explosiveness = 0.85
+mesh = ExtResource("2_vw26v")
+particle_flag_align_y = true
+direction = Vector3(0, 1.775, 0)
+initial_velocity_min = 6.09
+initial_velocity_max = 6.09
+scale_amount_curve = SubResource("Curve_boyjm")
+color_ramp = ExtResource("3_ma2uj")
+
+[node name="Hitbox" type="Area3D" parent="."]
+script = ExtResource("4_vb0ah")
+type = "Player"
+metadata/_custom_type_script = ExtResource("4_vb0ah")
+
+[node name="Collider" type="CollisionShape3D" parent="Hitbox"]
+shape = SubResource("BoxShape3D_j40gx")
+debug_color = Color(0.7, 0, 0.0116665, 0.419608)
+
+[node name="DespawnTimer" type="Timer" parent="."]
+unique_name_in_owner = true
+wait_time = 1.5
+one_shot = true
+autostart = true
+script = SubResource("GDScript_j40gx")
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_4kon0")
+}
+
+[connection signal="timeout" from="DespawnTimer" to="DespawnTimer" method="_on_timeout"]

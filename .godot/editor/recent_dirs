@@ -1,4 +1,5 @@
-res://common/hud
+res://enemies/shooting_enemy
+res://common/ui
 res://common
 res://
 res://common/shaders
@@ -9,7 +10,6 @@ res://enemies
 C:/Users/LiiiightYT/Documents/godot exports/3d-no-name-thingy/Linux
 C:/Users/LiiiightYT/Documents/godot exports/3d-no-name-thingy/Windows
 C:/Users/LiiiightYT/Documents/godot exports/3d-no-name-thingy/Web
-res://common/pause_menu
 C:/Users/LiiiightYT/Downloads
 C:/Program Files (x86)/Steam/steamapps/common/Blender
 res://levels

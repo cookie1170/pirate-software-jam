@@ -1,7 +1,7 @@
 [gd_scene load_steps=39 format=4 uid="uid://bi40akbu0hcyl"]
 
 [ext_resource type="Script" uid="uid://b1qqjj3erxy3i" path="res://player/player.gd" id="1_oul6g"]
-[ext_resource type="PackedScene" uid="uid://ciy177ajnquy0" path="res://player/bullet.tscn" id="2_boad6"]
+[ext_resource type="PackedScene" uid="uid://ciy177ajnquy0" path="res://common/scenes/bullet.tscn" id="2_boad6"]
 [ext_resource type="Texture2D" uid="uid://b4mp0yqk1nqqq" path="res://common/resources/gradients/gradient1d_blue.tres" id="2_g1dw6"]
 [ext_resource type="Shader" uid="uid://dr1cjaw111atj" path="res://common/shaders/color_change.gdshader" id="3_hg6s5"]
 [ext_resource type="Script" uid="uid://cox2ddvnlx17p" path="res://common/upgrades/upgrade_resources/base_upgrade.gd" id="3_kb6p2"]
@@ -9,7 +9,7 @@
 [ext_resource type="Texture2D" uid="uid://dwt5euhqkftkv" path="res://common/resources/gradients/gradient1d_orange.tres" id="4_yllr7"]
 [ext_resource type="Gradient" uid="uid://doolqgh7pxcdh" path="res://common/resources/gradients/gradient_blue.tres" id="4_yw30f"]
 [ext_resource type="BoxMesh" uid="uid://c6x5imk26w5pm" path="res://common/resources/meshes/block_1.tres" id="5_2ieo8"]
-[ext_resource type="Script" uid="uid://cueoxdgpqrre6" path="res://common/hurtbox.gd" id="5_qjkh3"]
+[ext_resource type="Script" uid="uid://cueoxdgpqrre6" path="res://common/scripts/hurtbox.gd" id="5_qjkh3"]
 [ext_resource type="BoxMesh" uid="uid://c6vg725nvh2l3" path="res://common/resources/meshes/block_2.tres" id="6_ebec5"]
 [ext_resource type="Script" uid="uid://cw2knxh8u7elo" path="res://addons/modular-settings-menu/scripts/settings-handler-scripts/camera_settings_handler.gd" id="6_g6k8r"]
 [ext_resource type="BoxMesh" uid="uid://bmjjnfg1hiqso" path="res://common/resources/meshes/block_3.tres" id="7_yllr7"]
@@ -108,7 +108,7 @@ point_count = 4
 curve = SubResource("Curve_kqu6x")
 
 [sub_resource type="ParticleProcessMaterial" id="ParticleProcessMaterial_rkbax"]
-particle_flag_rotate_y = true
+particle_flag_align_y = true
 emission_shape = 2
 emission_sphere_radius = 1.0
 angle_curve = SubResource("CurveTexture_kqu6x")
@@ -181,6 +181,7 @@ radius = 0.75
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 0
 script = ExtResource("1_oul6g")
+sensitivity = 1.0
 base_move_speed = 10.0
 accel_sec = 0.15
 base_attack_speed = 2.0

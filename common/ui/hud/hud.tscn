@@ -1,31 +1,22 @@
-[gd_scene load_steps=5 format=3 uid="uid://ptj3tog7skao"]
+[gd_scene load_steps=6 format=3 uid="uid://ptj3tog7skao"]
 
 [ext_resource type="Script" uid="uid://bbq1uagk4q68d" path="res://common/ui/hud/hud.gd" id="1_wuvj5"]
-[ext_resource type="FontFile" uid="uid://crgj5nxei62tk" path="res://common/ui/Rubik-Bold.ttf" id="2_862u4"]
+[ext_resource type="Texture2D" uid="uid://cqko0vc1e2fd" path="res://common/ui/hud/icons/coin.svg" id="2_862u4"]
+[ext_resource type="Texture2D" uid="uid://bp0pdti5jwcwd" path="res://common/ui/hud/icons/cube.svg" id="3_bqepj"]
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wuvj5"]
-bg_color = Color(1, 0.894118, 0.470588, 1)
+bg_color = Color(0.14, 0.12824, 0.1008, 0.196078)
 border_width_left = 4
-border_width_top = 4
-border_width_right = 4
 border_width_bottom = 4
-border_color = Color(0.94902, 0.65098, 0.368627, 1)
+border_color = Color(0.05, 0.046375, 0.0355, 0.0980392)
 corner_radius_top_left = 8
 corner_radius_top_right = 8
 corner_radius_bottom_right = 8
 corner_radius_bottom_left = 8
 
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_aklx7"]
-bg_color = Color(0.690196, 0.188235, 0.360784, 1)
-border_width_left = 4
-border_width_top = 4
-border_width_right = 4
-border_width_bottom = 4
-border_color = Color(0.45098, 0.152941, 0.360784, 1)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[sub_resource type="LabelSettings" id="LabelSettings_2s207"]
+font_size = 32
+font_color = Color(0.9215, 0.941708, 0.97, 0.498039)
 
 [node name="HUD" type="Control"]
 layout_mode = 3
@@ -40,13 +31,15 @@ script = ExtResource("1_wuvj5")
 [node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_left = 0.05
-anchor_top = 0.8
-anchor_right = 0.2
-anchor_bottom = 0.95
+anchor_top = 0.850309
+anchor_right = 0.15
+anchor_bottom = 1.00031
+offset_left = 20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = -20.0
 grow_vertical = 0
 mouse_filter = 2
-theme_override_constants/separation = -10
 
 [node name="CoinPanel" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
@@ -54,48 +47,68 @@ size_flags_vertical = 3
 mouse_filter = 2
 theme_override_styles/panel = SubResource("StyleBoxFlat_wuvj5")
 
-[node name="CoinHBox" type="HBoxContainer" parent="VBoxContainer/CoinPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/CoinPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+
+[node name="CoinHBox" type="HBoxContainer" parent="VBoxContainer/CoinPanel/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
+metadata/_edit_lock_ = true
 
-[node name="CoinSprite" type="TextureRect" parent="VBoxContainer/CoinPanel/CoinHBox"]
+[node name="CoinSprite" type="TextureRect" parent="VBoxContainer/CoinPanel/MarginContainer/CoinHBox"]
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 mouse_filter = 2
+texture = ExtResource("2_862u4")
+expand_mode = 1
 
-[node name="CoinLabel" type="Label" parent="VBoxContainer/CoinPanel/CoinHBox"]
+[node name="CoinLabel" type="Label" parent="VBoxContainer/CoinPanel/MarginContainer/CoinHBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.925037, 0.945336, 0.972507, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.470588)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.133333, 0.121569, 0.227451, 1)
 theme_override_constants/outline_size = 16
-theme_override_fonts/font = ExtResource("2_862u4")
 theme_override_font_sizes/font_size = 32
-text = "%s"
+text = "coins"
+label_settings = SubResource("LabelSettings_2s207")
 
 [node name="BlockPanel" type="PanelContainer" parent="VBoxContainer"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_aklx7")
+theme_override_styles/panel = SubResource("StyleBoxFlat_wuvj5")
 
-[node name="BlockHBox" type="HBoxContainer" parent="VBoxContainer/BlockPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/BlockPanel"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+
+[node name="BlockHBox" type="HBoxContainer" parent="VBoxContainer/BlockPanel/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
+metadata/_edit_lock_ = true
 
-[node name="BlockSprite" type="TextureRect" parent="VBoxContainer/BlockPanel/BlockHBox"]
+[node name="BlockSprite" type="TextureRect" parent="VBoxContainer/BlockPanel/MarginContainer/BlockHBox"]
+custom_minimum_size = Vector2(32, 42)
 layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 4
 mouse_filter = 2
+texture = ExtResource("3_bqepj")
+expand_mode = 1
 
-[node name="BlockLabel" type="Label" parent="VBoxContainer/BlockPanel/BlockHBox"]
+[node name="BlockLabel" type="Label" parent="VBoxContainer/BlockPanel/MarginContainer/BlockHBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_colors/font_color = Color(0, 0, 0, 1)
+theme_override_colors/font_color = Color(0.925037, 0.945336, 0.972507, 1)
 theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.470588)
-theme_override_colors/font_outline_color = Color(1, 1, 1, 1)
+theme_override_colors/font_outline_color = Color(0.133333, 0.121569, 0.227451, 1)
 theme_override_constants/outline_size = 16
-theme_override_fonts/font = ExtResource("2_862u4")
 theme_override_font_sizes/font_size = 32
-text = "%s"
+text = "blocks"
+label_settings = SubResource("LabelSettings_2s207")
