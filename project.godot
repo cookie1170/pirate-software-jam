@@ -25,6 +25,7 @@ config/icon="res://icon.svg"
 SettingsDataManager="*res://addons/modular-settings-menu/singletons/settings_data_manager.gd"
 PauseMenu="*res://common/ui/pause_menu/pause_menu.tscn"
 Hud="*res://common/ui/hud/hud.tscn"
+SignalBus="*res://common/scripts/signal_bus.gd"
 
 [display]
 

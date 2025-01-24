@@ -1,15 +1,26 @@
 class_name Enemy
 extends CharacterBody3D
 
+#region exports
 @export_range(10, 1000, 1) var health : int = 100
 @export_range(1, 20) var max_speed : float
 @export_range(0.05, 1, 0.05) var accel_sec : float
+@export var coin_amount_min : int = 4
+@export var coin_amount_max : int = 8
+#endregion
+
+#region nodes & misc @onready
 @onready var prev_color : Color = %Mesh.mesh.material.get_shader_parameter("albedo")
 @onready var nav : NavigationAgent3D = %NavAgent
 @onready var player : Player = get_tree().get_first_node_in_group("player")
+@onready var coin_amount = randi_range(coin_amount_min, coin_amount_max)
+#endregion
+
+#region other vars
 var target_pos : Vector3
 var skip_nav_frame : bool
-
+var wave_index : int
+#endregion
 
 func _ready() -> void:
 	_on_path_update()
@@ -49,6 +60,7 @@ func _get_hit(hitbox : Hitbox) -> void:
 
 	health -= hitbox.damage
 	if health <= 0:
+		SignalBus.enemy_killed.emit(self)
 		%AnimationPlayer.stop()
 		%AnimationPlayer.play("die")
 	else:

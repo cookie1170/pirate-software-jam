@@ -4,7 +4,8 @@ extends Enemy
 @export var damage : int = 8
 @export_range(0.1, 10, 0.1) var accuracy : float
 @export_range(0.1, 10, 0.1) var attack_speed : float
-@export_range(1, 20, 0.5) var shoot_distance : float
+@export_range(1, 20, 0.5) var start_aim_dist : float
+@export_range(1, 20, 0.5) var stop_aim_dist : float
 @export_range(0, 1, 0.05) var notice_time : float
 @export var bullet_scene : PackedScene
 
@@ -13,6 +14,7 @@ extends Enemy
 @onready var check_wall_raycast: RayCast3D = $CheckWallRaycast
 
 var has_noticed_player : bool
+var is_aiming : bool
 
 func _ready() -> void:
 	super()
@@ -22,7 +24,11 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	if global_position.distance_to(target_pos) <= shoot_distance:
+	if global_position.distance_to(target_pos) <= start_aim_dist:
+		is_aiming = true
+	if global_position.distance_to(target_pos) >= stop_aim_dist:
+		is_aiming = false
+	if is_aiming:
 		check_wall_raycast.target_position = target_pos - position
 		if not check_wall_raycast.is_colliding():
 			skip_nav_frame = true
@@ -30,7 +36,7 @@ func _physics_process(delta: float) -> void:
 			if notice_timer.is_stopped():
 				notice_timer.start()
 		elif shooting_cooldown.is_stopped():
-			_on_notice_timer_timeout()
+			_on_path_update()
 			shoot()
 	else:
 		has_noticed_player = false
@@ -45,11 +51,11 @@ func shoot() -> void:
 	bullet_instance.global_position = global_position
 	bullet_instance.get_node("Hitbox").damage = damage
 	bullet_instance.get_node("Hitbox").pierce = 1
-	bullet_instance.apply_impulse(global_position.direction_to(target_pos) * 30 + Vector3(
+	bullet_instance.apply_impulse(global_position.direction_to(target_pos + player.velocity * 0.5) * 30 + Vector3(
 		randf_range(0.0 - spread, 0.0 + spread),
 		randf_range(0.0 - spread, 0.0 + spread),
 		randf_range(0.0 - spread, 0.0 + spread)
-	) + Vector3.UP * 5)
+	) + Vector3.UP * 2.5)
 	shooting_cooldown.start()
 
 

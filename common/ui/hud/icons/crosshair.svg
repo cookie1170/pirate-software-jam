@@ -1,0 +1,83 @@
+<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<!-- Created with Inkscape (http://www.inkscape.org/) -->
+
+<svg
+   width="32"
+   height="32"
+   viewBox="0 0 32 32"
+   version="1.1"
+   id="svg1"
+   sodipodi:docname="crosshair.svg"
+   inkscape:version="1.4 (86a8ad7, 2024-10-11)"
+   xmlns:inkscape="http://www.inkscape.org/namespaces/inkscape"
+   xmlns:sodipodi="http://sodipodi.sourceforge.net/DTD/sodipodi-0.dtd"
+   xmlns="http://www.w3.org/2000/svg"
+   xmlns:svg="http://www.w3.org/2000/svg">
+  <sodipodi:namedview
+     id="namedview1"
+     pagecolor="#505050"
+     bordercolor="#eeeeee"
+     borderopacity="1"
+     inkscape:showpageshadow="0"
+     inkscape:pageopacity="0"
+     inkscape:pagecheckerboard="0"
+     inkscape:deskcolor="#505050"
+     inkscape:document-units="px"
+     inkscape:zoom="18.318485"
+     inkscape:cx="13.783891"
+     inkscape:cy="24.428876"
+     inkscape:window-width="1920"
+     inkscape:window-height="1009"
+     inkscape:window-x="-8"
+     inkscape:window-y="-8"
+     inkscape:window-maximized="1"
+     inkscape:current-layer="layer1" />
+  <defs
+     id="defs1" />
+  <g
+     inkscape:label="Layer 1"
+     inkscape:groupmode="layer"
+     id="layer1">
+    <circle
+       style="opacity:0.4;fill:#c2c2d1;stroke:#c2c2d1;stroke-width:0;stroke-linecap:square;stroke-dasharray:none"
+       id="path1"
+       cx="16"
+       cy="16"
+       r="2" />
+    <rect
+       style="opacity:0.4;fill:#c2c2d1;stroke:#c2c2d1;stroke-width:0;stroke-linecap:square;stroke-dasharray:none"
+       id="rect1"
+       width="5"
+       height="10"
+       x="13.5"
+       y="-6.6613381e-16"
+       ry="1.2840059" />
+    <rect
+       style="opacity:0.4;fill:#c2c2d1;stroke:#c2c2d1;stroke-width:0;stroke-linecap:square;stroke-dasharray:none"
+       id="rect2"
+       width="6"
+       height="10"
+       x="13"
+       y="-32"
+       ry="1.2840059"
+       transform="rotate(90)" />
+    <rect
+       style="opacity:0.4;fill:#c2c2d1;stroke:#c2c2d1;stroke-width:0;stroke-linecap:square;stroke-dasharray:none"
+       id="rect3"
+       width="5"
+       height="10"
+       x="-18.5"
+       y="-32"
+       ry="1.2840059"
+       transform="scale(-1)" />
+    <rect
+       style="opacity:0.4;fill:#c2c2d1;stroke:#c2c2d1;stroke-width:0;stroke-linecap:square;stroke-dasharray:none"
+       id="rect4"
+       width="5"
+       height="10"
+       x="-18.5"
+       y="-6.6613381e-16"
+       ry="1.2840059"
+       transform="rotate(-90)" />
+  </g>
+</svg>

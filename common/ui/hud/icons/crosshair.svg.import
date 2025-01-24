@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://oghe1t5f6qxw"
-path="res://.godot/imported/coin.svg-25bcd2636a71fe0b8d367fa894372cce.ctex"
+uid="uid://0or7lubgcjvb"
+path="res://.godot/imported/crosshair.svg-12adb02a19d81e4813f6a163193bfc42.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://common/ui/hud/coin.svg"
-dest_files=["res://.godot/imported/coin.svg-25bcd2636a71fe0b8d367fa894372cce.ctex"]
+source_file="res://common/ui/hud/icons/crosshair.svg"
+dest_files=["res://.godot/imported/crosshair.svg-12adb02a19d81e4813f6a163193bfc42.ctex"]
 
 [params]
 
@@ -32,6 +32,6 @@ process/hdr_as_srgb=false
 process/hdr_clamp_exposure=false
 process/size_limit=0
 detect_3d/compress_to=1
-svg/scale=1.0
+svg/scale=2.0
 editor/scale_with_editor_scale=false
 editor/convert_colors_with_editor_theme=false

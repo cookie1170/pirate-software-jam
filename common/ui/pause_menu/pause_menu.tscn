@@ -49,9 +49,16 @@ size_flags_vertical = 3
 text = "SETTINGS"
 
 [node name="Quit" type="Button" parent="PauseMenu/VBoxContainer"]
+visible = false
 layout_mode = 2
 size_flags_vertical = 3
 text = "QUIT"
+
+[node name="Label" type="Label" parent="PauseMenu/VBoxContainer"]
+custom_minimum_size = Vector2(300, 63)
+layout_mode = 2
+text = "there was supposed to be a quit button here but webgl doesn't like getting closed"
+autowrap_mode = 3
 
 [node name="Settings" parent="." node_paths=PackedStringArray("MenuPanelRef") instance=ExtResource("2_dndfr")]
 visible = false

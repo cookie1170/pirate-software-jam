@@ -1,18 +1,10 @@
-[gd_scene load_steps=6 format=3 uid="uid://ptj3tog7skao"]
+[gd_scene load_steps=7 format=3 uid="uid://ptj3tog7skao"]
 
 [ext_resource type="Script" uid="uid://bbq1uagk4q68d" path="res://common/ui/hud/hud.gd" id="1_wuvj5"]
 [ext_resource type="Texture2D" uid="uid://cqko0vc1e2fd" path="res://common/ui/hud/icons/coin.svg" id="2_862u4"]
+[ext_resource type="StyleBox" uid="uid://cgxg3chmw2c4r" path="res://common/ui/hud/panel.tres" id="3_616me"]
 [ext_resource type="Texture2D" uid="uid://bp0pdti5jwcwd" path="res://common/ui/hud/icons/cube.svg" id="3_bqepj"]
-
-[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wuvj5"]
-bg_color = Color(0.14, 0.12824, 0.1008, 0.196078)
-border_width_left = 4
-border_width_bottom = 4
-border_color = Color(0.05, 0.046375, 0.0355, 0.0980392)
-corner_radius_top_left = 8
-corner_radius_top_right = 8
-corner_radius_bottom_right = 8
-corner_radius_bottom_left = 8
+[ext_resource type="Texture2D" uid="uid://0or7lubgcjvb" path="res://common/ui/hud/icons/crosshair.svg" id="4_0pq1e"]
 
 [sub_resource type="LabelSettings" id="LabelSettings_2s207"]
 font_size = 32
@@ -27,8 +19,24 @@ grow_horizontal = 2
 grow_vertical = 2
 mouse_filter = 2
 script = ExtResource("1_wuvj5")
+metadata/_edit_lock_ = true
 
-[node name="VBoxContainer" type="VBoxContainer" parent="."]
+[node name="Crosshair" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -32.0
+offset_top = -32.0
+offset_right = 32.0
+offset_bottom = 32.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("4_0pq1e")
+
+[node name="StatDisplay" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_top = 0.850309
@@ -41,22 +49,22 @@ offset_bottom = -20.0
 grow_vertical = 0
 mouse_filter = 2
 
-[node name="CoinPanel" type="PanelContainer" parent="VBoxContainer"]
+[node name="CoinPanel" type="PanelContainer" parent="StatDisplay"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_wuvj5")
+theme_override_styles/panel = ExtResource("3_616me")
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/CoinPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="StatDisplay/CoinPanel"]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 
-[node name="CoinHBox" type="HBoxContainer" parent="VBoxContainer/CoinPanel/MarginContainer"]
+[node name="CoinHBox" type="HBoxContainer" parent="StatDisplay/CoinPanel/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
 metadata/_edit_lock_ = true
 
-[node name="CoinSprite" type="TextureRect" parent="VBoxContainer/CoinPanel/MarginContainer/CoinHBox"]
+[node name="CoinSprite" type="TextureRect" parent="StatDisplay/CoinPanel/MarginContainer/CoinHBox"]
 custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -65,7 +73,7 @@ mouse_filter = 2
 texture = ExtResource("2_862u4")
 expand_mode = 1
 
-[node name="CoinLabel" type="Label" parent="VBoxContainer/CoinPanel/MarginContainer/CoinHBox"]
+[node name="CoinLabel" type="Label" parent="StatDisplay/CoinPanel/MarginContainer/CoinHBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
@@ -77,22 +85,22 @@ theme_override_font_sizes/font_size = 32
 text = "coins"
 label_settings = SubResource("LabelSettings_2s207")
 
-[node name="BlockPanel" type="PanelContainer" parent="VBoxContainer"]
+[node name="BlockPanel" type="PanelContainer" parent="StatDisplay"]
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
-theme_override_styles/panel = SubResource("StyleBoxFlat_wuvj5")
+theme_override_styles/panel = ExtResource("3_616me")
 
-[node name="MarginContainer" type="MarginContainer" parent="VBoxContainer/BlockPanel"]
+[node name="MarginContainer" type="MarginContainer" parent="StatDisplay/BlockPanel"]
 layout_mode = 2
 theme_override_constants/margin_left = 4
 
-[node name="BlockHBox" type="HBoxContainer" parent="VBoxContainer/BlockPanel/MarginContainer"]
+[node name="BlockHBox" type="HBoxContainer" parent="StatDisplay/BlockPanel/MarginContainer"]
 layout_mode = 2
 mouse_filter = 2
 metadata/_edit_lock_ = true
 
-[node name="BlockSprite" type="TextureRect" parent="VBoxContainer/BlockPanel/MarginContainer/BlockHBox"]
+[node name="BlockSprite" type="TextureRect" parent="StatDisplay/BlockPanel/MarginContainer/BlockHBox"]
 custom_minimum_size = Vector2(32, 42)
 layout_mode = 2
 size_flags_horizontal = 4
@@ -101,7 +109,7 @@ mouse_filter = 2
 texture = ExtResource("3_bqepj")
 expand_mode = 1
 
-[node name="BlockLabel" type="Label" parent="VBoxContainer/BlockPanel/MarginContainer/BlockHBox"]
+[node name="BlockLabel" type="Label" parent="StatDisplay/BlockPanel/MarginContainer/BlockHBox"]
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
@@ -112,3 +120,36 @@ theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 32
 text = "blocks"
 label_settings = SubResource("LabelSettings_2s207")
+
+[node name="WaveInfo" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_right = 0.5
+offset_left = -35.5
+offset_top = 16.0
+offset_right = 35.5
+offset_bottom = 46.0
+grow_horizontal = 2
+theme_override_styles/panel = ExtResource("3_616me")
+
+[node name="MarginContainer" type="MarginContainer" parent="WaveInfo"]
+layout_mode = 2
+theme_override_constants/margin_left = 4
+theme_override_constants/margin_top = 4
+theme_override_constants/margin_right = 4
+theme_override_constants/margin_bottom = 4
+
+[node name="WaveVBox" type="VBoxContainer" parent="WaveInfo/MarginContainer"]
+layout_mode = 2
+
+[node name="WaveNumber" type="Label" parent="WaveInfo/MarginContainer/WaveVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "Wave %s"
+
+[node name="StallTime" type="Label" parent="WaveInfo/MarginContainer/WaveVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+text = "%s"
+horizontal_alignment = 1

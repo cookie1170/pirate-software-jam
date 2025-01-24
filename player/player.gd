@@ -1,6 +1,7 @@
 class_name Player
 extends CharacterBody3D
 
+
 #region exports
 @export var invert_y : bool = false
 @export_range(0.1, 2.0, 0.05) var sensitivity : float = 0.5
@@ -20,7 +21,10 @@ extends CharacterBody3D
 @onready var camera: Camera3D = %Camera
 @onready var shooting_cooldown: Timer = %ShootingCooldown
 #endregion
+
+#region misc @onready vars
 @onready var attack_cooldown : float = 1.0 / clampf(attack_speed, 0.1, 20.0)
+#endregion
 
 #region variables
 var block_amount : int = 16
@@ -39,7 +43,8 @@ var coins : int = 0
 
 func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-	apply_upgrades()
+	_apply_upgrades()
+	SignalBus.enemy_killed.connect(_on_enemy_killed)
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -60,44 +65,21 @@ func _unhandled_input(event: InputEvent) -> void:
 
 
 func _physics_process(_delta : float) -> void:
-	_handle_movement()
-	_handle_camera_movement()
-	_handle_shooting()
-	apply_upgrades()
+	handle_movement()
+	handle_camera_movement()
+	handle_shooting()
+	_apply_upgrades()
 
 
+#region handler functions
 func _change_voxel_amt(amount : int) -> void:
 	block_amount +=  amount
 	block_particles.update_particles()
-	_handle_block_changes()
+	handle_block_changes()
 
 
-func _get_hit(hitbox : Hitbox) -> void:
-	if is_one_hit:
-		_die()
-	block_amount -= hitbox.damage
-	block_particles.update_particles()
-	hurt_particles.amount = hitbox.damage
-	if "linear_velocity" in hitbox.owner:
-		hurt_particles.direction.x = hitbox.owner.linear_velocity.x
-		hurt_particles.direction.y = 10
-		hurt_particles.direction.z = hitbox.owner.linear_velocity.z
-	elif "velocity" in hitbox.owner:
-		hurt_particles.direction.x = hitbox.owner.velocity.x
-		hurt_particles.direction.y = 10
-		hurt_particles.direction.z = hitbox.owner.velocity.z
-	hurt_particles.restart()
-	Engine.set_time_scale(0.2)
-	await get_tree().create_timer(0.1 / 0.2)
-	Engine.set_time_scale(1.0)
-	_handle_block_changes()
-
-
-func _die() -> void:
-	get_tree().call_deferred("reload_current_scene")
-
-
-func _handle_block_changes() -> void:
+func handle_block_changes() -> void:
+	#i also have no idea
 	is_one_hit = (block_amount <= 0)
 	var remapped_block_amount : float = remap(
 		block_amount, 0, 64, 1, 2
@@ -113,8 +95,8 @@ func _handle_block_changes() -> void:
 	)
 
 
-func _handle_movement() -> void:
-	var move_dir := _get_move_dir()
+func handle_movement() -> void:
+	var move_dir := get_move_dir()
 
 	velocity.x = move_toward(velocity.x, move_dir.x * move_speed,
 	 move_speed / accel_sec * get_physics_process_delta_time())
@@ -124,7 +106,7 @@ func _handle_movement() -> void:
 	move_and_slide()
 
 
-func _handle_camera_movement() -> void:
+func handle_camera_movement() -> void:
 	spring_arm.rotation.x -= camera_input_dir.y * get_physics_process_delta_time()\
 	 * (-1.0 if invert_y else 1.0)
 	spring_arm.rotation.x = clampf(spring_arm.rotation.x, 
@@ -134,7 +116,7 @@ func _handle_camera_movement() -> void:
 	camera_input_dir = Vector2.ZERO
 
 
-func _handle_shooting() -> void:
+func handle_shooting() -> void:
 	if block_amount <= 0:
 		return
 	if (Input.is_action_pressed("shoot") and
@@ -144,7 +126,7 @@ func _handle_shooting() -> void:
 			shoot()
 
 
-func _get_move_dir() -> Vector2:
+func get_move_dir() -> Vector2:
 	## gets the raw input and forward and right vectors based on camera rotation
 	var raw_input := Input.get_vector("left", "right", "forw", "back")
 	var forward := camera.global_basis.z
@@ -156,13 +138,14 @@ func _get_move_dir() -> Vector2:
 	move_dir = move_dir.normalized()
 
 	return Vector2(move_dir.x, move_dir.z)
+#endregion
 
-
+#region actions
 func shoot() -> void:
 	var bullet_instance : RigidBody3D = bullet_scene.instantiate()
 	var spread : float = 1.0 / clampf(accuracy, 0.1, INF)
 	get_parent().add_child(bullet_instance)
-	bullet_instance.global_position = spring_arm.global_position + Vector3.UP * 1.5
+	bullet_instance.global_position = spring_arm.global_position
 	bullet_instance.get_node("Hitbox").damage = damage
 	bullet_instance.get_node("Hitbox").pierce = pierce
 	bullet_instance.apply_impulse(-camera.global_basis.z * 30 + Vector3(
@@ -173,14 +156,16 @@ func shoot() -> void:
 	if randf_range(0.0, 1.0) > bullet_save_chance:
 		_change_voxel_amt(-1)
 	shooting_cooldown.start()
+#endregion
 
-
+#region virtual methods
 func _pickup_collectible(collectible : Collectible) -> void:
 	_change_voxel_amt(collectible.amount)
 	collectible.animation_player.play("collect")
 
 
-func apply_upgrades() -> void:
+# awful but i can't be bothered to fix it
+func _apply_upgrades() -> void:
 	attack_speed = base_attack_speed
 	damage = base_damage
 	move_speed = base_move_speed
@@ -199,3 +184,34 @@ func apply_upgrades() -> void:
 	shooting_cooldown.wait_time = 1.0 / clampf(attack_speed, 0.01, INF)
 	if is_one_hit:
 		move_speed *= 1.5
+
+
+func _on_enemy_killed(enemy : Enemy):
+	coins += enemy.coin_amount
+
+
+func _get_hit(hitbox : Hitbox) -> void:
+	Engine.time_scale = 0.2
+	if is_one_hit:
+		_die()
+	block_amount -= hitbox.damage
+	block_particles.update_particles()
+	hurt_particles.amount = hitbox.damage
+	if "linear_velocity" in hitbox.owner:
+		hurt_particles.direction.x = hitbox.owner.linear_velocity.x
+		hurt_particles.direction.y = 10
+		hurt_particles.direction.z = hitbox.owner.linear_velocity.z
+	elif "velocity" in hitbox.owner:
+		hurt_particles.direction.x = hitbox.owner.velocity.x
+		hurt_particles.direction.y = 10
+		hurt_particles.direction.z = hitbox.owner.velocity.z
+	hurt_particles.restart()
+	await get_tree().create_timer(0.5 * 0.2).timeout
+	Engine.time_scale = 1.0
+	handle_block_changes()
+
+
+func _die() -> void:
+	Engine.time_scale = 1.0
+	get_tree().call_deferred("reload_current_scene")
+#endregion

@@ -119,7 +119,8 @@ script = ExtResource("2_00urf")
 damage = 8
 accuracy = 1.5
 attack_speed = 1.0
-shoot_distance = 10.0
+start_aim_dist = 10.0
+stop_aim_dist = 20.0
 notice_time = 0.2
 bullet_scene = ExtResource("3_dueci")
 

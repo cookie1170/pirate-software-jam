@@ -1,8 +1,8 @@
 class_name Collectible
 extends Area3D
 
-@export var min_amount : int = 4
-@export var max_amount : int = 8
+@export var min_amount : int = 8
+@export var max_amount : int = 16
 @export var animation_player : AnimationPlayer
 
 var amount : int

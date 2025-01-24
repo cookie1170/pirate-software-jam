@@ -162,7 +162,7 @@ script/source = "extends SpringArm3D
 
 
 func _process(delta: float) -> void:
-	position = position.lerp(owner.position, 1 / 0.25 * delta)
+	position = position.lerp(owner.position + Vector3.UP * 1.5, 1 / 0.25 * delta)
 "
 
 [sub_resource type="CameraAttributesPractical" id="CameraAttributesPractical_g6k8r"]
@@ -181,7 +181,6 @@ radius = 0.75
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 0
 script = ExtResource("1_oul6g")
-sensitivity = 1.0
 base_move_speed = 10.0
 accel_sec = 0.15
 base_attack_speed = 2.0
@@ -257,7 +256,7 @@ shape = SubResource("SphereShape3D_oul6g")
 
 [node name="SpringArm" type="SpringArm3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0.5, 1.5, 0)
+transform = Transform3D(1, 0, 0, 0, 0.965926, 0.258819, 0, -0.258819, 0.965926, 0, 1.5, 0)
 top_level = true
 spring_length = 5.0
 script = SubResource("GDScript_g6k8r")

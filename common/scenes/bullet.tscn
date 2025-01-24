@@ -59,12 +59,12 @@ _surfaces = [{
 [sub_resource type="BoxShape3D" id="BoxShape3D_6bq6f"]
 size = Vector3(0.5, 0.5, 0.5)
 
+[sub_resource type="BoxShape3D" id="BoxShape3D_j40gx"]
+size = Vector3(0.75, 0.75, 0.75)
+
 [sub_resource type="Curve" id="Curve_boyjm"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.2, 1), 0.0, 0.0, 0, 0, Vector2(0.6, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 4
-
-[sub_resource type="BoxShape3D" id="BoxShape3D_j40gx"]
-size = Vector3(0.75, 0.75, 0.75)
 
 [sub_resource type="GDScript" id="GDScript_j40gx"]
 resource_name = "bullet_despawn_timer"
@@ -177,6 +177,15 @@ mesh = SubResource("ArrayMesh_42du2")
 [node name="Collider" type="CollisionShape3D" parent="."]
 shape = SubResource("BoxShape3D_6bq6f")
 
+[node name="Hitbox" type="Area3D" parent="."]
+script = ExtResource("4_vb0ah")
+type = "Player"
+metadata/_custom_type_script = ExtResource("4_vb0ah")
+
+[node name="Collider" type="CollisionShape3D" parent="Hitbox"]
+shape = SubResource("BoxShape3D_j40gx")
+debug_color = Color(0.7, 0, 0.0116665, 0.419608)
+
 [node name="DespawnParticles" type="CPUParticles3D" parent="."]
 emitting = false
 one_shot = true
@@ -188,15 +197,6 @@ initial_velocity_min = 6.09
 initial_velocity_max = 6.09
 scale_amount_curve = SubResource("Curve_boyjm")
 color_ramp = ExtResource("3_ma2uj")
-
-[node name="Hitbox" type="Area3D" parent="."]
-script = ExtResource("4_vb0ah")
-type = "Player"
-metadata/_custom_type_script = ExtResource("4_vb0ah")
-
-[node name="Collider" type="CollisionShape3D" parent="Hitbox"]
-shape = SubResource("BoxShape3D_j40gx")
-debug_color = Color(0.7, 0, 0.0116665, 0.419608)
 
 [node name="DespawnTimer" type="Timer" parent="."]
 unique_name_in_owner = true
