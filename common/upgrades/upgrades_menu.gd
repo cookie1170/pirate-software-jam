@@ -1,6 +1,6 @@
 extends Control
 
-@onready var buttons : Array[Node] = $GridContainer.get_children()
+@onready var buttons : Array[Node] = %ButtonGrid.get_children()
 
 @export var available_upgrades : Array[Upgrade]
 
@@ -12,6 +12,4 @@ func refresh_upgrades() -> void:
 	for i in buttons.size():
 		var button : Button = buttons[i]
 		button.upgrade = available_upgrades.pick_random()
-		print(available_upgrades.pick_random())
-		print(button.upgrade)
 	%Done.grab_focus()

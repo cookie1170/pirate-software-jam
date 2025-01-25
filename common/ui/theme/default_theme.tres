@@ -1,0 +1,22 @@
+[gd_resource type="Theme" load_steps=5 format=3 uid="uid://wsmuj14b5quv"]
+
+[ext_resource type="StyleBox" uid="uid://t2bwbameviv3" path="res://common/ui/theme/button_hover_no_outline.tres" id="1_js3p1"]
+[ext_resource type="StyleBox" uid="uid://c1lka7ue1pmdq" path="res://common/ui/theme/button_normal_no_outline.tres" id="2_js3p1"]
+[ext_resource type="StyleBox" uid="uid://bx6rnvs3l20pe" path="res://common/ui/theme/button_pressed.tres" id="3_rqjg7"]
+[ext_resource type="StyleBox" uid="uid://bjtlopal45pt3" path="res://common/ui/theme/default_panel.tres" id="4_rqjg7"]
+
+[resource]
+Button/colors/font_color = Color(1, 1, 0.921569, 1)
+Button/styles/hover = ExtResource("1_js3p1")
+Button/styles/hover_pressed = ExtResource("1_js3p1")
+Button/styles/normal = ExtResource("2_js3p1")
+Button/styles/pressed = ExtResource("3_rqjg7")
+HSlider/styles/grabber_area = ExtResource("2_js3p1")
+HSlider/styles/grabber_area_highlight = ExtResource("3_rqjg7")
+Label/colors/font_color = Color(1, 1, 0.921569, 1)
+PanelContainer/styles/panel = ExtResource("4_rqjg7")
+PopupPanel/styles/panel = ExtResource("4_rqjg7")
+TabContainer/styles/panel = ExtResource("4_rqjg7")
+TabContainer/styles/tab_hovered = ExtResource("1_js3p1")
+TabContainer/styles/tab_selected = ExtResource("3_rqjg7")
+TabContainer/styles/tab_unselected = ExtResource("2_js3p1")

@@ -1,26 +1,19 @@
 extends Control
 
-@export var settings : Control
+var can_pause : bool = false :
+	set(value):
+		if value == false:
+			owner.visible = false
+			get_tree().paused = false
+			Hud.visible = true
+			Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+		can_pause = value
 
 
 func _input(event: InputEvent) -> void:
-	if event.is_action_pressed("pause"):
-		owner.set_visible(!owner.is_visible())
-		get_tree().set_pause(owner.is_visible())
-		Input.set_mouse_mode(Input.MOUSE_MODE_VISIBLE if owner.is_visible()\
-		 else Input.MOUSE_MODE_CAPTURED)
-
-
-func _on_back_down() -> void:
-	owner.set_visible(false)
-	get_tree().set_pause(false)
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
-
-
-func _on_settings_down() -> void:
-	settings.show()
-	hide()
-
-
-func _on_quit_down() -> void:
-	get_tree().quit()
+	if event.is_action_pressed("pause") and can_pause:
+		owner.visible = !owner.visible
+		get_tree().paused = owner.is_visible()
+		Hud.visible = !owner.visible
+		Input.mouse_mode = (Input.MOUSE_MODE_VISIBLE if owner.is_visible()
+		else Input.MOUSE_MODE_CAPTURED)

@@ -1,8 +1,10 @@
-[gd_scene load_steps=22 format=4 uid="uid://vkj15iayrnau"]
+[gd_scene load_steps=27 format=4 uid="uid://vkj15iayrnau"]
 
 [ext_resource type="Script" uid="uid://bsmce2pk6wm0s" path="res://enemies/basic_enemy/basic_enemy.gd" id="1_ubayq"]
 [ext_resource type="Script" uid="uid://cueoxdgpqrre6" path="res://common/scripts/hurtbox.gd" id="2_6ofcp"]
+[ext_resource type="BoxMesh" uid="uid://diyfhnaeex4bm" path="res://common/resources/meshes/block_0.tres" id="2_xuk7h"]
 [ext_resource type="Script" uid="uid://bh4s8tbbuep0u" path="res://common/scripts/hitbox.gd" id="3_5xrap"]
+[ext_resource type="Gradient" uid="uid://l5xjnpns02x8" path="res://common/resources/gradients/gradient_orange_particles.tres" id="3_m6spd"]
 
 [sub_resource type="Shader" id="Shader_6ofcp"]
 resource_local_to_scene = true
@@ -131,6 +133,10 @@ point_count = 2
 offsets = PackedFloat32Array(0, 0.87963)
 colors = PackedColorArray(1, 1, 1, 1, 0, 0, 0, 1)
 
+[sub_resource type="Curve" id="Curve_xuk7h"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.202312, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
 [sub_resource type="CapsuleShape3D" id="CapsuleShape3D_5xrap"]
 radius = 0.75
 height = 2.5
@@ -154,7 +160,7 @@ tracks/0/keys = {
 tracks/1/type = "value"
 tracks/1/imported = false
 tracks/1/enabled = true
-tracks/1/path = NodePath("OutlineMesh:visible")
+tracks/1/path = NodePath("Mesh/OutlineMesh:visible")
 tracks/1/interp = 1
 tracks/1/loop_wrap = true
 tracks/1/keys = {
@@ -186,6 +192,37 @@ tracks/3/keys = {
 "transitions": PackedFloat32Array(1),
 "update": 0,
 "values": [0.0]
+}
+tracks/4/type = "scale_3d"
+tracks/4/imported = false
+tracks/4/enabled = true
+tracks/4/path = NodePath("Mesh")
+tracks/4/interp = 1
+tracks/4/loop_wrap = true
+tracks/4/keys = PackedFloat32Array(0, 1, 1, 1, 1)
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("SpawnParticles:emitting")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath(".:can_attack")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
 }
 
 [sub_resource type="Animation" id="Animation_ubayq"]
@@ -221,7 +258,7 @@ tracks/1/keys = {
 tracks/2/type = "value"
 tracks/2/imported = false
 tracks/2/enabled = true
-tracks/2/path = NodePath("OutlineMesh:visible")
+tracks/2/path = NodePath("Mesh/OutlineMesh:visible")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
@@ -299,12 +336,99 @@ tracks/2/keys = {
 "method": &"restart"
 }]
 }
+tracks/3/type = "scale_3d"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("Mesh")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = PackedFloat32Array(0, 1, 1, 1, 1)
+
+[sub_resource type="Animation" id="Animation_u66kj"]
+resource_name = "shader_compile"
+length = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("HurtParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpawnParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath(".")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0.5),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
+
+[sub_resource type="Animation" id="Animation_m6spd"]
+resource_name = "spawn"
+tracks/0/type = "scale_3d"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("Mesh")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = PackedFloat32Array(0, 1, 0, 0, 0, 1, 1, 1, 1, 1)
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("SpawnParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "method"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("SpawnParticles")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(1),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [],
+"method": &"queue_free"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_6ofcp"]
 _data = {
 &"RESET": SubResource("Animation_6ofcp"),
 &"die": SubResource("Animation_ubayq"),
-&"hurt": SubResource("Animation_5xrap")
+&"hurt": SubResource("Animation_5xrap"),
+&"shader_compile": SubResource("Animation_u66kj"),
+&"spawn": SubResource("Animation_m6spd")
 }
 
 [node name="Enemy" type="CharacterBody3D"]
@@ -315,18 +439,15 @@ accel_sec = 0.1
 
 [node name="NavAgent" type="NavigationAgent3D" parent="."]
 unique_name_in_owner = true
-debug_enabled = true
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("CapsuleMesh_qjw0p")
 
-[node name="OutlineMesh" type="MeshInstance3D" parent="."]
+[node name="OutlineMesh" type="MeshInstance3D" parent="Mesh"]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 mesh = SubResource("ArrayMesh_otc15")
-skeleton = NodePath("../Mesh")
 
 [node name="Collider" type="CollisionShape3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
@@ -357,7 +478,29 @@ color_ramp = SubResource("Gradient_5xrap")
 hue_variation_min = -1.0
 hue_variation_max = 1.0
 
+[node name="SpawnParticles" type="CPUParticles3D" parent="."]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
+emitting = false
+amount = 32
+lifetime = 0.75
+one_shot = true
+lifetime_randomness = 0.05
+mesh = ExtResource("2_xuk7h")
+emission_shape = 2
+emission_sphere_radius = 1.5
+particle_flag_align_y = true
+gravity = Vector3(0, 0.1, 0)
+radial_accel_min = -13.95
+radial_accel_max = -9.45
+tangential_accel_min = 0.95
+tangential_accel_max = 1.6
+scale_amount_curve = SubResource("Curve_xuk7h")
+color_ramp = ExtResource("3_m6spd")
+hue_variation_min = -0.05
+hue_variation_max = 0.05
+
 [node name="Hurtbox" type="Area3D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("2_6ofcp")
 type = "Enemy"
 metadata/_custom_type_script = ExtResource("2_6ofcp")
@@ -367,6 +510,7 @@ transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 1, 0)
 shape = SubResource("CapsuleShape3D_5xrap")
 
 [node name="Hitbox" type="Area3D" parent="."]
+unique_name_in_owner = true
 script = ExtResource("3_5xrap")
 damage = 8
 has_pierce = false

@@ -23,9 +23,9 @@
      inkscape:pagecheckerboard="0"
      inkscape:deskcolor="#505050"
      inkscape:document-units="px"
-     inkscape:zoom="18.318485"
-     inkscape:cx="17.932706"
-     inkscape:cy="18.478602"
+     inkscape:zoom="9.1592425"
+     inkscape:cx="3.5483284"
+     inkscape:cy="25.056657"
      inkscape:window-width="1920"
      inkscape:window-height="1009"
      inkscape:window-x="-8"
@@ -40,22 +40,22 @@
      id="layer1" />
   <g
      inkscape:label="cube:x45.00:x45.00:y45.00:x45.00:x0.00:y0.00"
-     transform="matrix(20.398251,0,0,17.178652,16.007643,16.007772)"
+     transform="matrix(20.39776,0,0,17.187363,16.007643,16.000047)"
      id="g28"
-     style="opacity:0.4;fill:none;stroke:#c2c2d1;stroke-width:0.155076;stroke-dasharray:none">
+     style="opacity:1;fill:none;stroke:#ffffeb;stroke-width:0.155076;stroke-dasharray:none">
     <path
        inkscape:label="Face:2"
-       style="fill:none;fill-opacity:1;stroke:#c2c2d1;stroke-width:0.155076;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#ffffeb;stroke-width:0.155076;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        d="M 0.707107,0.353553 V -0.353553 L 0,0.146447 v 0.707106 z"
        id="path26" />
     <path
        inkscape:label="Face:3"
-       style="fill:none;fill-opacity:1;stroke:#c2c2d1;stroke-width:0.155076;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#ffffeb;stroke-width:0.155076;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        d="M 0,0.853553 V 0.146447 l -0.707107,-0.5 v 0.707106 z"
        id="path27" />
     <path
        inkscape:label="Face:4"
-       style="fill:none;fill-opacity:1;stroke:#c2c2d1;stroke-width:0.155076;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
+       style="fill:none;fill-opacity:1;stroke:#ffffeb;stroke-width:0.155076;stroke-linejoin:round;stroke-dasharray:none;stroke-opacity:1"
        d="m -0.707107,-0.353553 0.707107,0.5 0.707107,-0.5 L 0,-0.853553 Z"
        id="path28" />
   </g>

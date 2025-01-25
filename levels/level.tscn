@@ -1,8 +1,7 @@
-[gd_scene load_steps=29 format=4 uid="uid://b311iowaksq5g"]
+[gd_scene load_steps=23 format=3 uid="uid://b311iowaksq5g"]
 
 [ext_resource type="PackedScene" uid="uid://bi40akbu0hcyl" path="res://player/player.tscn" id="1_xhwim"]
 [ext_resource type="Texture2D" uid="uid://cl7rq0wh0fviv" path="res://textures/prototype_materials/Orange/texture_01.png" id="2_vnv7o"]
-[ext_resource type="Texture2D" uid="uid://dlwvdwdq08fpw" path="res://textures/prototype_materials/Purple/texture_01.png" id="3_l2bkr"]
 [ext_resource type="Script" uid="uid://c6f4vs5pcsh1v" path="res://levels/wave_handler.gd" id="5_vnv7o"]
 [ext_resource type="Script" uid="uid://xd531u081wyx" path="res://levels/collectible_spawner.gd" id="6_gjl0y"]
 [ext_resource type="PackedScene" uid="uid://vkj15iayrnau" path="res://enemies/basic_enemy/basic_enemy.tscn" id="6_rtcij"]
@@ -28,8 +27,8 @@ fog_density = 1.0
 fog_depth_curve = 0.148651
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_gjl0y"]
-vertices = PackedVector3Array(-31.5, 0.442265, -5.75, -7.25, 0.442265, -5.5, -7.25, 0.442265, -7, -5.5, 0.442265, -7.25, -5.75, 0.442265, -31.5, -31.5, 0.442265, -31.5, -2.5, 0.442265, -7.25, -2.25, 0.442265, -31.5, -1, 0.442265, -7.25, -0.75, 0.442265, -5.5, 31.5, 0.442265, -5.75, 31.5, 0.442265, -31.5, -6.25, 10.4423, -6.25, -6.25, 10.4423, -1.75, -1.75, 10.4423, -1.75, -1.75, 10.4423, -6.25, -31.5, 0.442265, -2.25, -7.25, 0.442265, -2.5, -5.75, 0.442265, -5.75, -5.75, 0.442265, -2, -2, 0.442265, -2, -2, 0.442265, -5.75, -0.75, 0.442265, -2.5, 31.5, 0.442265, -2.25, -7.25, 0.442265, -1, -5.5, 0.442265, -0.75, -31.5, 0.442265, 31.5, -5.75, 0.442265, 31.5, -1, 0.442265, -0.75, -2.5, 0.442265, -0.75, -2.25, 0.442265, 31.5, 31.5, 0.442265, 31.5)
-polygons = [PackedInt32Array(2, 1, 0), PackedInt32Array(3, 2, 4), PackedInt32Array(4, 2, 5), PackedInt32Array(5, 2, 0), PackedInt32Array(3, 4, 6), PackedInt32Array(6, 4, 7), PackedInt32Array(8, 6, 7), PackedInt32Array(8, 7, 9), PackedInt32Array(9, 7, 10), PackedInt32Array(10, 7, 11), PackedInt32Array(15, 14, 12), PackedInt32Array(12, 14, 13), PackedInt32Array(17, 16, 1), PackedInt32Array(1, 16, 0), PackedInt32Array(21, 20, 18), PackedInt32Array(18, 20, 19), PackedInt32Array(9, 10, 22), PackedInt32Array(22, 10, 23), PackedInt32Array(16, 17, 24), PackedInt32Array(24, 25, 16), PackedInt32Array(16, 25, 27), PackedInt32Array(16, 27, 26), PackedInt32Array(30, 29, 28), PackedInt32Array(22, 23, 28), PackedInt32Array(28, 23, 31), PackedInt32Array(28, 31, 30), PackedInt32Array(25, 29, 27), PackedInt32Array(27, 29, 30)]
+vertices = PackedVector3Array(-31.5, 0.5, -31.5, -31.5, 0.5, 31.5, 31.5, 0.5, 31.5, 31.5, 0.5, -31.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
 agent_height = 2.0
 
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d5x7l"]
@@ -42,70 +41,46 @@ size = Vector2(64, 64)
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gjl0y"]
 points = PackedVector3Array(-32, 0, -32, -32, 0, 32, 32, 0, -32, 32, 0, 32)
 
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_t1gbn"]
-albedo_texture = ExtResource("3_l2bkr")
-uv1_scale = Vector3(5, 5, 10)
-
-[sub_resource type="BoxMesh" id="BoxMesh_leal2"]
-size = Vector3(5, 10, 5)
-
-[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_gjl0y"]
-data = PackedVector3Array(-2.5, 5, 2.5, 2.5, 5, 2.5, -2.5, -5, 2.5, 2.5, 5, 2.5, 2.5, -5, 2.5, -2.5, -5, 2.5, 2.5, 5, -2.5, -2.5, 5, -2.5, 2.5, -5, -2.5, -2.5, 5, -2.5, -2.5, -5, -2.5, 2.5, -5, -2.5, 2.5, 5, 2.5, 2.5, 5, -2.5, 2.5, -5, 2.5, 2.5, 5, -2.5, 2.5, -5, -2.5, 2.5, -5, 2.5, -2.5, 5, -2.5, -2.5, 5, 2.5, -2.5, -5, -2.5, -2.5, 5, 2.5, -2.5, -5, 2.5, -2.5, -5, -2.5, 2.5, 5, 2.5, -2.5, 5, 2.5, 2.5, 5, -2.5, -2.5, 5, 2.5, -2.5, 5, -2.5, 2.5, 5, -2.5, -2.5, -5, 2.5, 2.5, -5, 2.5, -2.5, -5, -2.5, 2.5, -5, 2.5, 2.5, -5, -2.5, -2.5, -5, -2.5)
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_gjl0y"]
-albedo_color = Color(0, 0, 0, 1)
-distance_fade_mode = 2
-distance_fade_min_distance = 1.0
-distance_fade_max_distance = 1.0
-
-[sub_resource type="ArrayMesh" id="ArrayMesh_gjl0y"]
-_surfaces = [{
-"aabb": AABB(-2.55773, -5.05773, -2.55773, 5.11547, 10.1155, 5.11547),
-"attribute_data": PackedByteArray("AAAAAAAAAACrqio/AAAAAKuqqj4AAAAAAACAPwAAAAAAAAAAAAAAP6uqKj8AAAA/q6qqPgAAAD8AAIA/AAAAP6uqqj4AAAAAAAAAAAAAAD+rqio/AAAAAKuqqj4AAAA/q6qqPgAAAD8AAAAAAACAP6uqKj8AAAA/q6qqPgAAgD+rqqo+AAAAP6uqKj8AAAA/q6oqPwAAAD8AAIA/AAAAP6uqqj4AAIA/q6oqPwAAgD+rqio/AACAPwAAgD8AAIA/"),
-"format": 34359742487,
-"index_count": 36,
-"index_data": PackedByteArray("AAAEAAIAAgAEAAYAAQAFAAMAAwAFAAcACAAMAAoACgAMAA4ACQANAAsACwANAA8AEAAUABIAEgAUABYAEQAVABMAEwAVABcA"),
-"material": SubResource("StandardMaterial3D_gjl0y"),
-"primitive": 3,
-"uv_scale": Vector4(0, 0, 0, 0),
-"vertex_count": 24,
-"vertex_data": PackedByteArray("7rEjwPfYoUDusSNA7rEjQPfYoUDusSPA7rEjQPfYoUDusSNA7rEjwPfYoUDusSPA7rEjwPfYocDusSNA7rEjQPfYocDusSPA7rEjQPfYocDusSNA7rEjwPfYocDusSPA7rEjQPfYoUDusSNA7rEjwPfYoUDusSPA7rEjQPfYoUDusSPA7rEjwPfYoUDusSNA7rEjQPfYocDusSNA7rEjwPfYocDusSPA7rEjQPfYocDusSPA7rEjwPfYocDusSNA7rEjQPfYoUDusSNA7rEjwPfYocDusSNA7rEjwPfYoUDusSNA7rEjQPfYocDusSNA7rEjQPfYoUDusSPA7rEjwPfYocDusSPA7rEjwPfYoUDusSPA7rEjQPfYocDusSPA/3//f////7//////AAD/v/9//3////+//////wAA/7//f/9/////v/////8AAP+//3//f////7//////AAD/v///AID/////AAAAgP9//7///wCA/////wAAAID/f/+///8AgP////8AAACA/3//v///AID/////AAAAgP9//78AgP//AAD/vwCAAAD///+/AID//wAA/78AgAAA////vwCA//8AAP+/AIAAAP///78AgP//AAD/vwCAAAD///+/")
-}]
-
 [sub_resource type="Resource" id="Resource_pb8y7"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("6_rtcij")])
 time_between_enemy_sec = 2.0
+stall_time_sec = 15.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_ukwr8"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("7_ukwr8")])
 time_between_enemy_sec = 2.0
+stall_time_sec = 15.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_hy0rb"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("6_rtcij"), ExtResource("6_rtcij")])
 time_between_enemy_sec = 2.0
+stall_time_sec = 15.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_mxp4k"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("6_rtcij"), ExtResource("7_ukwr8")])
 time_between_enemy_sec = 2.0
+stall_time_sec = 15.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_d7v53"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("7_ukwr8"), ExtResource("7_ukwr8")])
 time_between_enemy_sec = 2.0
+stall_time_sec = 15.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_0qmeg"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("6_rtcij"), ExtResource("7_ukwr8"), ExtResource("6_rtcij"), ExtResource("7_ukwr8"), ExtResource("6_rtcij")])
 time_between_enemy_sec = 2.0
+stall_time_sec = 15.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [node name="Level" type="Node3D"]
@@ -129,21 +104,6 @@ metadata/_edit_group_ = true
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavMesh/FloorPlane/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_gjl0y")
-
-[node name="GodotPlushPedestal" type="MeshInstance3D" parent="NavMesh"]
-transform = Transform3D(-4.37114e-08, 0, 1, 0, 1, 0, -1, 0, -4.37114e-08, -4, 5, -4)
-material_override = SubResource("StandardMaterial3D_t1gbn")
-mesh = SubResource("BoxMesh_leal2")
-skeleton = NodePath("../..")
-metadata/_edit_group_ = true
-
-[node name="StaticBody3D" type="StaticBody3D" parent="NavMesh/GodotPlushPedestal"]
-
-[node name="CollisionShape3D" type="CollisionShape3D" parent="NavMesh/GodotPlushPedestal/StaticBody3D"]
-shape = SubResource("ConcavePolygonShape3D_gjl0y")
-
-[node name="MeshInstance3D" type="MeshInstance3D" parent="NavMesh/GodotPlushPedestal"]
-mesh = SubResource("ArrayMesh_gjl0y")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(-0.551434, -0.724711, 0.413176, -0.219846, 0.604023, 0.766044, -0.804728, 0.331588, -0.492404, 0, 0, 0)
@@ -174,8 +134,13 @@ script = ExtResource("6_gjl0y")
 collectible_scene = ExtResource("7_d5x7l")
 
 [node name="CollectibleSpawnTimer" type="Timer" parent="CollectibleSpawner"]
+unique_name_in_owner = true
 wait_time = 10.0
-autostart = true
+
+[node name="FirstCollectible" parent="." instance=ExtResource("7_d5x7l")]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -4)
+min_amount = 16
+max_amount = 16
 
 [connection signal="timeout" from="WaveHandler/WaveTimer" to="WaveHandler" method="_spawn_next_enemy"]
 [connection signal="timeout" from="WaveHandler/WaveStallTimer" to="WaveHandler" method="change_wave"]

@@ -1,4 +1,4 @@
-[gd_scene load_steps=37 format=4 uid="uid://bi40akbu0hcyl"]
+[gd_scene load_steps=41 format=4 uid="uid://bi40akbu0hcyl"]
 
 [ext_resource type="Script" uid="uid://b1qqjj3erxy3i" path="res://player/player.gd" id="1_oul6g"]
 [ext_resource type="PackedScene" uid="uid://ciy177ajnquy0" path="res://common/scenes/bullet.tscn" id="2_boad6"]
@@ -8,6 +8,7 @@
 [ext_resource type="Texture2D" uid="uid://dwt5euhqkftkv" path="res://common/resources/gradients/gradient1d_orange.tres" id="4_yllr7"]
 [ext_resource type="Gradient" uid="uid://doolqgh7pxcdh" path="res://common/resources/gradients/gradient_blue.tres" id="4_yw30f"]
 [ext_resource type="BoxMesh" uid="uid://c6x5imk26w5pm" path="res://common/resources/meshes/block_1.tres" id="5_2ieo8"]
+[ext_resource type="Gradient" uid="uid://l5xjnpns02x8" path="res://common/resources/gradients/gradient_orange_particles.tres" id="5_kb6p2"]
 [ext_resource type="Script" uid="uid://cueoxdgpqrre6" path="res://common/scripts/hurtbox.gd" id="5_qjkh3"]
 [ext_resource type="BoxMesh" uid="uid://c6vg725nvh2l3" path="res://common/resources/meshes/block_2.tres" id="6_ebec5"]
 [ext_resource type="Script" uid="uid://cw2knxh8u7elo" path="res://addons/modular-settings-menu/scripts/settings-handler-scripts/camera_settings_handler.gd" id="6_g6k8r"]
@@ -74,12 +75,6 @@ size = Vector3(0.2, 0.2, 0.2)
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.25, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
 point_count = 3
 
-[sub_resource type="Gradient" id="Gradient_g6k8r"]
-offsets = PackedFloat32Array(0, 0.0625, 0.1875, 0.3125, 0.4375, 0.5625, 0.6875, 0.8125, 1)
-colors = PackedColorArray(1, 0.92549, 0.839216, 1, 1, 0.831373, 0.639216, 1, 1, 0.666667, 0.368627, 1, 0.815686, 0.505882, 0.34902, 1, 0.552941, 0.411765, 0.478431, 1, 0.374118, 0.327059, 0.421961, 1, 0.329412, 0.305882, 0.407843, 1, 0.12549, 0.235294, 0.337255, 1, 0.0509804, 0.168627, 0.270588, 1)
-metadata/_snap_enabled = true
-metadata/_snap_count = 16
-
 [sub_resource type="Curve" id="Curve_oul6g"]
 _limits = [-360.0, 360.0, 0.0, 1.0]
 _data = [Vector2(0, -360), 0.0, 0.0, 0, 0, Vector2(0.5, 360), 0.0, 0.0, 0, 0, Vector2(1, -360), 0.0, 0.0, 0, 0]
@@ -138,6 +133,10 @@ func update_particles() -> void:
 		set_draw_pass_mesh(0, BLOCKS[int(clampf(scale.x, 1, 5))])
 "
 
+[sub_resource type="Curve" id="Curve_kb6p2"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.104046, 1), 0.0, 0.0, 0, 0, Vector2(0.696532, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
 [sub_resource type="Curve" id="Curve_rkbax"]
 _data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.202479, 1), 0.0, 0.0, 0, 0, Vector2(1, 0.011236), 0.0, 0.0, 0, 0]
 point_count = 3
@@ -166,14 +165,127 @@ func _physics_process(_delta: float) -> void:
 [sub_resource type="SphereShape3D" id="SphereShape3D_boad6"]
 radius = 0.75
 
+[sub_resource type="Animation" id="Animation_wodsf"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerMesh/TrailParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BlockParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("JumpParticles:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HurtParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [false]
+}
+
+[sub_resource type="Animation" id="Animation_kb6p2"]
+resource_name = "shader_compile"
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("PlayerMesh/TrailParticles:emitting")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("BlockParticles:emitting")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/2/type = "value"
+tracks/2/imported = false
+tracks/2/enabled = true
+tracks/2/path = NodePath("JumpParticles:emitting")
+tracks/2/interp = 1
+tracks/2/loop_wrap = true
+tracks/2/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+tracks/3/type = "value"
+tracks/3/imported = false
+tracks/3/enabled = true
+tracks/3/path = NodePath("HurtParticles:emitting")
+tracks/3/interp = 1
+tracks/3/loop_wrap = true
+tracks/3/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_wodsf"]
+_data = {
+&"RESET": SubResource("Animation_wodsf"),
+&"shader_compile": SubResource("Animation_kb6p2")
+}
+
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 0
 script = ExtResource("1_oul6g")
+sensitivity = 1.0
 base_move_speed = 10.0
 accel_sec = 0.15
 base_attack_speed = 2.0
 base_damage = 20
 base_accuracy = 1.0
+jump_velocity = 6.5
+blockless_jump_velocity = 10.0
+gravity = 18.0
 bullet_scene = ExtResource("2_boad6")
 metadata/_edit_group_ = true
 
@@ -195,7 +307,7 @@ emission_sphere_radius = 0.25
 particle_flag_rotate_y = true
 gravity = Vector3(0, -0.2, 0)
 scale_amount_curve = SubResource("Curve_g6k8r")
-color_ramp = SubResource("Gradient_g6k8r")
+color_ramp = ExtResource("5_kb6p2")
 hue_variation_min = -0.05
 hue_variation_max = 0.05
 
@@ -217,6 +329,26 @@ BLOCKS = Dictionary[int, Mesh]({
 4: ExtResource("7_yllr7"),
 5: ExtResource("8_kb6p2")
 })
+
+[node name="JumpParticles" type="CPUParticles3D" parent="."]
+unique_name_in_owner = true
+emitting = false
+amount = 12
+one_shot = true
+explosiveness = 0.91
+randomness = 0.4
+lifetime_randomness = 0.7
+mesh = ExtResource("3_yw30f")
+particle_flag_align_y = true
+direction = Vector3(0, 0.5, 0)
+initial_velocity_min = 3.3
+initial_velocity_max = 6.65
+damping_min = 1.44
+damping_max = 2.58
+scale_amount_curve = SubResource("Curve_kb6p2")
+color_ramp = ExtResource("5_kb6p2")
+hue_variation_min = -0.05
+hue_variation_max = 0.05
 
 [node name="HurtParticles" type="CPUParticles3D" parent="."]
 unique_name_in_owner = true
@@ -281,5 +413,11 @@ CameraRef = NodePath("../SpringArm/Camera")
 [node name="ShootingCooldown" type="Timer" parent="."]
 unique_name_in_owner = true
 one_shot = true
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+unique_name_in_owner = true
+libraries = {
+&"": SubResource("AnimationLibrary_wodsf")
+}
 
 [connection signal="area_entered" from="Collectiblebox" to="." method="_pickup_collectible"]

@@ -16,17 +16,16 @@ func init_element() -> void:
 func load_settings() -> void:
 	super.load_settings()
 	if currentValue == 0:
-		ValueBoxRef.set_text(\"Unlimited\")
+		ValueBoxRef.set_value(0)
 		SliderRef.set_value(MAX_VALUE + 1)
 
 
 func value_changed(value: float) -> void:
 	if value > MAX_VALUE:
 		value = 0
-		ValueBoxRef.set_text(\"Unlimited\")
+		ValueBoxRef.set_value(240)
 	
 	super.value_changed(value)
-	
 
 
 # Element specific script for applying its value to the game

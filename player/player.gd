@@ -11,6 +11,9 @@ extends CharacterBody3D
 @export_range(1, 100) var base_damage : int
 @export_range(1, 5) var base_pierce : int = 1
 @export_range(0.1, 10, 0.1) var base_accuracy : float
+@export_range(1, 10, 0.5) var jump_velocity : float
+@export_range(1, 10, 0.5) var blockless_jump_velocity : float
+@export_range(1, 20, 0.5) var gravity : float
 @export var bullet_scene : PackedScene
 #endregion
 
@@ -27,7 +30,7 @@ extends CharacterBody3D
 #endregion
 
 #region variables
-var block_amount : int = 16
+var block_amount : int = 0
 var camera_input_dir : Vector2
 var attack_speed : float
 var move_speed : float
@@ -36,7 +39,7 @@ var damage : int
 var pierce : int
 var accuracy : float
 var bullet_amount : int = 1
-var is_one_hit : bool = false
+var is_one_hit : bool = true
 var coins : int = 0
 var upgrades : Array[Upgrade]
 #endregion
@@ -45,6 +48,7 @@ func _ready() -> void:
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	_apply_upgrades()
 	SignalBus.enemy_killed.connect(_on_enemy_killed)
+	%AnimationPlayer.play("shader_compile")
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -102,6 +106,13 @@ func handle_movement() -> void:
 	 move_speed / accel_sec * get_physics_process_delta_time())
 	velocity.z = move_toward(velocity.z, move_dir.y * move_speed,
 	 move_speed / accel_sec * get_physics_process_delta_time())
+	if not is_on_floor():
+		velocity.y -= gravity * get_physics_process_delta_time()
+
+	if is_on_floor() and Input.is_action_just_pressed("jump") and block_amount < 64:
+		velocity.y += (blockless_jump_velocity if is_one_hit
+		else jump_velocity)
+		%JumpParticles.emitting = true
 
 	move_and_slide()
 
@@ -161,7 +172,9 @@ func shoot() -> void:
 #region virtual methods
 func _pickup_collectible(collectible : Collectible) -> void:
 	_change_voxel_amt(collectible.amount)
-	collectible.animation_player.play("collect")
+	collectible.anim_player.play("collect")
+	if collectible.name == "FirstCollectible":
+		%WaveHandler.waves_started = true
 
 
 # awful but i can't be bothered to fix it
@@ -214,5 +227,6 @@ func _get_hit(hitbox : Hitbox) -> void:
 
 func _die() -> void:
 	Engine.time_scale = 1.0
+	print_debug("why are you dying asdfkjqlkjwqnef")
 	get_tree().call_deferred("reload_current_scene")
 #endregion

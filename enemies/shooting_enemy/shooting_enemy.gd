@@ -11,7 +11,7 @@ extends Enemy
 
 @onready var shooting_cooldown: Timer = %ShootingCooldown
 @onready var notice_timer : Timer = %NoticeTimer
-@onready var check_wall_raycast: RayCast3D = $CheckWallRaycast
+@onready var check_wall_raycast: RayCast3D = %CheckWallRaycast
 
 var has_noticed_player : bool
 var is_aiming : bool
@@ -44,6 +44,8 @@ func _physics_process(delta: float) -> void:
 
 
 func shoot() -> void:
+	if not can_attack:
+		return
 	var bullet_instance : RigidBody3D = bullet_scene.instantiate()
 	var spread : float = 1.0 / clampf(accuracy, 0.1, INF)
 	bullet_instance.get_node("Hitbox").type = "Enemy"
@@ -51,7 +53,9 @@ func shoot() -> void:
 	bullet_instance.global_position = global_position
 	bullet_instance.get_node("Hitbox").damage = damage
 	bullet_instance.get_node("Hitbox").pierce = 1
-	bullet_instance.apply_impulse(global_position.direction_to(target_pos + player.velocity * 0.5) * 30 + Vector3(
+	bullet_instance.apply_impulse(global_position.direction_to(
+			target_pos + player.velocity * 0.5
+		) * 30 + Vector3(
 		randf_range(0.0 - spread, 0.0 + spread),
 		randf_range(0.0 - spread, 0.0 + spread),
 		randf_range(0.0 - spread, 0.0 + spread)

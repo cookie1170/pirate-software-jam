@@ -1,0 +1,20 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://dhbjyyof51s5d"]
+
+[ext_resource type="Texture2D" uid="uid://dlgnhirubx8d8" path="res://icon.svg" id="1_2aqkv"]
+[ext_resource type="Script" uid="uid://cox2ddvnlx17p" path="res://common/upgrades/upgrade_resources/base_upgrade.gd" id="2_ppw7q"]
+
+[resource]
+script = ExtResource("2_ppw7q")
+attack_speed_change = 50.0
+bullet_amt_change = 50
+bullet_save_chance = 1.0
+damage_increase = 100
+move_speed_increase = 0.0
+pierce_increase = 10
+accuracy_change = -10.0
+price_type = "blocks"
+price = 10
+name = "very real upgrade"
+icon = ExtResource("1_2aqkv")
+tooltip = "the very realest legitest upgrade totally for real"
+metadata/_custom_type_script = ExtResource("2_ppw7q")

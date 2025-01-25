@@ -1,7 +1,40 @@
-[gd_scene load_steps=3 format=3 uid="uid://yph83yaseuro"]
+[gd_scene load_steps=6 format=3 uid="uid://yph83yaseuro"]
 
 [ext_resource type="Script" uid="uid://dwo7iwr3inwrf" path="res://common/ui/pause_menu/pause_menu.gd" id="1_go8nb"]
 [ext_resource type="PackedScene" uid="uid://px6a2dg8cawb" path="res://addons/modular-settings-menu/scenes/settings.tscn" id="2_dndfr"]
+
+[sub_resource type="GDScript" id="GDScript_4ekc8"]
+resource_name = "back"
+script/source = "extends Button
+
+
+func _pressed() -> void:
+	owner.visible = false
+	get_tree().paused = false
+	Hud.visible = true
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+"
+
+[sub_resource type="GDScript" id="GDScript_hya0r"]
+resource_name = "settingsbutton"
+script/source = "extends Button
+
+@export var settings : Control
+@export var pause_menu : Control
+
+func _pressed() -> void:
+	settings.show()
+	pause_menu.hide()
+"
+
+[sub_resource type="GDScript" id="GDScript_2wdbx"]
+resource_name = "quit"
+script/source = "extends Button
+
+
+func _pressed() -> void:
+	get_tree().quit()
+"
 
 [node name="Pause" type="Control"]
 visible = false
@@ -12,7 +45,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 
-[node name="PauseMenu" type="Control" parent="." node_paths=PackedStringArray("settings")]
+[node name="PauseMenu" type="Control" parent="."]
 process_mode = 3
 layout_mode = 1
 anchors_preset = 15
@@ -21,7 +54,6 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_go8nb")
-settings = NodePath("../Settings")
 
 [node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu"]
 layout_mode = 1
@@ -42,17 +74,22 @@ theme_override_constants/separation = 10
 layout_mode = 2
 size_flags_vertical = 3
 text = "BACK"
+script = SubResource("GDScript_4ekc8")
 
-[node name="Settings" type="Button" parent="PauseMenu/VBoxContainer"]
+[node name="Settings" type="Button" parent="PauseMenu/VBoxContainer" node_paths=PackedStringArray("settings", "pause_menu")]
 layout_mode = 2
 size_flags_vertical = 3
 text = "SETTINGS"
+script = SubResource("GDScript_hya0r")
+settings = NodePath("../../../Settings")
+pause_menu = NodePath("../..")
 
 [node name="Quit" type="Button" parent="PauseMenu/VBoxContainer"]
 visible = false
 layout_mode = 2
 size_flags_vertical = 3
 text = "QUIT"
+script = SubResource("GDScript_2wdbx")
 
 [node name="Label" type="Label" parent="PauseMenu/VBoxContainer"]
 custom_minimum_size = Vector2(300, 63)

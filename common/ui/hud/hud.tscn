@@ -1,15 +1,12 @@
-[gd_scene load_steps=6 format=3 uid="uid://ptj3tog7skao"]
+[gd_scene load_steps=5 format=3 uid="uid://ptj3tog7skao"]
 
 [ext_resource type="Script" uid="uid://bbq1uagk4q68d" path="res://common/ui/hud/hud.gd" id="1_wuvj5"]
 [ext_resource type="Texture2D" uid="uid://cqko0vc1e2fd" path="res://common/ui/hud/icons/coin.svg" id="2_862u4"]
 [ext_resource type="Texture2D" uid="uid://bp0pdti5jwcwd" path="res://common/ui/hud/icons/cube.svg" id="3_bqepj"]
 [ext_resource type="Texture2D" uid="uid://0or7lubgcjvb" path="res://common/ui/hud/icons/crosshair.svg" id="4_0pq1e"]
 
-[sub_resource type="LabelSettings" id="LabelSettings_2s207"]
-font_size = 32
-font_color = Color(0.9215, 0.941708, 0.97, 0.498039)
-
 [node name="HUD" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -75,13 +72,8 @@ expand_mode = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_colors/font_color = Color(0.925037, 0.945336, 0.972507, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.470588)
-theme_override_colors/font_outline_color = Color(0.133333, 0.121569, 0.227451, 1)
-theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 32
 text = "coins"
-label_settings = SubResource("LabelSettings_2s207")
 
 [node name="BlockPanel" type="PanelContainer" parent="StatDisplay"]
 layout_mode = 2
@@ -98,7 +90,7 @@ mouse_filter = 2
 metadata/_edit_lock_ = true
 
 [node name="BlockSprite" type="TextureRect" parent="StatDisplay/BlockPanel/MarginContainer/BlockHBox"]
-custom_minimum_size = Vector2(32, 42)
+custom_minimum_size = Vector2(32, 32)
 layout_mode = 2
 size_flags_horizontal = 4
 size_flags_vertical = 4
@@ -110,15 +102,11 @@ expand_mode = 1
 unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
-theme_override_colors/font_color = Color(0.925037, 0.945336, 0.972507, 1)
-theme_override_colors/font_shadow_color = Color(0, 0, 0, 0.470588)
-theme_override_colors/font_outline_color = Color(0.133333, 0.121569, 0.227451, 1)
-theme_override_constants/outline_size = 16
 theme_override_font_sizes/font_size = 32
 text = "blocks"
-label_settings = SubResource("LabelSettings_2s207")
 
 [node name="WaveInfo" type="PanelContainer" parent="."]
+unique_name_in_owner = true
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5

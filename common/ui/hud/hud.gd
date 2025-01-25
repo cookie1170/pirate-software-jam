@@ -11,7 +11,11 @@ func _physics_process(_delta: float) -> void:
 		player = get_tree().get_first_node_in_group("player")
 
 	if wave_handler:
-		%WaveNumber.text = "Wave %s" % (wave_handler.current_wave + 1)
-		%StallTime.text = str(wave_handler.time_display_value)
+		if not wave_handler.waves_started:
+			%WaveInfo.visible = false
+		else:
+			%WaveInfo.visible = true
+			%WaveNumber.text = "Wave %s" % (wave_handler.current_wave + 1)
+			%StallTime.text = str(wave_handler.time_display_value)
 	else:
 		wave_handler = get_tree().get_first_node_in_group("wave_handler")

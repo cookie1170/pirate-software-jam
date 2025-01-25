@@ -10,3 +10,4 @@ extends Area3D
 func _ready() -> void:
 	collision_mask = 0
 	collision_layer = (4 if type == "Player" else 8)
+	monitoring = false

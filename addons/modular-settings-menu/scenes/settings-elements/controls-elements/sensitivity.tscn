@@ -26,7 +26,6 @@ script = SubResource("GDScript_s1j2c")
 MIN_VALUE = 0.1
 MAX_VALUE = 5.0
 STEP_VALUE = 0.05
-DEFAULT_VALUE = 0.5
 SliderRef = NodePath("SliderValue/Slider")
 ValueBoxRef = NodePath("SliderValue/Value")
 IDENTIFIER = "Sensitivity"

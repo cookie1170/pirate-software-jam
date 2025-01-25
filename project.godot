@@ -27,6 +27,7 @@ PauseMenu="*res://common/ui/pause_menu/pause_menu.tscn"
 Hud="*res://common/ui/hud/hud.tscn"
 SignalBus="*res://common/scripts/signal_bus.gd"
 UpgradesMenu="*res://common/upgrades/upgrades_menu.tscn"
+ShaderCompileScreen="res://common/scenes/shader_compile_screen.tscn"
 
 [display]
 

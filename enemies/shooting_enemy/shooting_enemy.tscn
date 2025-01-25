@@ -99,7 +99,7 @@ material = SubResource("ShaderMaterial_00urf")
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_6ofcp"]
 albedo_color = Color(0, 0, 0, 1)
 
-[sub_resource type="ArrayMesh" id="ArrayMesh_y3ps2"]
+[sub_resource type="ArrayMesh" id="ArrayMesh_00urf"]
 resource_local_to_scene = true
 _surfaces = [{
 "aabb": AABB(-0.599884, -1.09963, -0.599884, 1.19977, 2.19926, 1.19977),
@@ -127,10 +127,11 @@ bullet_scene = ExtResource("3_dueci")
 [node name="Mesh" parent="." index="1"]
 mesh = SubResource("CapsuleMesh_dueci")
 
-[node name="OutlineMesh" parent="." index="2"]
-mesh = SubResource("ArrayMesh_y3ps2")
+[node name="OutlineMesh" parent="Mesh" index="0"]
+mesh = SubResource("ArrayMesh_00urf")
 
 [node name="CheckWallRaycast" type="RayCast3D" parent="." index="5"]
+unique_name_in_owner = true
 
 [node name="ShootingCooldown" type="Timer" parent="." index="10"]
 unique_name_in_owner = true
