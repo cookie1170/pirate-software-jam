@@ -1,0 +1,15 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=2 format=3 uid="uid://b7ubbducq5nut"]
+
+[ext_resource type="Script" uid="uid://cox2ddvnlx17p" path="res://common/upgrades/upgrade_resources/base_upgrade.gd" id="1_vltwk"]
+
+[resource]
+script = ExtResource("1_vltwk")
+attack_speed_change = 50.0
+bullet_amt_change = 50
+bullet_save_chance = 1.0
+damage_increase = 100
+move_speed_increase = 0.0
+pierce_increase = 10
+accuracy_change = -10.0
+tooltip = "the very realest legitest upgrade totally for real"
+metadata/_custom_type_script = ExtResource("1_vltwk")

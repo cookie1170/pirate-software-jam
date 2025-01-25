@@ -1,10 +1,9 @@
-[gd_scene load_steps=39 format=4 uid="uid://bi40akbu0hcyl"]
+[gd_scene load_steps=37 format=4 uid="uid://bi40akbu0hcyl"]
 
 [ext_resource type="Script" uid="uid://b1qqjj3erxy3i" path="res://player/player.gd" id="1_oul6g"]
 [ext_resource type="PackedScene" uid="uid://ciy177ajnquy0" path="res://common/scenes/bullet.tscn" id="2_boad6"]
 [ext_resource type="Texture2D" uid="uid://b4mp0yqk1nqqq" path="res://common/resources/gradients/gradient1d_blue.tres" id="2_g1dw6"]
 [ext_resource type="Shader" uid="uid://dr1cjaw111atj" path="res://common/shaders/color_change.gdshader" id="3_hg6s5"]
-[ext_resource type="Script" uid="uid://cox2ddvnlx17p" path="res://common/upgrades/upgrade_resources/base_upgrade.gd" id="3_kb6p2"]
 [ext_resource type="BoxMesh" uid="uid://diyfhnaeex4bm" path="res://common/resources/meshes/block_0.tres" id="3_yw30f"]
 [ext_resource type="Texture2D" uid="uid://dwt5euhqkftkv" path="res://common/resources/gradients/gradient1d_orange.tres" id="4_yllr7"]
 [ext_resource type="Gradient" uid="uid://doolqgh7pxcdh" path="res://common/resources/gradients/gradient_blue.tres" id="4_yw30f"]
@@ -14,17 +13,6 @@
 [ext_resource type="Script" uid="uid://cw2knxh8u7elo" path="res://addons/modular-settings-menu/scripts/settings-handler-scripts/camera_settings_handler.gd" id="6_g6k8r"]
 [ext_resource type="BoxMesh" uid="uid://bmjjnfg1hiqso" path="res://common/resources/meshes/block_3.tres" id="7_yllr7"]
 [ext_resource type="BoxMesh" uid="uid://ba2si1edpkedm" path="res://common/resources/meshes/block_4.tres" id="8_kb6p2"]
-
-[sub_resource type="Resource" id="Resource_kb6p2"]
-script = ExtResource("3_kb6p2")
-attack_speed_change = 0.0
-bullet_amt_change = 0
-bullet_save_chance = 0.0
-damage_increase = 0
-move_speed_increase = 0.0
-pierce_increase = 0
-accuracy_change = 0.0
-metadata/_custom_type_script = ExtResource("3_kb6p2")
 
 [sub_resource type="Shader" id="Shader_kb6p2"]
 code = "shader_type spatial;
@@ -187,7 +175,6 @@ base_attack_speed = 2.0
 base_damage = 20
 base_accuracy = 1.0
 bullet_scene = ExtResource("2_boad6")
-upgrades = Array[ExtResource("3_kb6p2")]([SubResource("Resource_kb6p2")])
 metadata/_edit_group_ = true
 
 [node name="PlayerMesh" type="MeshInstance3D" parent="."]

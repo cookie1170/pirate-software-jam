@@ -1,20 +1,38 @@
-[gd_scene load_steps=2 format=3 uid="uid://qaq8syjc51ib"]
+[gd_scene load_steps=6 format=3 uid="uid://qaq8syjc51ib"]
 
-[ext_resource type="Script" uid="uid://bpbucs1uv60b2" path="res://common/upgrades/upgrade_button.gd" id="1_c6j3r"]
+[ext_resource type="Script" uid="uid://hjn2afy0uepl" path="res://common/upgrades/upgrade_button.gd" id="1_c6j3r"]
+[ext_resource type="Script" uid="uid://bwmup3twr6qrq" path="res://common/upgrades/upgrades_menu.gd" id="1_phunp"]
+[ext_resource type="Script" uid="uid://cox2ddvnlx17p" path="res://common/upgrades/upgrade_resources/base_upgrade.gd" id="2_ysaia"]
+[ext_resource type="Resource" uid="uid://b7ubbducq5nut" path="res://common/upgrades/upgrade_resources/totally_legit_upgrade.tres" id="3_m6m6h"]
+
+[sub_resource type="GDScript" id="GDScript_jvaya"]
+resource_name = "done_button"
+script/source = "extends Button
+
+
+func _pressed() -> void:
+	get_parent().hide()
+	get_tree().paused = false
+	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
+"
 
 [node name="UpgradesMenu" type="Control"]
+process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = ExtResource("1_phunp")
+available_upgrades = Array[ExtResource("2_ysaia")]([ExtResource("3_m6m6h")])
 
 [node name="GridContainer" type="GridContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.2
-anchor_top = 0.2
+anchor_top = 0.1
 anchor_right = 0.8
 anchor_bottom = 0.8
 grow_horizontal = 2
@@ -31,19 +49,40 @@ script = ExtResource("1_c6j3r")
 [node name="Button2" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
+script = ExtResource("1_c6j3r")
 
 [node name="Button3" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
+script = ExtResource("1_c6j3r")
 
 [node name="Button4" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
+script = ExtResource("1_c6j3r")
 
 [node name="Button5" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
+script = ExtResource("1_c6j3r")
 
 [node name="Button6" type="Button" parent="GridContainer"]
 custom_minimum_size = Vector2(200, 200)
 layout_mode = 2
+script = ExtResource("1_c6j3r")
+
+[node name="Done" type="Button" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.45
+anchor_top = 0.9
+anchor_right = 0.55
+anchor_bottom = 1.0
+offset_top = -10.0
+offset_bottom = -10.0
+grow_horizontal = 2
+grow_vertical = 0
+theme_override_font_sizes/font_size = 32
+text = "DONE"
+script = SubResource("GDScript_jvaya")

@@ -59,10 +59,13 @@ func change_wave() -> void:
 	if %WaveTimer.is_stopped():
 		%WaveTimer.wait_time = time_between_waves_sec
 		%WaveTimer.start()
+	if current_wave % 5 == 0 and current_wave > 1:
+		UpgradesMenu.refresh_upgrades()
 	print_debug("changing wave to wave %s" % current_wave)
 
 
 func _on_enemy_killed(enemy : Enemy) -> void:
 	alive_enemies -= 1
 	if alive_enemies <= 0 and has_spawned_all_enemies:
+		alive_enemies = 0
 		change_wave()

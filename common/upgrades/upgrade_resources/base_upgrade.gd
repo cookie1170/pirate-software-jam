@@ -8,3 +8,4 @@ extends Resource
 @export_range(0, 20, 0.5) var move_speed_increase : float
 @export_range(0, 10) var pierce_increase : int
 @export_range(-10 , 10) var accuracy_change : float
+@export var tooltip : String

@@ -1,8 +1,7 @@
-[gd_scene load_steps=7 format=3 uid="uid://ptj3tog7skao"]
+[gd_scene load_steps=6 format=3 uid="uid://ptj3tog7skao"]
 
 [ext_resource type="Script" uid="uid://bbq1uagk4q68d" path="res://common/ui/hud/hud.gd" id="1_wuvj5"]
 [ext_resource type="Texture2D" uid="uid://cqko0vc1e2fd" path="res://common/ui/hud/icons/coin.svg" id="2_862u4"]
-[ext_resource type="StyleBox" uid="uid://cgxg3chmw2c4r" path="res://common/ui/hud/panel.tres" id="3_616me"]
 [ext_resource type="Texture2D" uid="uid://bp0pdti5jwcwd" path="res://common/ui/hud/icons/cube.svg" id="3_bqepj"]
 [ext_resource type="Texture2D" uid="uid://0or7lubgcjvb" path="res://common/ui/hud/icons/crosshair.svg" id="4_0pq1e"]
 
@@ -53,7 +52,6 @@ mouse_filter = 2
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
-theme_override_styles/panel = ExtResource("3_616me")
 
 [node name="MarginContainer" type="MarginContainer" parent="StatDisplay/CoinPanel"]
 layout_mode = 2
@@ -89,7 +87,6 @@ label_settings = SubResource("LabelSettings_2s207")
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
-theme_override_styles/panel = ExtResource("3_616me")
 
 [node name="MarginContainer" type="MarginContainer" parent="StatDisplay/BlockPanel"]
 layout_mode = 2
@@ -131,7 +128,6 @@ offset_top = 16.0
 offset_right = 35.5
 offset_bottom = 46.0
 grow_horizontal = 2
-theme_override_styles/panel = ExtResource("3_616me")
 
 [node name="MarginContainer" type="MarginContainer" parent="WaveInfo"]
 layout_mode = 2

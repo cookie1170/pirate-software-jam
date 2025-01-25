@@ -26,6 +26,7 @@ SettingsDataManager="*res://addons/modular-settings-menu/singletons/settings_dat
 PauseMenu="*res://common/ui/pause_menu/pause_menu.tscn"
 Hud="*res://common/ui/hud/hud.tscn"
 SignalBus="*res://common/scripts/signal_bus.gd"
+UpgradesMenu="*res://common/upgrades/upgrades_menu.tscn"
 
 [display]
 
@@ -34,10 +35,11 @@ window/stretch/aspect="expand"
 
 [editor_plugins]
 
-enabled=PackedStringArray("res://addons/modular-settings-menu/plugin.cfg")
+enabled=PackedStringArray("res://addons/modular-settings-menu/plugin.cfg", "res://addons/script-ide/plugin.cfg")
 
 [gui]
 
+theme/custom="uid://wsmuj14b5quv"
 theme/custom_font="uid://crgj5nxei62tk"
 theme/default_font_multichannel_signed_distance_field=true
 

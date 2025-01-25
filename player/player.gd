@@ -8,7 +8,7 @@ extends CharacterBody3D
 @export_range(1, 16, 0.5) var base_move_speed : float
 @export_range(0.1, 2.0, 0.05) var accel_sec : float
 @export_range(0.1, 2.0) var base_attack_speed : float
-@export_range(1, 40) var base_damage : int
+@export_range(1, 100) var base_damage : int
 @export_range(1, 5) var base_pierce : int = 1
 @export_range(0.1, 10, 0.1) var base_accuracy : float
 @export var bullet_scene : PackedScene
@@ -35,10 +35,10 @@ var bullet_save_chance : float
 var damage : int
 var pierce : int
 var accuracy : float
-var bullet_amount : int = 3
+var bullet_amount : int = 1
 var is_one_hit : bool = false
 var coins : int = 0
-@export var upgrades : Array[Upgrade]
+var upgrades : Array[Upgrade]
 #endregion
 
 func _ready() -> void:
@@ -68,7 +68,6 @@ func _physics_process(_delta : float) -> void:
 	handle_movement()
 	handle_camera_movement()
 	handle_shooting()
-	_apply_upgrades()
 
 
 #region handler functions
@@ -81,6 +80,7 @@ func _change_voxel_amt(amount : int) -> void:
 func handle_block_changes() -> void:
 	#i also have no idea
 	is_one_hit = (block_amount <= 0)
+	_apply_upgrades()
 	var remapped_block_amount : float = remap(
 		block_amount, 0, 64, 1, 2
 	)
@@ -173,7 +173,8 @@ func _apply_upgrades() -> void:
 	bullet_save_chance = 0
 	accuracy = base_accuracy
 	bullet_amount = 1
-	for upgrade : Upgrade in upgrades:
+	for i in upgrades.size():
+		var upgrade : Upgrade = upgrades[i]
 		attack_speed += upgrade.attack_speed_change
 		move_speed += upgrade.move_speed_increase
 		damage += upgrade.damage_increase
@@ -181,7 +182,7 @@ func _apply_upgrades() -> void:
 		bullet_save_chance += upgrade.bullet_save_chance
 		accuracy += upgrade.accuracy_change
 		bullet_amount += upgrade.bullet_amt_change
-	shooting_cooldown.wait_time = 1.0 / clampf(attack_speed, 0.01, INF)
+		shooting_cooldown.wait_time = 1.0 / clampf(attack_speed, 0.01, INF)
 	if is_one_hit:
 		move_speed *= 1.5
 
