@@ -1,21 +1,14 @@
 extends Control
 
-@onready var player : Player = get_tree().get_first_node_in_group("player")
-@onready var wave_handler : Node = get_tree().get_first_node_in_group("wave_handler")
+@onready var game_scene : Node = get_tree().get_root().get_node("Game")
 
 func _physics_process(_delta: float) -> void:
-	if player:
-		%CoinLabel.text = str(player.coins)
-		%BlockLabel.text = str(clampi(player.block_amount, 0, 100000))
-	else:
-		player = get_tree().get_first_node_in_group("player")
+	%CoinLabel.text = str(game_scene.player.coins)
+	%BlockLabel.text = str(clampi(game_scene.player.block_amount, 0, 100000))
 
-	if wave_handler:
-		if not wave_handler.waves_started:
-			%WaveInfo.visible = false
-		else:
-			%WaveInfo.visible = true
-			%WaveNumber.text = "Wave %s" % (wave_handler.current_wave + 1)
-			%StallTime.text = str(wave_handler.time_display_value)
+	if not game_scene.level.wave_handler.waves_started:
+		%WaveInfo.visible = false
 	else:
-		wave_handler = get_tree().get_first_node_in_group("wave_handler")
+		%WaveInfo.visible = true
+		%WaveNumber.text = "Wave %s" % (game_scene.level.wave_handler.current_wave + 1)
+		%StallTime.text = str(game_scene.level.wave_handler.time_display_value)

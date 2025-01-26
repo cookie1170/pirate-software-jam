@@ -7,7 +7,8 @@ extends Resource
 @export_range(-100, 100) var damage_increase : int
 @export_range(0, 20, 0.5) var move_speed_increase : float
 @export_range(0, 10) var pierce_increase : int
-@export_range(-10 , 10) var accuracy_change : float
+@export_range(-10 , 10, 0.05) var accuracy_change : float
+@export_range(-10, 10, 0.05) var knockback_change : float
 @export_enum("blocks", "coins") var price_type : String = "coins"
 @export_range(1, 100) var price : int = 10
 @export var name : String

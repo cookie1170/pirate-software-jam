@@ -1,7 +1,7 @@
 class_name ShootingEnemy
 extends Enemy
 
-@export var damage : int = 8
+@export var damage : int
 @export_range(0.1, 10, 0.1) var accuracy : float
 @export_range(0.1, 10, 0.1) var attack_speed : float
 @export_range(1, 20, 0.5) var start_aim_dist : float
@@ -24,6 +24,8 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
+	if not can_attack:
+		return
 	if global_position.distance_to(target_pos) <= start_aim_dist:
 		is_aiming = true
 	if global_position.distance_to(target_pos) >= stop_aim_dist:
@@ -48,11 +50,11 @@ func shoot() -> void:
 		return
 	var bullet_instance : RigidBody3D = bullet_scene.instantiate()
 	var spread : float = 1.0 / clampf(accuracy, 0.1, INF)
-	bullet_instance.get_node("Hitbox").type = "Enemy"
+	bullet_instance.hitbox.type = "Enemy"
 	get_parent().add_child(bullet_instance)
 	bullet_instance.global_position = global_position
-	bullet_instance.get_node("Hitbox").damage = damage
-	bullet_instance.get_node("Hitbox").pierce = 1
+	bullet_instance.hitbox.damage = damage
+	bullet_instance.hitbox.pierce = 1
 	bullet_instance.apply_impulse(global_position.direction_to(
 			target_pos + player.velocity * 0.5
 		) * 30 + Vector3(

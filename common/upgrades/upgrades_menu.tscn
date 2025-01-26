@@ -15,6 +15,7 @@ script/source = "extends Button
 func _pressed() -> void:
 	get_parent().hide()
 	get_tree().paused = false
+	Hud.visible = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 "
 
@@ -132,6 +133,7 @@ script = SubResource("GDScript_jvaya")
 
 [node name="NotFound" type="Label" parent="."]
 unique_name_in_owner = true
+visible = false
 layout_mode = 1
 anchors_preset = -1
 anchor_left = 0.5

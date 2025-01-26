@@ -16,7 +16,7 @@ warnings/check_angle_interpolation_type_conflicting=false
 [application]
 
 config/name="pirate software jam"
-run/main_scene="res://levels/level.tscn"
+run/main_scene="uid://bluj5us1vph6q"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
@@ -27,7 +27,8 @@ PauseMenu="*res://common/ui/pause_menu/pause_menu.tscn"
 Hud="*res://common/ui/hud/hud.tscn"
 SignalBus="*res://common/scripts/signal_bus.gd"
 UpgradesMenu="*res://common/upgrades/upgrades_menu.tscn"
-ShaderCompileScreen="res://common/scenes/shader_compile_screen.tscn"
+MainMenu="*res://common/scenes/main_menu.tscn"
+Settings="*res://addons/modular-settings-menu/scenes/settings.tscn"
 
 [display]
 

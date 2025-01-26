@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=4 uid="uid://bo07g2k1wcqxk"]
+[gd_scene load_steps=21 format=4 uid="uid://bo07g2k1wcqxk"]
 
 [ext_resource type="Script" uid="uid://b50r4koj36myo" path="res://common/collectible_block/collectible.gd" id="1_88jrh"]
 [ext_resource type="Shader" uid="uid://dr1cjaw111atj" path="res://common/shaders/color_change.gdshader" id="1_jiutc"]
@@ -189,60 +189,6 @@ tracks/4/keys = {
 }]
 }
 
-[sub_resource type="Animation" id="Animation_ii3mg"]
-resource_name = "shader_compile"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HoverParticles:emitting")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("CollectParticles:emitting")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("SpawnParticles:emitting")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/3/type = "method"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath(".")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0.5),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"queue_free"
-}]
-}
-
 [sub_resource type="Animation" id="Animation_ys11s"]
 resource_name = "spawn"
 step = 0.05
@@ -282,7 +228,6 @@ tracks/2/keys = {
 _data = {
 &"RESET": SubResource("Animation_hjgi0"),
 &"collect": SubResource("Animation_pimo8"),
-&"shader_compile": SubResource("Animation_ii3mg"),
 &"spawn": SubResource("Animation_ys11s")
 }
 
@@ -311,6 +256,7 @@ shape = SubResource("BoxShape3D_14ew2")
 [node name="HoverParticles" type="CPUParticles3D" parent="."]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.5, 0)
 amount = 16
+local_coords = true
 mesh = ExtResource("5_864ot")
 emission_shape = 2
 emission_sphere_radius = 0.75
@@ -330,6 +276,7 @@ one_shot = true
 explosiveness = 0.85
 randomness = 0.2
 lifetime_randomness = 0.2
+local_coords = true
 mesh = ExtResource("5_864ot")
 particle_flag_align_y = true
 direction = Vector3(0, 1, 0)
@@ -346,6 +293,7 @@ emitting = false
 amount = 32
 lifetime = 0.5
 one_shot = true
+local_coords = true
 mesh = ExtResource("5_864ot")
 emission_shape = 2
 emission_sphere_radius = 0.75

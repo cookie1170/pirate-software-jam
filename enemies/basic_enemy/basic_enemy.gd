@@ -2,19 +2,20 @@ class_name Enemy
 extends CharacterBody3D
 
 #region exports
-@export_range(10, 1000, 1) var health : int = 100
+@export var health : int
+@export var contact_damage : int
 @export_range(1, 20) var max_speed : float
 @export_range(0.05, 1, 0.05) var accel_sec : float
-@export var coin_amount_min : int = 4
-@export var coin_amount_max : int = 8
-@export var can_attack : bool = true
+@export var coin_amount_min : int
+@export var coin_amount_max : int
+@export var can_attack : bool
 #endregion
 
 #region nodes & misc @onready
 @onready var prev_color : Color = %Mesh.mesh.material.get_shader_parameter("albedo")
 @onready var nav : NavigationAgent3D = %NavAgent
 @onready var anim_player : AnimationPlayer = %AnimationPlayer
-@onready var player : Player = get_tree().get_first_node_in_group("player")
+@onready var player : Player = get_tree().get_root().get_node("Game").player
 @onready var coin_amount = randi_range(coin_amount_min, coin_amount_max)
 #endregion
 
@@ -22,22 +23,18 @@ extends CharacterBody3D
 var target_pos : Vector3
 var skip_nav_frame : bool
 var wave_index : int
-var is_compile_instance : bool
 #endregion
 
 func _ready() -> void:
-	if is_compile_instance:
-		process_mode = Node.PROCESS_MODE_ALWAYS
-		shader_compile()
-		can_attack = false
-		return
 	anim_player.play("spawn")
 	%Hitbox.monitorable = can_attack
+	%Hitbox.damage = contact_damage
 	_on_path_update()
 
 
 func _physics_process(delta: float) -> void:
-	%Hitbox.monitorable = can_attack
+	if not can_attack:
+		return
 	var direction : Vector3 = nav.get_next_path_position() - global_position
 	direction = direction.normalized()
 	if skip_nav_frame:
@@ -83,8 +80,3 @@ func _on_path_update() -> void:
 	target_pos = player.global_position
 	nav.target_position = target_pos
 	%NavTimer.wait_time = randf_range(0.4, 0.6)
-
-
-func shader_compile() -> void:
-	await get_tree().process_frame
-	anim_player.play("shader_compile")

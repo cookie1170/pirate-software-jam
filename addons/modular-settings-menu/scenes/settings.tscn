@@ -15,6 +15,7 @@
 
 [node name="Settings" type="Control"]
 process_mode = 3
+visible = false
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
@@ -75,6 +76,7 @@ disabled = true
 text = "Apply"
 
 [node name="BackButton" type="Button" parent="SettingsPanel/HBoxContainer"]
+unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 3
 theme_override_styles/focus = SubResource("StyleBoxEmpty_qp71p")

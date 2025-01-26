@@ -10,11 +10,13 @@ extends CharacterBody3D
 @export_range(0.1, 2.0) var base_attack_speed : float
 @export_range(1, 100) var base_damage : int
 @export_range(1, 5) var base_pierce : int = 1
+@export_range(1, 10, 0.05) var base_knockback : float
 @export_range(0.1, 10, 0.1) var base_accuracy : float
 @export_range(1, 10, 0.5) var jump_velocity : float
 @export_range(1, 10, 0.5) var blockless_jump_velocity : float
 @export_range(1, 20, 0.5) var gravity : float
 @export var bullet_scene : PackedScene
+@export var game_scene : Node
 #endregion
 
 #region nodes
@@ -38,6 +40,7 @@ var bullet_save_chance : float
 var damage : int
 var pierce : int
 var accuracy : float
+var knockback : float
 var bullet_amount : int = 1
 var is_one_hit : bool = true
 var coins : int = 0
@@ -45,10 +48,8 @@ var upgrades : Array[Upgrade]
 #endregion
 
 func _ready() -> void:
-	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	_apply_upgrades()
 	SignalBus.enemy_killed.connect(_on_enemy_killed)
-	%AnimationPlayer.play("shader_compile")
 
 
 func _unhandled_input(event: InputEvent) -> void:
@@ -61,7 +62,7 @@ func _unhandled_input(event: InputEvent) -> void:
 	if is_camera_moving:
 		camera_input_dir = event.screen_relative * sensitivity
 
-	if event.is_action_pressed("focus_click"):
+	if event.is_action_pressed("focus_click") and not MainMenu.visible:
 		await get_tree().create_timer(0.1).timeout
 		Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 	if event.is_action_pressed("ui_cancel"):
@@ -157,8 +158,9 @@ func shoot() -> void:
 	var spread : float = 1.0 / clampf(accuracy, 0.1, INF)
 	get_parent().add_child(bullet_instance)
 	bullet_instance.global_position = spring_arm.global_position
-	bullet_instance.get_node("Hitbox").damage = damage
-	bullet_instance.get_node("Hitbox").pierce = pierce
+	bullet_instance.hitbox.damage = damage
+	bullet_instance.hitbox.pierce = pierce
+	bullet_instance.hitbox.knockback = knockback
 	bullet_instance.apply_impulse(-camera.global_basis.z * 30 + Vector3(
 		randf_range(0.0 - spread, 0.0 + spread),
 		randf_range(0.0 - spread, 0.0 + spread),
@@ -174,7 +176,8 @@ func _pickup_collectible(collectible : Collectible) -> void:
 	_change_voxel_amt(collectible.amount)
 	collectible.anim_player.play("collect")
 	if collectible.name == "FirstCollectible":
-		%WaveHandler.waves_started = true
+		game_scene.level.wave_handler.waves_started = true
+		Hud.visible = true
 
 
 # awful but i can't be bothered to fix it
@@ -186,6 +189,7 @@ func _apply_upgrades() -> void:
 	bullet_save_chance = 0
 	accuracy = base_accuracy
 	bullet_amount = 1
+	knockback = base_knockback
 	for i in upgrades.size():
 		var upgrade : Upgrade = upgrades[i]
 		attack_speed += upgrade.attack_speed_change
@@ -196,6 +200,7 @@ func _apply_upgrades() -> void:
 		accuracy += upgrade.accuracy_change
 		bullet_amount += upgrade.bullet_amt_change
 		shooting_cooldown.wait_time = 1.0 / clampf(attack_speed, 0.01, INF)
+		knockback += upgrade.knockback_change
 	if is_one_hit:
 		move_speed *= 1.5
 
@@ -228,5 +233,5 @@ func _get_hit(hitbox : Hitbox) -> void:
 func _die() -> void:
 	Engine.time_scale = 1.0
 	print_debug("why are you dying asdfkjqlkjwqnef")
-	get_tree().call_deferred("reload_current_scene")
+	#get_tree().call_deferred("reload_current_scene")
 #endregion

@@ -1,4 +1,4 @@
-[gd_scene load_steps=41 format=4 uid="uid://bi40akbu0hcyl"]
+[gd_scene load_steps=38 format=4 uid="uid://bi40akbu0hcyl"]
 
 [ext_resource type="Script" uid="uid://b1qqjj3erxy3i" path="res://player/player.gd" id="1_oul6g"]
 [ext_resource type="PackedScene" uid="uid://ciy177ajnquy0" path="res://common/scenes/bullet.tscn" id="2_boad6"]
@@ -165,115 +165,6 @@ func _physics_process(_delta: float) -> void:
 [sub_resource type="SphereShape3D" id="SphereShape3D_boad6"]
 radius = 0.75
 
-[sub_resource type="Animation" id="Animation_wodsf"]
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerMesh/TrailParticles:emitting")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("BlockParticles:emitting")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("JumpParticles:emitting")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("HurtParticles:emitting")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [false]
-}
-
-[sub_resource type="Animation" id="Animation_kb6p2"]
-resource_name = "shader_compile"
-length = 0.001
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("PlayerMesh/TrailParticles:emitting")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("BlockParticles:emitting")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "value"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath("JumpParticles:emitting")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/3/type = "value"
-tracks/3/imported = false
-tracks/3/enabled = true
-tracks/3/path = NodePath("HurtParticles:emitting")
-tracks/3/interp = 1
-tracks/3/loop_wrap = true
-tracks/3/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-
-[sub_resource type="AnimationLibrary" id="AnimationLibrary_wodsf"]
-_data = {
-&"RESET": SubResource("Animation_wodsf"),
-&"shader_compile": SubResource("Animation_kb6p2")
-}
-
 [node name="Player" type="CharacterBody3D"]
 collision_layer = 0
 script = ExtResource("1_oul6g")
@@ -282,6 +173,7 @@ base_move_speed = 10.0
 accel_sec = 0.15
 base_attack_speed = 2.0
 base_damage = 20
+base_knockback = 5.0
 base_accuracy = 1.0
 jump_velocity = 6.5
 blockless_jump_velocity = 10.0
@@ -413,11 +305,5 @@ CameraRef = NodePath("../SpringArm/Camera")
 [node name="ShootingCooldown" type="Timer" parent="."]
 unique_name_in_owner = true
 one_shot = true
-
-[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
-unique_name_in_owner = true
-libraries = {
-&"": SubResource("AnimationLibrary_wodsf")
-}
 
 [connection signal="area_entered" from="Collectiblebox" to="." method="_pickup_collectible"]

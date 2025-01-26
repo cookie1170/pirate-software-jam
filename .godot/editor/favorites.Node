@@ -4,3 +4,4 @@ Camera3D
 RigidBody3D
 CharacterBody3D
 Area3D
+AnimationPlayer

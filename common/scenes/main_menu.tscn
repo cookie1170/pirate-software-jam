@@ -1,0 +1,199 @@
+[gd_scene load_steps=13 format=3 uid="uid://t653hrueci18"]
+
+[ext_resource type="Texture2D" uid="uid://cla4odtaq5w8r" path="res://common/ui/pause_menu/circle.svg" id="1_0ettg"]
+[ext_resource type="Gradient" uid="uid://vap74vlkmx22" path="res://common/resources/gradients/pink_gradient.tres" id="1_duh7t"]
+[ext_resource type="PackedScene" uid="uid://px6a2dg8cawb" path="res://addons/modular-settings-menu/scenes/settings.tscn" id="3_6ymyu"]
+
+[sub_resource type="GradientTexture2D" id="GradientTexture2D_0ettg"]
+gradient = ExtResource("1_duh7t")
+fill_from = Vector2(0, 1)
+fill_to = Vector2(0, 0)
+
+[sub_resource type="Curve" id="Curve_6ymyu"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.1, 1), 0.0, 0.0, 0, 0, Vector2(0.7, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 4
+
+[sub_resource type="Gradient" id="Gradient_duh7t"]
+interpolation_mode = 2
+offsets = PackedFloat32Array(0, 0.2, 0.5, 0.9, 1)
+colors = PackedColorArray(0.996078, 0.423529, 0.564706, 1, 0.815686, 0.215686, 0.568627, 1, 0.529412, 0.156863, 0.415686, 1, 0.270588, 0.141176, 0.34902, 1, 0.14902, 0.0509804, 0.203922, 1)
+metadata/_snap_enabled = true
+
+[sub_resource type="GDScript" id="GDScript_51xbr"]
+resource_name = "menu_visibility_handler"
+script/source = "extends VBoxContainer
+
+
+func _on_visibility_changed() -> void:
+	%Play.grab_focus()
+"
+
+[sub_resource type="GDScript" id="GDScript_6ymyu"]
+resource_name = "play_button"
+script/source = "extends Button
+
+
+func _ready() -> void:
+	grab_focus()
+
+
+func _pressed() -> void:
+	owner.visible = false
+	PauseMenu.can_pause = true
+	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+"
+
+[sub_resource type="GDScript" id="GDScript_duh7t"]
+resource_name = "settings_menu_button"
+script/source = "extends Button
+
+
+func _pressed() -> void:
+	%ButtonsVBox.visible = false
+	Settings.MenuPanelRef = %ButtonsVBox
+	Settings.visible = true
+"
+
+[sub_resource type="Animation" id="Animation_spmat"]
+resource_name = "gradient_anim"
+length = 32.0
+loop_mode = 1
+step = 0.5
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture:fill_from")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0, 4, 8, 12, 16, 20, 24, 28, 32),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 1), Vector2(1, 1), Vector2(1, 0), Vector2(1, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 1), Vector2(0, 1), Vector2(1, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:texture:fill_to")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0, 4, 8, 12, 16, 20, 24, 28, 32),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1, 1, 1, 1, 1),
+"update": 0,
+"values": [Vector2(1, 0), Vector2(0, 0), Vector2(0, 0), Vector2(0, 1), Vector2(0, 1), Vector2(1, 1), Vector2(1, 1), Vector2(1, 0), Vector2(1, 0)]
+}
+
+[sub_resource type="Animation" id="Animation_0ettg"]
+length = 0.001
+tracks/0/type = "value"
+tracks/0/imported = false
+tracks/0/enabled = true
+tracks/0/path = NodePath("TextureRect:texture:fill_from")
+tracks/0/interp = 1
+tracks/0/loop_wrap = true
+tracks/0/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 1)]
+}
+tracks/1/type = "value"
+tracks/1/imported = false
+tracks/1/enabled = true
+tracks/1/path = NodePath("TextureRect:texture:fill_to")
+tracks/1/interp = 1
+tracks/1/loop_wrap = true
+tracks/1/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 0,
+"values": [Vector2(0, 0)]
+}
+
+[sub_resource type="AnimationLibrary" id="AnimationLibrary_duh7t"]
+_data = {
+&"RESET": SubResource("Animation_0ettg"),
+&"gradient_anim": SubResource("Animation_spmat")
+}
+
+[node name="MainMenu" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("GradientTexture2D_0ettg")
+
+[node name="AmbientParticles" type="CPUParticles2D" parent="."]
+position = Vector2(576, 648)
+texture = ExtResource("1_0ettg")
+emission_shape = 3
+emission_rect_extents = Vector2(576, 1)
+gravity = Vector2(0, -980)
+scale_amount_curve = SubResource("Curve_6ymyu")
+color_ramp = SubResource("Gradient_duh7t")
+
+[node name="ButtonsVBox" type="VBoxContainer" parent="."]
+unique_name_in_owner = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -20.0
+offset_top = -20.0
+offset_right = 20.0
+offset_bottom = 20.0
+grow_horizontal = 2
+grow_vertical = 2
+script = SubResource("GDScript_51xbr")
+
+[node name="NameLabel" type="Label" parent="ButtonsVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 32
+text = "<UNNAMED GAME>"
+
+[node name="Play" type="Button" parent="ButtonsVBox"]
+unique_name_in_owner = true
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "PLAY"
+script = SubResource("GDScript_6ymyu")
+
+[node name="Settings" type="Button" parent="ButtonsVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "SETTINGS"
+script = SubResource("GDScript_duh7t")
+
+[node name="Quit" type="Button" parent="ButtonsVBox"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+disabled = true
+text = "QUIT"
+
+[node name="AnimationPlayer" type="AnimationPlayer" parent="."]
+libraries = {
+&"": SubResource("AnimationLibrary_duh7t")
+}
+autoplay = "gradient_anim"
+speed_scale = 0.1
+
+[node name="Settings" parent="." node_paths=PackedStringArray("MenuPanelRef") instance=ExtResource("3_6ymyu")]
+unique_name_in_owner = true
+layout_mode = 1
+MenuPanelRef = NodePath("../ButtonsVBox")
+
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="visibility_changed" from="ButtonsVBox" to="ButtonsVBox" method="_on_visibility_changed"]

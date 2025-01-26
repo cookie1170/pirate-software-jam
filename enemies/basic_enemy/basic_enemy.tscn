@@ -1,4 +1,4 @@
-[gd_scene load_steps=27 format=4 uid="uid://vkj15iayrnau"]
+[gd_scene load_steps=26 format=4 uid="uid://vkj15iayrnau"]
 
 [ext_resource type="Script" uid="uid://bsmce2pk6wm0s" path="res://enemies/basic_enemy/basic_enemy.gd" id="1_ubayq"]
 [ext_resource type="Script" uid="uid://cueoxdgpqrre6" path="res://common/scripts/hurtbox.gd" id="2_6ofcp"]
@@ -344,48 +344,6 @@ tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = PackedFloat32Array(0, 1, 1, 1, 1)
 
-[sub_resource type="Animation" id="Animation_u66kj"]
-resource_name = "shader_compile"
-length = 0.5
-tracks/0/type = "value"
-tracks/0/imported = false
-tracks/0/enabled = true
-tracks/0/path = NodePath("HurtParticles:emitting")
-tracks/0/interp = 1
-tracks/0/loop_wrap = true
-tracks/0/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/1/type = "value"
-tracks/1/imported = false
-tracks/1/enabled = true
-tracks/1/path = NodePath("SpawnParticles:emitting")
-tracks/1/interp = 1
-tracks/1/loop_wrap = true
-tracks/1/keys = {
-"times": PackedFloat32Array(0),
-"transitions": PackedFloat32Array(1),
-"update": 1,
-"values": [true]
-}
-tracks/2/type = "method"
-tracks/2/imported = false
-tracks/2/enabled = true
-tracks/2/path = NodePath(".")
-tracks/2/interp = 1
-tracks/2/loop_wrap = true
-tracks/2/keys = {
-"times": PackedFloat32Array(0.5),
-"transitions": PackedFloat32Array(1),
-"values": [{
-"args": [],
-"method": &"queue_free"
-}]
-}
-
 [sub_resource type="Animation" id="Animation_m6spd"]
 resource_name = "spawn"
 tracks/0/type = "scale_3d"
@@ -427,15 +385,19 @@ _data = {
 &"RESET": SubResource("Animation_6ofcp"),
 &"die": SubResource("Animation_ubayq"),
 &"hurt": SubResource("Animation_5xrap"),
-&"shader_compile": SubResource("Animation_u66kj"),
 &"spawn": SubResource("Animation_m6spd")
 }
 
 [node name="Enemy" type="CharacterBody3D"]
 collision_layer = 0
 script = ExtResource("1_ubayq")
+health = 100
+contact_damage = 8
 max_speed = 8.0
 accel_sec = 0.1
+coin_amount_min = 4
+coin_amount_max = 8
+can_attack = true
 
 [node name="NavAgent" type="NavigationAgent3D" parent="."]
 unique_name_in_owner = true
@@ -513,7 +475,6 @@ shape = SubResource("CapsuleShape3D_5xrap")
 unique_name_in_owner = true
 script = ExtResource("3_5xrap")
 damage = 8
-has_pierce = false
 type = "Enemy"
 metadata/_custom_type_script = ExtResource("3_5xrap")
 

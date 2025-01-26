@@ -1,7 +1,6 @@
-[gd_scene load_steps=6 format=3 uid="uid://yph83yaseuro"]
+[gd_scene load_steps=5 format=3 uid="uid://yph83yaseuro"]
 
 [ext_resource type="Script" uid="uid://dwo7iwr3inwrf" path="res://common/ui/pause_menu/pause_menu.gd" id="1_go8nb"]
-[ext_resource type="PackedScene" uid="uid://px6a2dg8cawb" path="res://addons/modular-settings-menu/scenes/settings.tscn" id="2_dndfr"]
 
 [sub_resource type="GDScript" id="GDScript_4ekc8"]
 resource_name = "back"
@@ -19,12 +18,11 @@ func _pressed() -> void:
 resource_name = "settingsbutton"
 script/source = "extends Button
 
-@export var settings : Control
-@export var pause_menu : Control
 
 func _pressed() -> void:
-	settings.show()
-	pause_menu.hide()
+	Settings.visible = true
+	Settings.MenuPanelRef = PauseMenu
+	owner.visible = false
 "
 
 [sub_resource type="GDScript" id="GDScript_2wdbx"]
@@ -36,7 +34,8 @@ func _pressed() -> void:
 	get_tree().quit()
 "
 
-[node name="Pause" type="Control"]
+[node name="PauseMenu" type="Control"]
+process_mode = 3
 visible = false
 layout_mode = 3
 anchors_preset = 15
@@ -44,18 +43,9 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
-
-[node name="PauseMenu" type="Control" parent="."]
-process_mode = 3
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
 script = ExtResource("1_go8nb")
 
-[node name="VBoxContainer" type="VBoxContainer" parent="PauseMenu"]
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = 8
 anchor_left = 0.5
@@ -68,41 +58,29 @@ offset_right = 150.0
 offset_bottom = 170.0
 grow_horizontal = 2
 grow_vertical = 2
-theme_override_constants/separation = 10
+theme_override_constants/separation = 16
 
-[node name="Back" type="Button" parent="PauseMenu/VBoxContainer"]
+[node name="Back" type="Button" parent="VBoxContainer"]
+unique_name_in_owner = true
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
-size_flags_vertical = 3
 text = "BACK"
 script = SubResource("GDScript_4ekc8")
 
-[node name="Settings" type="Button" parent="PauseMenu/VBoxContainer" node_paths=PackedStringArray("settings", "pause_menu")]
+[node name="Settings" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
-size_flags_vertical = 3
 text = "SETTINGS"
 script = SubResource("GDScript_hya0r")
-settings = NodePath("../../../Settings")
-pause_menu = NodePath("../..")
 
-[node name="Quit" type="Button" parent="PauseMenu/VBoxContainer"]
-visible = false
+[node name="Quit" type="Button" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 96)
 layout_mode = 2
-size_flags_vertical = 3
+disabled = true
 text = "QUIT"
 script = SubResource("GDScript_2wdbx")
 
-[node name="Label" type="Label" parent="PauseMenu/VBoxContainer"]
-custom_minimum_size = Vector2(300, 63)
-layout_mode = 2
-text = "there was supposed to be a quit button here but webgl doesn't like getting closed"
-autowrap_mode = 3
-
-[node name="Settings" parent="." node_paths=PackedStringArray("MenuPanelRef") instance=ExtResource("2_dndfr")]
-visible = false
-layout_mode = 2
-anchors_preset = 0
-MenuPanelRef = NodePath("../PauseMenu")
-
-[connection signal="button_down" from="PauseMenu/VBoxContainer/Back" to="PauseMenu" method="_on_back_down"]
-[connection signal="button_down" from="PauseMenu/VBoxContainer/Settings" to="PauseMenu" method="_on_settings_down"]
-[connection signal="button_down" from="PauseMenu/VBoxContainer/Quit" to="PauseMenu" method="_on_quit_down"]
+[connection signal="visibility_changed" from="." to="." method="_on_visibility_changed"]
+[connection signal="button_down" from="VBoxContainer/Back" to="." method="_on_back_down"]
+[connection signal="button_down" from="VBoxContainer/Settings" to="." method="_on_settings_down"]
+[connection signal="button_down" from="VBoxContainer/Quit" to="." method="_on_quit_down"]

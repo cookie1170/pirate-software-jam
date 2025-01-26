@@ -63,6 +63,7 @@ func on_apply_button_pressed() -> void:
 func on_visibility_changed() -> void:
 	if is_visible_in_tree():
 		emit_signal("settings_menu_opened")
+		%BackButton.grab_focus()
 
 
 # Called to discard the changes in the settings menu

@@ -1,6 +1,6 @@
 extends Button
 
-@onready var player : Player = get_tree().get_first_node_in_group("Player")
+@onready var player : Player = get_tree().get_root().get_node("Game").player
 
 var upgrade : Upgrade :
 	set(value):
@@ -10,14 +10,7 @@ var upgrade : Upgrade :
 		upgrade = value
 
 func _pressed() -> void:
-	if player:
-		apply_upgrade_to_player()
-	else:
-		player = get_tree().get_first_node_in_group("player")
-		if player:
-			apply_upgrade_to_player()
-		else:
-			display_player_not_found()
+	apply_upgrade_to_player()
 
 
 func apply_upgrade_to_player() -> void:
@@ -32,9 +25,3 @@ func apply_upgrade_to_player() -> void:
 			player._change_voxel_amt(-upgrade.price)
 	player.upgrades.append(upgrade)
 	player._apply_upgrades()
-
-
-func display_player_not_found() -> void:
-	%NotFound.visible = true
-	await get_tree().create_timer(0.5)
-	%NotFound.visible = false

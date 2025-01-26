@@ -117,3 +117,6 @@ layout_mode = 2
 
 [node name="SDFGIQuality" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/AdvancedSettings/SubSectionElements" instance=ExtResource("13_ifeh4")]
 layout_mode = 2
+
+[editable path="MarginContainer/ScrollContainer/MarginContainer/ElementList/BasicSettings/SubSectionElements/MaxFPS"]
+[editable path="MarginContainer/ScrollContainer/MarginContainer/ElementList/AdvancedSettings/SubSectionElements/Scaler"]
