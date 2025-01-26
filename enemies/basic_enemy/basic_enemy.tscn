@@ -409,7 +409,6 @@ max_speed = 8.0
 accel_sec = 0.1
 coin_amount_min = 4
 coin_amount_max = 8
-can_attack = true
 
 [node name="NavAgent" type="NavigationAgent3D" parent="."]
 unique_name_in_owner = true

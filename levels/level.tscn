@@ -1,7 +1,7 @@
-[gd_scene load_steps=23 format=3 uid="uid://b311iowaksq5g"]
+[gd_scene load_steps=22 format=3 uid="uid://b311iowaksq5g"]
 
 [ext_resource type="Script" uid="uid://c4pk7vmh2ycgs" path="res://levels/level.gd" id="1_rtcij"]
-[ext_resource type="Texture2D" uid="uid://cl7rq0wh0fviv" path="res://textures/prototype_materials/Orange/texture_01.png" id="2_vnv7o"]
+[ext_resource type="Texture2D" uid="uid://bv187shpkefdy" path="res://textures/prototype_materials/Dark/texture_01.png" id="2_rtcij"]
 [ext_resource type="Script" uid="uid://c6f4vs5pcsh1v" path="res://levels/wave_handler.gd" id="5_vnv7o"]
 [ext_resource type="Script" uid="uid://xd531u081wyx" path="res://levels/collectible_spawner.gd" id="6_gjl0y"]
 [ext_resource type="PackedScene" uid="uid://vkj15iayrnau" path="res://enemies/basic_enemy/basic_enemy.tscn" id="6_rtcij"]
@@ -26,17 +26,13 @@ fog_mode = 1
 fog_density = 1.0
 fog_depth_curve = 0.148651
 
-[sub_resource type="NavigationMesh" id="NavigationMesh_gjl0y"]
-vertices = PackedVector3Array(-31.5, 0.5, -31.5, -31.5, 0.5, 31.5, 31.5, 0.5, 31.5, 31.5, 0.5, -31.5)
-polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
-agent_height = 2.0
-
-[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_d5x7l"]
-albedo_texture = ExtResource("2_vnv7o")
-uv1_scale = Vector3(64, 64, 1)
+[sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rtcij"]
+albedo_texture = ExtResource("2_rtcij")
+uv1_scale = Vector3(96, 96, 1)
 
 [sub_resource type="PlaneMesh" id="PlaneMesh_gjl0y"]
-size = Vector2(64, 64)
+material = SubResource("StandardMaterial3D_rtcij")
+size = Vector2(96, 96)
 
 [sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gjl0y"]
 points = PackedVector3Array(-32, 0, -32, -32, 0, 32, 32, 0, -32, 32, 0, 32)
@@ -93,10 +89,9 @@ environment = SubResource("Environment_7ua0a")
 
 [node name="NavMesh" type="NavigationRegion3D" parent="."]
 unique_name_in_owner = true
-navigation_mesh = SubResource("NavigationMesh_gjl0y")
+metadata/_edit_lock_ = true
 
 [node name="FloorPlane" type="MeshInstance3D" parent="NavMesh"]
-material_override = SubResource("StandardMaterial3D_d5x7l")
 mesh = SubResource("PlaneMesh_gjl0y")
 skeleton = NodePath("../..")
 metadata/_edit_group_ = true
@@ -106,8 +101,28 @@ metadata/_edit_group_ = true
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavMesh/FloorPlane/StaticBody3D"]
 shape = SubResource("ConvexPolygonShape3D_gjl0y")
 
+[node name="CSGCombiner3D" type="CSGCombiner3D" parent="NavMesh"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 1)
+use_collision = true
+
+[node name="CSGBox3D" type="CSGBox3D" parent="NavMesh/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 10, -1)
+size = Vector3(4, 20, 96)
+
+[node name="CSGBox3D3" type="CSGBox3D" parent="NavMesh/CSGCombiner3D"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96, 10, -0.5)
+size = Vector3(4, 20, 97)
+
+[node name="CSGBox3D2" type="CSGBox3D" parent="NavMesh/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -48, 10, 46)
+size = Vector3(4, 20, 96)
+
+[node name="CSGBox3D4" type="CSGBox3D" parent="NavMesh/CSGCombiner3D"]
+transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -48, 10, -47)
+size = Vector3(4, 20, 96)
+
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
-transform = Transform3D(-0.551434, -0.724711, 0.413176, -0.219846, 0.604023, 0.766044, -0.804728, 0.331588, -0.492404, 0, 0, 0)
+transform = Transform3D(0.532825, 0.573223, -0.622505, 0.524519, 0.353553, 0.774519, 0.664061, -0.739199, -0.112285, 0, 5, -3)
 light_energy = 1.5
 shadow_enabled = true
 

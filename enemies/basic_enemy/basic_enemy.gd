@@ -8,7 +8,6 @@ extends CharacterBody3D
 @export_range(0.05, 1, 0.05) var accel_sec : float
 @export var coin_amount_min : int
 @export var coin_amount_max : int
-@export var can_attack : bool
 #endregion
 
 #region nodes & misc @onready
@@ -30,13 +29,11 @@ var wave_index : int
 
 func _ready() -> void:
 	anim_player.play("spawn")
-	hitbox.monitorable = can_attack
 	hitbox.damage = contact_damage
 	_on_path_update()
 
 
 func _physics_process(delta: float) -> void:
-	hitbox.monitorable = can_attack
 	var direction : Vector3 = nav.get_next_path_position() - global_position
 	direction = direction.normalized()
 	if skip_nav_frame:

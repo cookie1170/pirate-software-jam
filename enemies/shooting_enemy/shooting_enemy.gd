@@ -25,8 +25,6 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	super(delta)
-	if not can_attack:
-		return
 	if global_position.distance_to(target_pos) <= start_aim_dist:
 		is_aiming = true
 	if global_position.distance_to(target_pos) >= stop_aim_dist:
@@ -38,10 +36,9 @@ func _physics_process(delta: float) -> void:
 		if not has_noticed_player:
 			if notice_timer.is_stopped():
 				notice_timer.start()
-		elif shooting_cooldown.is_stopped():
+		elif shooting_cooldown.is_stopped() and not shooting_anim_player.is_playing():
 			_on_path_update()
 			shooting_anim_player.play("shoot")
-			print_debug("why")
 	else:
 		has_noticed_player = false
 		notice_timer.stop()
