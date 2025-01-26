@@ -12,6 +12,7 @@ extends Enemy
 @onready var shooting_cooldown: Timer = %ShootingCooldown
 @onready var notice_timer : Timer = %NoticeTimer
 @onready var check_wall_raycast: RayCast3D = %CheckWallRaycast
+@onready var shooting_anim_player: AnimationPlayer = %ShootingAnimPlayer
 
 var has_noticed_player : bool
 var is_aiming : bool
@@ -39,15 +40,14 @@ func _physics_process(delta: float) -> void:
 				notice_timer.start()
 		elif shooting_cooldown.is_stopped():
 			_on_path_update()
-			shoot()
+			shooting_anim_player.play("shoot")
+			print_debug("why")
 	else:
 		has_noticed_player = false
 		notice_timer.stop()
 
 
 func shoot() -> void:
-	if not can_attack:
-		return
 	var bullet_instance : RigidBody3D = bullet_scene.instantiate()
 	var spread : float = 1.0 / clampf(accuracy, 0.1, INF)
 	bullet_instance.hitbox.type = "Enemy"
@@ -67,3 +67,9 @@ func shoot() -> void:
 
 func _on_notice_timer_timeout() -> void:
 	has_noticed_player = true
+
+
+func _get_hit(attack_hitbox : Hitbox) -> void:
+	super(attack_hitbox)
+	shooting_anim_player.stop()
+	shooting_cooldown.stop()

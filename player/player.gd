@@ -14,7 +14,7 @@ extends CharacterBody3D
 @export_range(0.1, 10, 0.1) var base_accuracy : float
 @export_range(1, 10, 0.5) var jump_velocity : float
 @export_range(1, 10, 0.5) var blockless_jump_velocity : float
-@export_range(1, 20, 0.5) var gravity : float
+@export_range(1, 40, 0.5) var gravity : float
 @export var bullet_scene : PackedScene
 @export var game_scene : Node
 #endregion
@@ -24,6 +24,10 @@ extends CharacterBody3D
 @onready var hurt_particles: CPUParticles3D = %HurtParticles
 @onready var spring_arm: SpringArm3D = %SpringArm
 @onready var camera: Camera3D = %Camera
+@onready var collider : CollisionShape3D = %Collider
+@onready var hurtbox: Hurtbox = %Hurtbox
+@onready var collectible_box: Area3D = %CollectibleBox
+@onready var jump_particles: CPUParticles3D = %JumpParticles
 @onready var shooting_cooldown: Timer = %ShootingCooldown
 #endregion
 
@@ -92,9 +96,9 @@ func handle_block_changes() -> void:
 	block_particles.scale = Vector3(remapped_block_amount,
 	 remapped_block_amount,
 	 remapped_block_amount)
-	%Collider.scale = block_particles.scale
-	%Hurtbox.scale = block_particles.scale
-	%Collectiblebox.scale = block_particles.scale
+	collider.scale = block_particles.scale
+	hurtbox.scale = block_particles.scale
+	collectible_box.scale = block_particles.scale
 	spring_arm.spring_length = remap(
 		remapped_block_amount, 1, 5, 5, 10
 	)
@@ -113,7 +117,7 @@ func handle_movement() -> void:
 	if is_on_floor() and Input.is_action_just_pressed("jump") and block_amount < 64:
 		velocity.y += (blockless_jump_velocity if is_one_hit
 		else jump_velocity)
-		%JumpParticles.emitting = true
+		jump_particles.restart()
 
 	move_and_slide()
 

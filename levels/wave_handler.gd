@@ -44,7 +44,7 @@ func _physics_process(_delta: float) -> void:
 func _spawn_next_enemy() -> void:
 	if current_enemy > waves[current_wave].enemies.size() - 1:
 		has_spawned_all_enemies = true
-		if stall_timer.is_stopped() and current_wave < waves.size() - 1:
+		if stall_timer.is_stopped():
 			if waves[current_wave].stall_time_sec != 0:
 				stall_timer.wait_time = waves[current_wave].stall_time_sec
 				stall_timer.start()

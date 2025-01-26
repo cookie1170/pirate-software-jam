@@ -15,7 +15,6 @@ script/source = "extends Button
 func _pressed() -> void:
 	get_parent().hide()
 	get_tree().paused = false
-	Hud.visible = true
 	Input.set_mouse_mode(Input.MOUSE_MODE_CAPTURED)
 "
 

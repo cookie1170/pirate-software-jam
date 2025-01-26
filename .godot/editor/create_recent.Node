@@ -1,9 +1,9 @@
+AnimationPlayer
 Player
 CPUParticles2D
 Button
 Label
 VBoxContainer
-AnimationPlayer
 AnimationTree
 TextureRect
 ColorRect
@@ -12,4 +12,3 @@ Collectible
 SpinBox
 Node
 TextEdit
-MarginContainer

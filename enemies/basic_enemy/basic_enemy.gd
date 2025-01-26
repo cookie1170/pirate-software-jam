@@ -14,7 +14,10 @@ extends CharacterBody3D
 #region nodes & misc @onready
 @onready var prev_color : Color = %Mesh.mesh.material.get_shader_parameter("albedo")
 @onready var nav : NavigationAgent3D = %NavAgent
-@onready var anim_player : AnimationPlayer = %AnimationPlayer
+@onready var anim_player : AnimationPlayer = %BaseAnimPlayer
+@onready var hitbox: Hitbox = %Hitbox
+@onready var hurt_particles: CPUParticles3D = %HurtParticles
+@onready var nav_timer: Timer = %NavTimer
 @onready var player : Player = get_tree().get_root().get_node("Game").player
 @onready var coin_amount = randi_range(coin_amount_min, coin_amount_max)
 #endregion
@@ -27,14 +30,13 @@ var wave_index : int
 
 func _ready() -> void:
 	anim_player.play("spawn")
-	%Hitbox.monitorable = can_attack
-	%Hitbox.damage = contact_damage
+	hitbox.monitorable = can_attack
+	hitbox.damage = contact_damage
 	_on_path_update()
 
 
 func _physics_process(delta: float) -> void:
-	if not can_attack:
-		return
+	hitbox.monitorable = can_attack
 	var direction : Vector3 = nav.get_next_path_position() - global_position
 	direction = direction.normalized()
 	if skip_nav_frame:
@@ -50,23 +52,23 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-func _get_hit(hitbox : Hitbox) -> void:
+func _get_hit(attack_hitbox : Hitbox) -> void:
 	var hitbox_horizontal_vel := Vector2(
-		hitbox.owner.linear_velocity.x, 
-		hitbox.owner.linear_velocity.z
+		attack_hitbox.owner.linear_velocity.x, 
+		attack_hitbox.owner.linear_velocity.z
 		).normalized()
-	%HurtParticles.direction = Vector3(
+	hurt_particles.direction = Vector3(
 		hitbox_horizontal_vel.x,
 		1,
 		hitbox_horizontal_vel.y
 		)
 	velocity = Vector3(
-		hitbox_horizontal_vel.x * hitbox.knockback,
+		hitbox_horizontal_vel.x * attack_hitbox.knockback,
 		5 * clampf(hitbox.knockback, 0, 1),
-		hitbox_horizontal_vel.y * hitbox.knockback,
+		hitbox_horizontal_vel.y * attack_hitbox.knockback,
 	)
 
-	health -= hitbox.damage
+	health -= attack_hitbox.damage
 	if health <= 0:
 		SignalBus.enemy_killed.emit(self)
 		anim_player.stop()
@@ -79,4 +81,4 @@ func _get_hit(hitbox : Hitbox) -> void:
 func _on_path_update() -> void:
 	target_pos = player.global_position
 	nav.target_position = target_pos
-	%NavTimer.wait_time = randf_range(0.4, 0.6)
+	nav_timer.wait_time = randf_range(0.4, 0.6)

@@ -73,14 +73,14 @@ metadata/_custom_type_script = ExtResource("8_ukwr8")
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("7_ukwr8"), ExtResource("7_ukwr8")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 15.0
+stall_time_sec = 0.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_0qmeg"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("6_rtcij"), ExtResource("7_ukwr8"), ExtResource("6_rtcij"), ExtResource("7_ukwr8"), ExtResource("6_rtcij")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 15.0
+stall_time_sec = 0.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [node name="Level" type="Node3D" node_paths=PackedStringArray("wave_handler", "collectible_spawner")]
