@@ -25,3 +25,5 @@ res://common/scenes/main_menu.tscn
 res://player/player.gd
 res://enemies/basic_enemy/basic_enemy.gd
 res://common/resources/meshes/block_material.tres
+res://common/scripts/game.gd
+res://common/shaders/outline.gdshader

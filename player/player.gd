@@ -115,6 +115,7 @@ func handle_movement() -> void:
 	 move_speed / accel_sec * get_physics_process_delta_time())
 	velocity.z = move_toward(velocity.z, move_dir.y * move_speed,
 	 move_speed / accel_sec * get_physics_process_delta_time())
+	trail_particles.emitting = move_dir != Vector2.ZERO
 	if not is_on_floor():
 		velocity.y -= gravity * get_physics_process_delta_time()
 
@@ -256,6 +257,7 @@ func _get_hit(hitbox : Hitbox) -> void:
 
 
 func _die() -> void:
+	Hud.visible = false
 	trail_particles.visible = false
 	Engine.time_scale = 1.0
 	%EnemyPushAwayer.monitoring = true
@@ -267,11 +269,9 @@ func _die() -> void:
 						30, 3, 30
 				) + Vector3.UP * 3
 		)
-		print(-enemy.global_position.direction_to(position) * Vector3(
-						30, 3, 30
-				) + Vector3.UP * 3
-		)
 	anim_player.play("die")
 	set_physics_process(false)
-	#get_tree().call_deferred("reload_current_scene")
+	await anim_player.animation_finished
+	await get_tree().create_timer(2.0)
+	game_scene.reset()
 #endregion

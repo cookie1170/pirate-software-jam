@@ -1,3 +1,4 @@
+res://common/shaders
 res://addons/modular-settings-menu/scenes
 res://player
 res://common/scripts
@@ -13,7 +14,6 @@ res://common/upgrades
 res://common/upgrades/upgrade_resources
 res://enemies/shooting_enemy
 res://common
-res://common/shaders
 res://common/resources
 res://enemies
 C:/Users/LiiiightYT/Documents/godot exports/3d-no-name-thingy/Linux

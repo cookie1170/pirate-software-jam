@@ -6,6 +6,7 @@
 
 [node name="Game" type="Node"]
 script = ExtResource("1_pv8hn")
+level_scene = ExtResource("2_pv8hn")
 
 [node name="Player" parent="." node_paths=PackedStringArray("game_scene") instance=ExtResource("1_oyp42")]
 unique_name_in_owner = true
