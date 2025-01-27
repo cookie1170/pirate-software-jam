@@ -2,4 +2,3 @@
 
 [resource]
 vertex_color_use_as_albedo = true
-metallic = 1.0

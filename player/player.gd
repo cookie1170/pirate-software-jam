@@ -22,6 +22,7 @@ extends CharacterBody3D
 #region nodes
 @onready var block_particles: GPUParticles3D = %BlockParticles
 @onready var hurt_particles: CPUParticles3D = %HurtParticles
+@onready var trail_particles: CPUParticles3D = %TrailParticles
 @onready var spring_arm: SpringArm3D = %SpringArm
 @onready var camera: Camera3D = %Camera
 @onready var collider : CollisionShape3D = %Collider
@@ -29,6 +30,9 @@ extends CharacterBody3D
 @onready var collectible_box: Area3D = %CollectibleBox
 @onready var jump_particles: CPUParticles3D = %JumpParticles
 @onready var shooting_cooldown: Timer = %ShootingCooldown
+@onready var mesh: MeshInstance3D = %Mesh
+@onready var outline_mesh: MeshInstance3D = %OutlineMesh
+@onready var anim_player: AnimationPlayer = %AnimationPlayer
 #endregion
 
 #region misc @onready vars
@@ -154,6 +158,22 @@ func get_move_dir() -> Vector2:
 	move_dir = move_dir.normalized()
 
 	return Vector2(move_dir.x, move_dir.z)
+
+
+func shake_mesh_pos() -> void:
+	var pos_tween := get_tree().create_tween().set_parallel(false).set_loops(50)
+	pos_tween.tween_callback(func():
+		var tween := get_tree().create_tween()
+		tween.tween_property(mesh, "position", Vector3(
+			randf_range(-0.05, 0.05),
+			randf_range(0.2, 0.3),
+			randf_range(-0.05, 0.05)
+		), 0.005)
+		).set_delay(0.005)
+	await pos_tween.finished
+	get_tree().create_tween().tween_property(Engine, "time_scale", 1.0, 0.1)
+
+	
 #endregion
 
 #region actions
@@ -215,11 +235,12 @@ func _on_enemy_killed(enemy : Enemy):
 
 func _get_hit(hitbox : Hitbox) -> void:
 	Engine.time_scale = 0.2
-	if is_one_hit:
+	if is_one_hit or hitbox.is_one_shot:
 		_die()
+		return
+	hurt_particles.amount = min(hitbox.damage, block_amount)
 	block_amount -= hitbox.damage
 	block_particles.update_particles()
-	hurt_particles.amount = hitbox.damage
 	if "linear_velocity" in hitbox.owner:
 		hurt_particles.direction.x = hitbox.owner.linear_velocity.x
 		hurt_particles.direction.y = 10
@@ -235,7 +256,22 @@ func _get_hit(hitbox : Hitbox) -> void:
 
 
 func _die() -> void:
+	trail_particles.visible = false
 	Engine.time_scale = 1.0
-	print_debug("why are you dying asdfkjqlkjwqnef")
+	%EnemyPushAwayer.monitoring = true
+	await get_tree().physics_frame
+	Engine.time_scale = 0.1
+	for enemy : Enemy in %EnemyPushAwayer.get_overlapping_bodies():
+		enemy.velocity = (
+				-enemy.global_position.direction_to(position) * Vector3(
+						30, 3, 30
+				) + Vector3.UP * 3
+		)
+		print(-enemy.global_position.direction_to(position) * Vector3(
+						30, 3, 30
+				) + Vector3.UP * 3
+		)
+	anim_player.play("die")
+	set_physics_process(false)
 	#get_tree().call_deferred("reload_current_scene")
 #endregion

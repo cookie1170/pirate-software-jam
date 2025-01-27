@@ -33,6 +33,7 @@ uniform vec3 uv2_offset;
 
 uniform sampler2D dissolve_noise_texture;
 uniform float dissolve_amount : hint_range(0.0, 1.0, 0.05);
+uniform float dissolve_color_range : hint_range(0.0, 1.0, 0.05);
 uniform float flash_amount : hint_range(0.0, 1.0 ,0.05);
 uniform vec4 flash_color : source_color;
 uniform vec4 dissolve_color : source_color;
@@ -55,10 +56,11 @@ void fragment() {
 	float roughness_tex = dot(texture(texture_roughness, base_uv), roughness_texture_channel);
 	ROUGHNESS = roughness_tex * roughness;
 
-		if (texture(dissolve_noise_texture, UV).r < dissolve_amount){
+		if (texture(dissolve_noise_texture, UV).r < dissolve_amount) {
 		ALPHA = 0.0;
 	}
-		if (texture(dissolve_noise_texture, UV).r < dissolve_amount + 0.1 && dissolve_amount > 0.0){
+		if (texture(dissolve_noise_texture, UV).r < dissolve_amount + dissolve_color_range
+		&& dissolve_amount > 0.0) {
 			ALBEDO = dissolve_color.rgb;
 		}
 
@@ -90,6 +92,7 @@ shader_parameter/uv2_scale = Vector3(1, 1, 1)
 shader_parameter/uv2_offset = Vector3(0, 0, 0)
 shader_parameter/dissolve_noise_texture = SubResource("NoiseTexture2D_li1hj")
 shader_parameter/dissolve_amount = 0.0
+shader_parameter/dissolve_color_range = 0.1
 shader_parameter/flash_amount = 0.0
 shader_parameter/flash_color = Color(0.47, 0, 0, 1)
 shader_parameter/dissolve_color = Color(1, 0.666667, 0.368627, 1)
@@ -401,7 +404,7 @@ _data = {
 }
 
 [node name="Enemy" type="CharacterBody3D"]
-collision_layer = 0
+collision_layer = 16
 script = ExtResource("1_ubayq")
 health = 100
 contact_damage = 8
@@ -412,6 +415,7 @@ coin_amount_max = 8
 
 [node name="NavAgent" type="NavigationAgent3D" parent="."]
 unique_name_in_owner = true
+debug_enabled = true
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true

@@ -1,4 +1,4 @@
-[gd_scene load_steps=22 format=3 uid="uid://b311iowaksq5g"]
+[gd_scene load_steps=25 format=3 uid="uid://b311iowaksq5g"]
 
 [ext_resource type="Script" uid="uid://c4pk7vmh2ycgs" path="res://levels/level.gd" id="1_rtcij"]
 [ext_resource type="Texture2D" uid="uid://bv187shpkefdy" path="res://textures/prototype_materials/Dark/texture_01.png" id="2_rtcij"]
@@ -9,6 +9,7 @@
 [ext_resource type="PackedScene" uid="uid://cgwc0hxoneo7e" path="res://enemies/shooting_enemy/shooting_enemy.tscn" id="7_ukwr8"]
 [ext_resource type="Script" uid="uid://dp4tgomuhuj1y" path="res://addons/modular-settings-menu/scripts/settings-handler-scripts/world_env_settings_handler.gd" id="7_vnv7o"]
 [ext_resource type="Script" uid="uid://d3o6fca0xbd4g" path="res://common/resources/wave.gd" id="8_ukwr8"]
+[ext_resource type="Script" uid="uid://bh4s8tbbuep0u" path="res://common/scripts/hitbox.gd" id="10_ukwr8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wxewf"]
 
@@ -26,6 +27,10 @@ fog_mode = 1
 fog_density = 1.0
 fog_depth_curve = 0.148651
 
+[sub_resource type="NavigationMesh" id="NavigationMesh_ukwr8"]
+vertices = PackedVector3Array(-47.5, 0.5, -47.5, -47.5, 0.5, 47.5, 47.5, 0.5, 47.5, 47.5, 0.5, -47.5)
+polygons = [PackedInt32Array(3, 2, 0), PackedInt32Array(0, 2, 1)]
+
 [sub_resource type="StandardMaterial3D" id="StandardMaterial3D_rtcij"]
 albedo_texture = ExtResource("2_rtcij")
 uv1_scale = Vector3(96, 96, 1)
@@ -34,8 +39,8 @@ uv1_scale = Vector3(96, 96, 1)
 material = SubResource("StandardMaterial3D_rtcij")
 size = Vector2(96, 96)
 
-[sub_resource type="ConvexPolygonShape3D" id="ConvexPolygonShape3D_gjl0y"]
-points = PackedVector3Array(-32, 0, -32, -32, 0, 32, 32, 0, -32, 32, 0, 32)
+[sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_pb8y7"]
+data = PackedVector3Array(48, 0, 48, -48, 0, 48, 48, 0, -48, -48, 0, 48, -48, 0, -48, 48, 0, -48)
 
 [sub_resource type="Resource" id="Resource_pb8y7"]
 script = ExtResource("8_ukwr8")
@@ -79,6 +84,8 @@ time_between_enemy_sec = 2.0
 stall_time_sec = 0.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_rtcij"]
+
 [node name="Level" type="Node3D" node_paths=PackedStringArray("wave_handler", "collectible_spawner")]
 script = ExtResource("1_rtcij")
 wave_handler = NodePath("WaveHandler")
@@ -89,6 +96,7 @@ environment = SubResource("Environment_7ua0a")
 
 [node name="NavMesh" type="NavigationRegion3D" parent="."]
 unique_name_in_owner = true
+navigation_mesh = SubResource("NavigationMesh_ukwr8")
 metadata/_edit_lock_ = true
 
 [node name="FloorPlane" type="MeshInstance3D" parent="NavMesh"]
@@ -99,27 +107,7 @@ metadata/_edit_group_ = true
 [node name="StaticBody3D" type="StaticBody3D" parent="NavMesh/FloorPlane"]
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="NavMesh/FloorPlane/StaticBody3D"]
-shape = SubResource("ConvexPolygonShape3D_gjl0y")
-
-[node name="CSGCombiner3D" type="CSGCombiner3D" parent="NavMesh"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 1)
-use_collision = true
-
-[node name="CSGBox3D" type="CSGBox3D" parent="NavMesh/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -2, 10, -1)
-size = Vector3(4, 20, 96)
-
-[node name="CSGBox3D3" type="CSGBox3D" parent="NavMesh/CSGCombiner3D"]
-transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -96, 10, -0.5)
-size = Vector3(4, 20, 97)
-
-[node name="CSGBox3D2" type="CSGBox3D" parent="NavMesh/CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -48, 10, 46)
-size = Vector3(4, 20, 96)
-
-[node name="CSGBox3D4" type="CSGBox3D" parent="NavMesh/CSGCombiner3D"]
-transform = Transform3D(-4.37114e-08, 0, -1, 0, 1, 0, 1, 0, -4.37114e-08, -48, 10, -47)
-size = Vector3(4, 20, 96)
+shape = SubResource("ConcavePolygonShape3D_pb8y7")
 
 [node name="DirectionalLight3D" type="DirectionalLight3D" parent="."]
 transform = Transform3D(0.532825, 0.573223, -0.622505, 0.524519, 0.353553, 0.774519, 0.664061, -0.739199, -0.112285, 0, 5, -3)
@@ -156,6 +144,19 @@ collectible_scene = ExtResource("7_d5x7l")
 [node name="CollectibleSpawnTimer" type="Timer" parent="CollectibleSpawner"]
 unique_name_in_owner = true
 wait_time = 10.0
+
+[node name="BottomBoundary" type="Area3D" parent="."]
+script = ExtResource("10_ukwr8")
+is_one_shot = true
+damage = 100
+has_pierce = false
+knockback = 0.0
+type = "Enemy"
+metadata/_custom_type_script = ExtResource("10_ukwr8")
+
+[node name="Collider" type="CollisionShape3D" parent="BottomBoundary"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -20, 0)
+shape = SubResource("WorldBoundaryShape3D_rtcij")
 
 [connection signal="timeout" from="WaveHandler/WaveTimer" to="WaveHandler" method="_spawn_next_enemy"]
 [connection signal="timeout" from="WaveHandler/WaveStallTimer" to="WaveHandler" method="change_wave"]

@@ -1,8 +1,17 @@
-[gd_scene load_steps=13 format=3 uid="uid://t653hrueci18"]
+[gd_scene load_steps=15 format=3 uid="uid://t653hrueci18"]
 
 [ext_resource type="Texture2D" uid="uid://cla4odtaq5w8r" path="res://common/ui/pause_menu/circle.svg" id="1_0ettg"]
 [ext_resource type="Gradient" uid="uid://vap74vlkmx22" path="res://common/resources/gradients/pink_gradient.tres" id="1_duh7t"]
 [ext_resource type="PackedScene" uid="uid://px6a2dg8cawb" path="res://addons/modular-settings-menu/scenes/settings.tscn" id="3_6ymyu"]
+
+[sub_resource type="GDScript" id="GDScript_4dx00"]
+resource_name = "main_menu"
+script/source = "extends Control
+
+
+func _ready() -> void:
+	get_tree().paused = true
+"
 
 [sub_resource type="GradientTexture2D" id="GradientTexture2D_0ettg"]
 gradient = ExtResource("1_duh7t")
@@ -41,6 +50,7 @@ func _pressed() -> void:
 	owner.visible = false
 	PauseMenu.can_pause = true
 	Input.mouse_mode = Input.MOUSE_MODE_CAPTURED
+	get_tree().paused = false
 "
 
 [sub_resource type="GDScript" id="GDScript_duh7t"]
@@ -52,6 +62,15 @@ func _pressed() -> void:
 	%ButtonsVBox.visible = false
 	Settings.MenuPanelRef = %ButtonsVBox
 	Settings.visible = true
+"
+
+[sub_resource type="GDScript" id="GDScript_p6akp"]
+resource_name = "quit_button"
+script/source = "extends Button
+
+
+func _pressed() -> void:
+	get_tree().quit()
 "
 
 [sub_resource type="Animation" id="Animation_0ettg"]
@@ -118,12 +137,14 @@ _data = {
 }
 
 [node name="MainMenu" type="Control"]
+process_mode = 3
 layout_mode = 3
 anchors_preset = 15
 anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+script = SubResource("GDScript_4dx00")
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 1
@@ -182,6 +203,7 @@ layout_mode = 2
 theme_override_font_sizes/font_size = 24
 disabled = true
 text = "QUIT"
+script = SubResource("GDScript_p6akp")
 
 [node name="AnimationPlayer" type="AnimationPlayer" parent="."]
 libraries = {

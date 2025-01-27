@@ -66,7 +66,7 @@ func _get_hit(attack_hitbox : Hitbox) -> void:
 	)
 
 	health -= attack_hitbox.damage
-	if health <= 0:
+	if health <= 0 or hitbox.is_one_shot:
 		SignalBus.enemy_killed.emit(self)
 		anim_player.stop()
 		anim_player.play("die")
