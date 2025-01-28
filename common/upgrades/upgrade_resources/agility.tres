@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://t06huc0fqxuk"]
+
+[ext_resource type="Texture2D" uid="uid://bu0kyhfeoldod" path="res://common/upgrades/icons/agility_icon.svg" id="1_37mo5"]
+[ext_resource type="Script" uid="uid://cox2ddvnlx17p" path="res://common/upgrades/upgrade_resources/base_upgrade.gd" id="2_xdpv4"]
+
+[resource]
+script = ExtResource("2_xdpv4")
+attack_speed_change = 0.0
+bullet_amt_change = 0
+bullet_save_chance = 0.0
+damage_increase = -1
+move_speed_increase = 1.0
+pierce_increase = 0
+accuracy_change = 0.0
+knockback_change = 0.0
+defense = 0
+price_type = "blocks"
+price = 5
+name = "Agility"
+icon = ExtResource("1_37mo5")
+tooltip = "Lets you run faster ( +1 m/s) at the cost of damage ( -1)"
+metadata/_custom_type_script = ExtResource("2_xdpv4")

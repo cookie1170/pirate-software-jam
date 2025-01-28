@@ -29,6 +29,7 @@ SignalBus="*res://common/scripts/signal_bus.gd"
 UpgradesMenu="*res://common/upgrades/upgrades_menu.tscn"
 MainMenu="*res://common/scenes/main_menu.tscn"
 Settings="*res://addons/modular-settings-menu/scenes/settings.tscn"
+GlobalReferences="*res://common/scripts/global_references.gd"
 
 [display]
 

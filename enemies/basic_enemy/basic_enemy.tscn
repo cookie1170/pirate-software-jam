@@ -491,6 +491,7 @@ unique_name_in_owner = true
 script = ExtResource("3_5xrap")
 damage = 8
 has_pierce = false
+total_i_frames = 0.5
 type = "Enemy"
 metadata/_custom_type_script = ExtResource("3_5xrap")
 

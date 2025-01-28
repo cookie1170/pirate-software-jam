@@ -1,8 +1,9 @@
-[gd_scene load_steps=47 format=4 uid="uid://bi40akbu0hcyl"]
+[gd_scene load_steps=48 format=4 uid="uid://bi40akbu0hcyl"]
 
 [ext_resource type="Script" uid="uid://b1qqjj3erxy3i" path="res://player/player.gd" id="1_oul6g"]
 [ext_resource type="PackedScene" uid="uid://ciy177ajnquy0" path="res://common/scenes/bullet.tscn" id="2_boad6"]
 [ext_resource type="Texture2D" uid="uid://b4mp0yqk1nqqq" path="res://common/resources/gradients/gradient1d_blue.tres" id="2_g1dw6"]
+[ext_resource type="Script" uid="uid://cox2ddvnlx17p" path="res://common/upgrades/upgrade_resources/base_upgrade.gd" id="3_kb6p2"]
 [ext_resource type="BoxMesh" uid="uid://diyfhnaeex4bm" path="res://common/resources/meshes/block_0.tres" id="3_yw30f"]
 [ext_resource type="Texture2D" uid="uid://dwt5euhqkftkv" path="res://common/resources/gradients/gradient1d_orange.tres" id="4_yllr7"]
 [ext_resource type="Gradient" uid="uid://doolqgh7pxcdh" path="res://common/resources/gradients/gradient_blue.tres" id="4_yw30f"]
@@ -287,10 +288,22 @@ tracks/4/keys = {
 "update": 0,
 "values": [0.0]
 }
+tracks/5/type = "value"
+tracks/5/imported = false
+tracks/5/enabled = true
+tracks/5/path = NodePath("Hurtbox:monitoring")
+tracks/5/interp = 1
+tracks/5/loop_wrap = true
+tracks/5/keys = {
+"times": PackedFloat32Array(0),
+"transitions": PackedFloat32Array(1),
+"update": 1,
+"values": [true]
+}
 
 [sub_resource type="Animation" id="Animation_yllr7"]
 resource_name = "die"
-length = 0.5
+length = 3.0
 step = 0.05
 tracks/0/type = "value"
 tracks/0/imported = false
@@ -299,10 +312,10 @@ tracks/0/path = NodePath("SpringArm:spring_length")
 tracks/0/interp = 1
 tracks/0/loop_wrap = true
 tracks/0/keys = {
-"times": PackedFloat32Array(0.3),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.3, 2.95, 3),
+"transitions": PackedFloat32Array(1, 1, 1),
 "update": 0,
-"values": [2.0]
+"values": [2.0, 2.0, 5.0]
 }
 tracks/1/type = "rotation_3d"
 tracks/1/imported = false
@@ -318,11 +331,14 @@ tracks/2/path = NodePath(".")
 tracks/2/interp = 1
 tracks/2/loop_wrap = true
 tracks/2/keys = {
-"times": PackedFloat32Array(0.05),
-"transitions": PackedFloat32Array(1),
+"times": PackedFloat32Array(0.05, 3),
+"transitions": PackedFloat32Array(1, 1),
 "values": [{
 "args": [],
 "method": &"shake_mesh_pos"
+}, {
+"args": [true],
+"method": &"set_physics_process"
 }]
 }
 tracks/3/type = "value"
@@ -332,10 +348,10 @@ tracks/3/path = NodePath("Mesh:mesh:material:shader_parameter/dissolve_amount")
 tracks/3/interp = 1
 tracks/3/loop_wrap = true
 tracks/3/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1.5),
+"times": PackedFloat32Array(0, 0.05, 0.3, 2.95, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [0.0, 0.0, 1.0]
+"values": [0.0, 0.0, 1.0, 1.0, 0.0]
 }
 tracks/4/type = "value"
 tracks/4/imported = false
@@ -356,10 +372,22 @@ tracks/5/path = NodePath("Mesh/OutlineMesh:mesh:surface_0/material:shader_parame
 tracks/5/interp = 1
 tracks/5/loop_wrap = true
 tracks/5/keys = {
-"times": PackedFloat32Array(0, 0.05, 0.3),
-"transitions": PackedFloat32Array(1, 1, 1.5),
+"times": PackedFloat32Array(0, 0.05, 0.3, 2.95, 3),
+"transitions": PackedFloat32Array(1, 1, 1, 1, 1),
 "update": 0,
-"values": [0.0, 0.0, 1.0]
+"values": [0.0, 0.0, 1.0, 1.0, 0.0]
+}
+tracks/6/type = "value"
+tracks/6/imported = false
+tracks/6/enabled = true
+tracks/6/path = NodePath("Hurtbox:monitoring")
+tracks/6/interp = 1
+tracks/6/loop_wrap = true
+tracks/6/keys = {
+"times": PackedFloat32Array(0, 3),
+"transitions": PackedFloat32Array(1, 1),
+"update": 1,
+"values": [false, true]
 }
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_32hag"]
@@ -377,11 +405,12 @@ accel_sec = 0.15
 base_attack_speed = 2.0
 base_damage = 20
 base_knockback = 5.0
-base_accuracy = 1.0
+base_accuracy = 10.0
 jump_velocity = 6.5
 blockless_jump_velocity = 10.0
 gravity = 24.0
 bullet_scene = ExtResource("2_boad6")
+upgrades = Array[ExtResource("3_kb6p2")]([null])
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true
@@ -394,7 +423,6 @@ mesh = SubResource("ArrayMesh_g6k8r")
 
 [node name="TrailParticles" type="CPUParticles3D" parent="Mesh"]
 unique_name_in_owner = true
-visible = false
 amount = 32
 lifetime = 0.75
 randomness = 0.2
@@ -412,7 +440,6 @@ hue_variation_max = 0.05
 [node name="BlockParticles" type="GPUParticles3D" parent="."]
 unique_name_in_owner = true
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0.25, 0)
-visible = false
 amount = 16
 lifetime = 0.7
 explosiveness = 0.5
@@ -495,7 +522,7 @@ shape = SubResource("SphereShape3D_oul6g")
 
 [node name="SpringArm" type="SpringArm3D" parent="."]
 unique_name_in_owner = true
-transform = Transform3D(1, 0, 0, 0, 0.707107, 0.707107, 0, -0.707107, 0.707107, 0, 1.5, 0)
+transform = Transform3D(1, 0, 0, 0, 0.707108, 0.707106, 0, -0.707106, 0.707108, 0, 1.5, 0)
 top_level = true
 spring_length = 5.0
 script = SubResource("GDScript_g6k8r")
@@ -508,7 +535,6 @@ attributes = SubResource("CameraAttributesPractical_g6k8r")
 unique_name_in_owner = true
 script = ExtResource("5_qjkh3")
 type = "Player"
-total_i_frames = 0.5
 metadata/_custom_type_script = ExtResource("5_qjkh3")
 
 [node name="HurtboxCollider" type="CollisionShape3D" parent="Hurtbox"]
@@ -549,6 +575,5 @@ unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_32hag")
 }
-speed_scale = 0.1
 
 [connection signal="area_entered" from="CollectibleBox" to="." method="_pickup_collectible"]

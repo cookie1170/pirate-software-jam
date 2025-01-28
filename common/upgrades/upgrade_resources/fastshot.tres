@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://clf0r4ngr3mei"]
+
+[ext_resource type="Texture2D" uid="uid://cmbeyid0bx5px" path="res://common/upgrades/icons/fastshot_icon.svg" id="1_1e43j"]
+[ext_resource type="Script" uid="uid://cox2ddvnlx17p" path="res://common/upgrades/upgrade_resources/base_upgrade.gd" id="1_of8ad"]
+
+[resource]
+script = ExtResource("1_of8ad")
+attack_speed_change = 0.5
+bullet_amt_change = 0
+bullet_save_chance = 0.0
+damage_increase = -1
+move_speed_increase = 0.0
+pierce_increase = 0
+accuracy_change = 0.0
+knockback_change = 0.0
+defense = 0
+price_type = "coins"
+price = 10
+name = "Fast shot"
+icon = ExtResource("1_1e43j")
+tooltip = "Increases your attack speed (+0.5), but reduces your damage (-1)"
+metadata/_custom_type_script = ExtResource("1_of8ad")

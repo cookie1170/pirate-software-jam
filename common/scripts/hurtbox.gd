@@ -2,9 +2,6 @@ class_name Hurtbox
 extends Area3D
 
 @export_enum("Player", "Enemy") var type : String
-@export_range(0, 1, 0.05) var total_i_frames : float = 0.2
-
-var i_frames : float
 
 func _ready() -> void:
 	collision_layer = 0
@@ -14,12 +11,10 @@ func _ready() -> void:
 
 func _physics_process(delta: float) -> void:
 	if monitoring:
-		if has_overlapping_areas() and not i_frames:
-			for area in get_overlapping_areas():
-				_get_hit(area)
-
-	if i_frames:
-		i_frames = move_toward(i_frames, 0, delta)
+		if has_overlapping_areas():
+			for hitbox : Hitbox in get_overlapping_areas():
+				if not hitbox.local_i_frames:
+					_get_hit(hitbox)
 
 
 func _get_hit(hitbox : Hitbox):
@@ -28,4 +23,4 @@ func _get_hit(hitbox : Hitbox):
 		hitbox.pierce -= 1
 	if hitbox.pierce <= 0:
 		hitbox.owner.anim_player.play("despawn")
-	i_frames = total_i_frames
+	hitbox.local_i_frames += hitbox.total_i_frames

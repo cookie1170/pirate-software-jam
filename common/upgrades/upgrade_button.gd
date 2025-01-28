@@ -1,19 +1,23 @@
 extends Button
 
-@onready var player : Player = get_tree().get_root().get_node("Game").player
+@onready var player : Player = $"/root/Game".player
 
-var upgrade : Upgrade :
-	set(value):
-		tooltip_text = value.tooltip
-		text = value.name + "\n" + str(value.price) + " " + value.price_type
-		icon = value.icon
-		upgrade = value
+@export var upgrade : Upgrade
+
+
+func _ready() -> void:
+	tooltip_text = upgrade.tooltip
+	text = upgrade.name + "\n" + str(upgrade.price) + " " + upgrade.price_type
+	icon = upgrade.icon
+
 
 func _pressed() -> void:
 	apply_upgrade_to_player()
 
 
 func apply_upgrade_to_player() -> void:
+	if not player:
+		player = $"/root/Game/Player"
 	match upgrade.price_type:
 		"coins":
 			if player.coins < upgrade.price:

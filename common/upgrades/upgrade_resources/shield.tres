@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://bmjrjiuion773"]
+
+[ext_resource type="Texture2D" uid="uid://bg2gofbc6idud" path="res://common/upgrades/icons/shield_icon.svg" id="1_qr811"]
+[ext_resource type="Script" uid="uid://cox2ddvnlx17p" path="res://common/upgrades/upgrade_resources/base_upgrade.gd" id="1_tylum"]
+
+[resource]
+script = ExtResource("1_tylum")
+attack_speed_change = 0.0
+bullet_amt_change = 0
+bullet_save_chance = 0.0
+damage_increase = 0
+move_speed_increase = 0.0
+pierce_increase = 0
+accuracy_change = 0.0
+knockback_change = 0.0
+defense = 1
+price_type = "coins"
+price = 20
+name = "Shield"
+icon = ExtResource("1_qr811")
+tooltip = "Increases your defense (+1 flat damage reduction), at the cost of movement speed (-0.5 m/s)"
+metadata/_custom_type_script = ExtResource("1_tylum")

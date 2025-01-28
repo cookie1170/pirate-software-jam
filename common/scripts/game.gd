@@ -12,4 +12,5 @@ func reset() -> void:
 	add_child(level_instance)
 	level = level_instance
 	player.position = Vector3.ZERO
+	Input.mouse_mode = Input.MOUSE_MODE_VISIBLE
 	get_tree().paused = true

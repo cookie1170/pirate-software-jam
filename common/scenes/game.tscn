@@ -1,16 +1,17 @@
-[gd_scene load_steps=4 format=3 uid="uid://bluj5us1vph6q"]
+[gd_scene load_steps=5 format=3 uid="uid://bluj5us1vph6q"]
 
 [ext_resource type="PackedScene" uid="uid://bi40akbu0hcyl" path="res://player/player.tscn" id="1_oyp42"]
 [ext_resource type="Script" uid="uid://cisw20hf82soy" path="res://common/scripts/game.gd" id="1_pv8hn"]
 [ext_resource type="PackedScene" uid="uid://b311iowaksq5g" path="res://levels/level.tscn" id="2_pv8hn"]
+[ext_resource type="Script" uid="uid://cox2ddvnlx17p" path="res://common/upgrades/upgrade_resources/base_upgrade.gd" id="4_abfgt"]
 
 [node name="Game" type="Node"]
 script = ExtResource("1_pv8hn")
 level_scene = ExtResource("2_pv8hn")
 
-[node name="Player" parent="." node_paths=PackedStringArray("game_scene") instance=ExtResource("1_oyp42")]
+[node name="Player" parent="." instance=ExtResource("1_oyp42")]
 unique_name_in_owner = true
-game_scene = NodePath("..")
+upgrades = Array[ExtResource("4_abfgt")]([])
 
 [node name="Level" parent="." instance=ExtResource("2_pv8hn")]
 unique_name_in_owner = true

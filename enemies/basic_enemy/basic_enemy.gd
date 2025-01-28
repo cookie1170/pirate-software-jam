@@ -15,9 +15,10 @@ extends CharacterBody3D
 @onready var nav : NavigationAgent3D = %NavAgent
 @onready var anim_player : AnimationPlayer = %BaseAnimPlayer
 @onready var hitbox: Hitbox = %Hitbox
+@onready var hurtbox: Hurtbox = %Hurtbox
 @onready var hurt_particles: CPUParticles3D = %HurtParticles
 @onready var nav_timer: Timer = %NavTimer
-@onready var player : Player = get_tree().get_root().get_node("Game").player
+@onready var player : Player = GlobalReferences.game_scene.player
 @onready var coin_amount = randi_range(coin_amount_min, coin_amount_max)
 #endregion
 
@@ -67,6 +68,7 @@ func _get_hit(attack_hitbox : Hitbox) -> void:
 
 	health -= attack_hitbox.damage
 	if health <= 0 or hitbox.is_one_shot:
+		hurtbox.monitoring = false
 		SignalBus.enemy_killed.emit(self)
 		anim_player.stop()
 		anim_player.play("die")

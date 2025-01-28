@@ -1,0 +1,22 @@
+[gd_resource type="Resource" script_class="Upgrade" load_steps=3 format=3 uid="uid://causve1lshi4q"]
+
+[ext_resource type="Script" uid="uid://cox2ddvnlx17p" path="res://common/upgrades/upgrade_resources/base_upgrade.gd" id="1_tifv7"]
+[ext_resource type="Texture2D" uid="uid://c5xvwnmcntnx3" path="res://common/upgrades/icons/buckshot_icon.svg" id="1_ts4t6"]
+
+[resource]
+script = ExtResource("1_tifv7")
+attack_speed_change = -1.0
+bullet_amt_change = 1
+bullet_save_chance = 0.0
+damage_increase = -5
+move_speed_increase = 0.0
+pierce_increase = 0
+accuracy_change = -8.0
+knockback_change = 0.0
+defense = 0
+price_type = "coins"
+price = 30
+name = "Buckshot"
+icon = ExtResource("1_ts4t6")
+tooltip = "Allows you to shoot 1 extra projectile at once, but reduces your accuracy ( -8), attack speed ( -1.0) and damage ( -5)"
+metadata/_custom_type_script = ExtResource("1_tifv7")

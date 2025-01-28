@@ -1,11 +1,15 @@
-[gd_scene load_steps=8 format=3 uid="uid://qaq8syjc51ib"]
+[gd_scene load_steps=12 format=3 uid="uid://qaq8syjc51ib"]
 
 [ext_resource type="Script" uid="uid://hjn2afy0uepl" path="res://common/upgrades/upgrade_button.gd" id="1_c6j3r"]
 [ext_resource type="Script" uid="uid://bwmup3twr6qrq" path="res://common/upgrades/upgrades_menu.gd" id="1_phunp"]
 [ext_resource type="Script" uid="uid://cox2ddvnlx17p" path="res://common/upgrades/upgrade_resources/base_upgrade.gd" id="2_ysaia"]
-[ext_resource type="Resource" uid="uid://b7ubbducq5nut" path="res://common/upgrades/upgrade_resources/totally_legit_upgrade.tres" id="3_m6m6h"]
-[ext_resource type="Resource" uid="uid://dhbjyyof51s5d" path="res://common/upgrades/upgrade_resources/totally_legit_upgrade_but_blocks.tres" id="4_5h7m0"]
+[ext_resource type="Resource" uid="uid://causve1lshi4q" path="res://common/upgrades/upgrade_resources/buckshot.tres" id="3_m6m6h"]
 [ext_resource type="Texture2D" uid="uid://dlgnhirubx8d8" path="res://icon.svg" id="4_m6m6h"]
+[ext_resource type="Resource" uid="uid://d24giljj23a20" path="res://common/upgrades/upgrade_resources/harderhits.tres" id="6_p55iy"]
+[ext_resource type="Resource" uid="uid://clf0r4ngr3mei" path="res://common/upgrades/upgrade_resources/fastshot.tres" id="7_83ce1"]
+[ext_resource type="Resource" uid="uid://t06huc0fqxuk" path="res://common/upgrades/upgrade_resources/agility.tres" id="8_386bv"]
+[ext_resource type="Resource" uid="uid://cm7uqqgihsqi6" path="res://common/upgrades/upgrade_resources/piercing.tres" id="9_386bv"]
+[ext_resource type="Resource" uid="uid://bmjrjiuion773" path="res://common/upgrades/upgrade_resources/shield.tres" id="10_nxgmi"]
 
 [sub_resource type="GDScript" id="GDScript_jvaya"]
 resource_name = "done_button"
@@ -28,7 +32,7 @@ anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_phunp")
-available_upgrades = Array[ExtResource("2_ysaia")]([ExtResource("3_m6m6h"), ExtResource("4_5h7m0")])
+available_upgrades = Array[ExtResource("2_ysaia")]([ExtResource("3_m6m6h")])
 
 [node name="ButtonGrid" type="GridContainer" parent="."]
 unique_name_in_owner = true
@@ -58,6 +62,7 @@ cost"
 icon_alignment = 1
 vertical_icon_alignment = 0
 script = ExtResource("1_c6j3r")
+upgrade = ExtResource("6_p55iy")
 
 [node name="Button2" type="Button" parent="ButtonGrid"]
 custom_minimum_size = Vector2(200, 200)
@@ -69,6 +74,7 @@ cost"
 icon_alignment = 1
 vertical_icon_alignment = 0
 script = ExtResource("1_c6j3r")
+upgrade = ExtResource("3_m6m6h")
 
 [node name="Button3" type="Button" parent="ButtonGrid"]
 custom_minimum_size = Vector2(200, 200)
@@ -80,6 +86,7 @@ cost"
 icon_alignment = 1
 vertical_icon_alignment = 0
 script = ExtResource("1_c6j3r")
+upgrade = ExtResource("7_83ce1")
 
 [node name="Button4" type="Button" parent="ButtonGrid"]
 custom_minimum_size = Vector2(200, 200)
@@ -91,6 +98,7 @@ cost"
 icon_alignment = 1
 vertical_icon_alignment = 0
 script = ExtResource("1_c6j3r")
+upgrade = ExtResource("8_386bv")
 
 [node name="Button5" type="Button" parent="ButtonGrid"]
 custom_minimum_size = Vector2(200, 200)
@@ -102,6 +110,7 @@ cost"
 icon_alignment = 1
 vertical_icon_alignment = 0
 script = ExtResource("1_c6j3r")
+upgrade = ExtResource("9_386bv")
 
 [node name="Button6" type="Button" parent="ButtonGrid"]
 custom_minimum_size = Vector2(200, 200)
@@ -113,6 +122,7 @@ cost"
 icon_alignment = 1
 vertical_icon_alignment = 0
 script = ExtResource("1_c6j3r")
+upgrade = ExtResource("10_nxgmi")
 
 [node name="Done" type="Button" parent="."]
 unique_name_in_owner = true

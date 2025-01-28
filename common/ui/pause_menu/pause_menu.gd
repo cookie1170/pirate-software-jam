@@ -1,5 +1,6 @@
 extends Control
 
+
 var can_pause : bool = false :
 	set(value):
 		if value == false:

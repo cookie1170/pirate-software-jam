@@ -11,12 +11,11 @@ extends CharacterBody3D
 @export_range(1, 100) var base_damage : int
 @export_range(1, 5) var base_pierce : int = 1
 @export_range(1, 10, 0.05) var base_knockback : float
-@export_range(0.1, 10, 0.1) var base_accuracy : float
+@export_range(0.1, 20, 0.1) var base_accuracy : float
 @export_range(1, 10, 0.5) var jump_velocity : float
 @export_range(1, 10, 0.5) var blockless_jump_velocity : float
 @export_range(1, 40, 0.5) var gravity : float
 @export var bullet_scene : PackedScene
-@export var game_scene : Node
 #endregion
 
 #region nodes
@@ -33,6 +32,7 @@ extends CharacterBody3D
 @onready var mesh: MeshInstance3D = %Mesh
 @onready var outline_mesh: MeshInstance3D = %OutlineMesh
 @onready var anim_player: AnimationPlayer = %AnimationPlayer
+@onready var game_scene : Node = GlobalReferences.game_scene
 #endregion
 
 #region misc @onready vars
@@ -50,9 +50,10 @@ var pierce : int
 var accuracy : float
 var knockback : float
 var bullet_amount : int = 1
+var defense : int = 0
 var is_one_hit : bool = true
 var coins : int = 0
-var upgrades : Array[Upgrade]
+@export var upgrades : Array[Upgrade]
 #endregion
 
 func _ready() -> void:
@@ -138,8 +139,6 @@ func handle_camera_movement() -> void:
 
 
 func handle_shooting() -> void:
-	if block_amount <= 0:
-		return
 	if (Input.is_action_pressed("shoot") and
 	Input.get_mouse_mode() == Input.MOUSE_MODE_CAPTURED and
 	shooting_cooldown.is_stopped()):
@@ -179,17 +178,20 @@ func shake_mesh_pos() -> void:
 
 #region actions
 func shoot() -> void:
+	if block_amount <= 0:
+		return
 	var bullet_instance : RigidBody3D = bullet_scene.instantiate()
-	var spread : float = 1.0 / clampf(accuracy, 0.1, INF)
+	var spread : float = 10.0 / clampf(accuracy, 0.01, INF)
 	get_parent().add_child(bullet_instance)
 	bullet_instance.global_position = spring_arm.global_position
 	bullet_instance.hitbox.damage = damage
 	bullet_instance.hitbox.pierce = pierce
 	bullet_instance.hitbox.knockback = knockback
+	bullet_instance.hitbox.total_i_frames = 0.2
 	bullet_instance.apply_impulse(-camera.global_basis.z * 30 + Vector3(
-		randf_range(0.0 - spread, 0.0 + spread),
-		randf_range(0.0 - spread, 0.0 + spread),
-		randf_range(0.0 - spread, 0.0 + spread)
+		randf_range(-spread, spread),
+		randf_range(-spread, spread),
+		randf_range(-spread, spread)
 	))
 	if randf_range(0.0, 1.0) > bullet_save_chance:
 		_change_voxel_amt(-1)
@@ -215,6 +217,7 @@ func _apply_upgrades() -> void:
 	accuracy = base_accuracy
 	bullet_amount = 1
 	knockback = base_knockback
+	defense = 0
 	for i in upgrades.size():
 		var upgrade : Upgrade = upgrades[i]
 		attack_speed += upgrade.attack_speed_change
@@ -226,6 +229,7 @@ func _apply_upgrades() -> void:
 		bullet_amount += upgrade.bullet_amt_change
 		shooting_cooldown.wait_time = 1.0 / clampf(attack_speed, 0.01, INF)
 		knockback += upgrade.knockback_change
+		defense += upgrade.defense
 	if is_one_hit:
 		move_speed *= 1.5
 
@@ -239,8 +243,9 @@ func _get_hit(hitbox : Hitbox) -> void:
 	if is_one_hit or hitbox.is_one_shot:
 		_die()
 		return
-	hurt_particles.amount = min(hitbox.damage, block_amount)
-	block_amount -= hitbox.damage
+	var dealt_damage : int = clampf(hitbox.damage - defense, 1, INF)
+	hurt_particles.amount = min(dealt_damage, block_amount)
+	block_amount -= dealt_damage
 	block_particles.update_particles()
 	if "linear_velocity" in hitbox.owner:
 		hurt_particles.direction.x = hitbox.owner.linear_velocity.x
@@ -271,7 +276,6 @@ func _die() -> void:
 		)
 	anim_player.play("die")
 	set_physics_process(false)
-	await anim_player.animation_finished
-	await get_tree().create_timer(2.0)
+	await get_tree().create_timer(2.5).timeout
 	game_scene.reset()
 #endregion
