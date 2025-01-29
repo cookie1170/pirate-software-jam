@@ -10,5 +10,8 @@ func _physics_process(_delta: float) -> void:
 		%WaveInfo.visible = false
 	else:
 		%WaveInfo.visible = true
-		%WaveNumber.text = "Wave %s/20" % (game_scene.level.wave_handler.current_wave + 1)
-		%StallTime.text = "%.2f" % game_scene.level.wave_handler.time_display_valu
+		%WaveNumber.text = (("Wave %s/20"
+		% (game_scene.level.wave_handler.current_wave + 1))
+		if game_scene.level.wave_handler.current_wave + 1 <= 20 else "You win!")
+		%StallTime.text = ("%.2f"
+		% game_scene.level.wave_handler.time_display_value)

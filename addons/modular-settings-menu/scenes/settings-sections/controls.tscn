@@ -63,6 +63,7 @@ layout_mode = 2
 
 [node name="Sensitivity" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/MouseSettings/SubSectionElements" instance=ExtResource("2_qcqml")]
 layout_mode = 2
+DEFAULT_VALUE = 0.5
 
 [node name="InvertY" parent="MarginContainer/ScrollContainer/MarginContainer/ElementList/MouseSettings/SubSectionElements" instance=ExtResource("3_8np8q")]
 layout_mode = 2
