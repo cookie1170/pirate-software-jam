@@ -1,14 +1,16 @@
-[gd_scene load_steps=25 format=3 uid="uid://b311iowaksq5g"]
+[gd_scene load_steps=45 format=3 uid="uid://b311iowaksq5g"]
 
 [ext_resource type="Script" uid="uid://c4pk7vmh2ycgs" path="res://levels/level.gd" id="1_rtcij"]
 [ext_resource type="Texture2D" uid="uid://bv187shpkefdy" path="res://textures/prototype_materials/Dark/texture_01.png" id="2_rtcij"]
 [ext_resource type="Script" uid="uid://c6f4vs5pcsh1v" path="res://levels/wave_handler.gd" id="5_vnv7o"]
 [ext_resource type="Script" uid="uid://xd531u081wyx" path="res://levels/collectible_spawner.gd" id="6_gjl0y"]
-[ext_resource type="PackedScene" uid="uid://vkj15iayrnau" path="res://enemies/basic_enemy/basic_enemy.tscn" id="6_rtcij"]
 [ext_resource type="PackedScene" uid="uid://bo07g2k1wcqxk" path="res://common/collectible_block/collectible_block.tscn" id="7_d5x7l"]
-[ext_resource type="PackedScene" uid="uid://cgwc0hxoneo7e" path="res://enemies/shooting_enemy/shooting_enemy.tscn" id="7_ukwr8"]
+[ext_resource type="PackedScene" uid="uid://vkj15iayrnau" path="res://enemies/basic_enemy/basic_enemy.tscn" id="7_rtcij"]
 [ext_resource type="Script" uid="uid://dp4tgomuhuj1y" path="res://addons/modular-settings-menu/scripts/settings-handler-scripts/world_env_settings_handler.gd" id="7_vnv7o"]
+[ext_resource type="PackedScene" uid="uid://mo7rmgh3y84v" path="res://enemies/fast_enemy/fast_enemy.tscn" id="8_pb8y7"]
 [ext_resource type="Script" uid="uid://d3o6fca0xbd4g" path="res://common/resources/wave.gd" id="8_ukwr8"]
+[ext_resource type="PackedScene" uid="uid://cgwc0hxoneo7e" path="res://enemies/shooting_enemy/shooting_enemy.tscn" id="9_pb8y7"]
+[ext_resource type="PackedScene" uid="uid://i6jc37py82lm" path="res://enemies/elite_enemy/elite_enemy.tscn" id="10_hy0rb"]
 [ext_resource type="Script" uid="uid://bh4s8tbbuep0u" path="res://common/scripts/hitbox.gd" id="10_ukwr8"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wxewf"]
@@ -42,49 +44,159 @@ size = Vector2(96, 96)
 [sub_resource type="ConcavePolygonShape3D" id="ConcavePolygonShape3D_pb8y7"]
 data = PackedVector3Array(48, 0, 48, -48, 0, 48, 48, 0, -48, -48, 0, 48, -48, 0, -48, 48, 0, -48)
 
-[sub_resource type="Resource" id="Resource_pb8y7"]
-script = ExtResource("8_ukwr8")
-enemies = Array[PackedScene]([ExtResource("6_rtcij")])
-time_between_enemy_sec = 2.0
-stall_time_sec = 15.0
-metadata/_custom_type_script = ExtResource("8_ukwr8")
-
-[sub_resource type="Resource" id="Resource_ukwr8"]
-script = ExtResource("8_ukwr8")
-enemies = Array[PackedScene]([ExtResource("7_ukwr8")])
-time_between_enemy_sec = 2.0
-stall_time_sec = 15.0
-metadata/_custom_type_script = ExtResource("8_ukwr8")
-
 [sub_resource type="Resource" id="Resource_hy0rb"]
 script = ExtResource("8_ukwr8")
-enemies = Array[PackedScene]([ExtResource("6_rtcij"), ExtResource("6_rtcij")])
+enemies = Array[PackedScene]([ExtResource("7_rtcij")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 15.0
+stall_time_sec = 20.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_mxp4k"]
 script = ExtResource("8_ukwr8")
-enemies = Array[PackedScene]([ExtResource("6_rtcij"), ExtResource("7_ukwr8")])
+enemies = Array[PackedScene]([ExtResource("7_rtcij"), ExtResource("7_rtcij")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 15.0
+stall_time_sec = 20.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_d7v53"]
 script = ExtResource("8_ukwr8")
-enemies = Array[PackedScene]([ExtResource("7_ukwr8"), ExtResource("7_ukwr8")])
+enemies = Array[PackedScene]([ExtResource("8_pb8y7")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 0.0
+stall_time_sec = 20.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_0qmeg"]
 script = ExtResource("8_ukwr8")
-enemies = Array[PackedScene]([ExtResource("6_rtcij"), ExtResource("7_ukwr8"), ExtResource("6_rtcij"), ExtResource("7_ukwr8"), ExtResource("6_rtcij")])
+enemies = Array[PackedScene]([ExtResource("9_pb8y7")])
+time_between_enemy_sec = 2.0
+stall_time_sec = 20.0
+metadata/_custom_type_script = ExtResource("8_ukwr8")
+
+[sub_resource type="Resource" id="Resource_ta7ci"]
+script = ExtResource("8_ukwr8")
+enemies = Array[PackedScene]([ExtResource("9_pb8y7"), ExtResource("8_pb8y7")])
+time_between_enemy_sec = 2.0
+stall_time_sec = 0.0
+metadata/_custom_type_script = ExtResource("8_ukwr8")
+
+[sub_resource type="Resource" id="Resource_lh335"]
+script = ExtResource("8_ukwr8")
+enemies = Array[PackedScene]([ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7")])
+time_between_enemy_sec = 0.5
+stall_time_sec = 20.0
+metadata/_custom_type_script = ExtResource("8_ukwr8")
+
+[sub_resource type="Resource" id="Resource_u6cys"]
+script = ExtResource("8_ukwr8")
+enemies = Array[PackedScene]([ExtResource("9_pb8y7"), ExtResource("9_pb8y7")])
+time_between_enemy_sec = 2.0
+stall_time_sec = 20.0
+metadata/_custom_type_script = ExtResource("8_ukwr8")
+
+[sub_resource type="Resource" id="Resource_368ro"]
+script = ExtResource("8_ukwr8")
+enemies = Array[PackedScene]([ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7")])
+time_between_enemy_sec = 2.0
+stall_time_sec = 20.0
+metadata/_custom_type_script = ExtResource("8_ukwr8")
+
+[sub_resource type="Resource" id="Resource_3ca7f"]
+script = ExtResource("8_ukwr8")
+enemies = Array[PackedScene]([ExtResource("9_pb8y7"), ExtResource("7_rtcij"), ExtResource("7_rtcij"), ExtResource("9_pb8y7")])
+time_between_enemy_sec = 2.0
+stall_time_sec = 20.0
+metadata/_custom_type_script = ExtResource("8_ukwr8")
+
+[sub_resource type="Resource" id="Resource_kogck"]
+script = ExtResource("8_ukwr8")
+enemies = Array[PackedScene]([ExtResource("10_hy0rb")])
+time_between_enemy_sec = 2.0
+stall_time_sec = 0.0
+metadata/_custom_type_script = ExtResource("8_ukwr8")
+
+[sub_resource type="Resource" id="Resource_574oa"]
+script = ExtResource("8_ukwr8")
+enemies = Array[PackedScene]([ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7")])
+time_between_enemy_sec = 0.5
+stall_time_sec = 40.0
+metadata/_custom_type_script = ExtResource("8_ukwr8")
+
+[sub_resource type="Resource" id="Resource_tn76l"]
+script = ExtResource("8_ukwr8")
+enemies = Array[PackedScene]([ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7")])
+time_between_enemy_sec = 2.0
+stall_time_sec = 30.0
+metadata/_custom_type_script = ExtResource("8_ukwr8")
+
+[sub_resource type="Resource" id="Resource_werwd"]
+script = ExtResource("8_ukwr8")
+enemies = Array[PackedScene]([ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("9_pb8y7")])
+time_between_enemy_sec = 1.0
+stall_time_sec = 30.0
+metadata/_custom_type_script = ExtResource("8_ukwr8")
+
+[sub_resource type="Resource" id="Resource_of21v"]
+script = ExtResource("8_ukwr8")
+enemies = Array[PackedScene]([ExtResource("8_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7")])
+time_between_enemy_sec = 2.0
+stall_time_sec = 40.0
+metadata/_custom_type_script = ExtResource("8_ukwr8")
+
+[sub_resource type="Resource" id="Resource_80cyg"]
+script = ExtResource("8_ukwr8")
+enemies = Array[PackedScene]([ExtResource("10_hy0rb"), ExtResource("10_hy0rb"), ExtResource("9_pb8y7")])
+time_between_enemy_sec = 2.0
+stall_time_sec = 0.0
+metadata/_custom_type_script = ExtResource("8_ukwr8")
+
+[sub_resource type="Resource" id="Resource_mca5t"]
+script = ExtResource("8_ukwr8")
+enemies = Array[PackedScene]([ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7")])
+time_between_enemy_sec = 2.0
+stall_time_sec = 30.0
+metadata/_custom_type_script = ExtResource("8_ukwr8")
+
+[sub_resource type="Resource" id="Resource_axqo2"]
+script = ExtResource("8_ukwr8")
+enemies = Array[PackedScene]([ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7")])
+time_between_enemy_sec = 0.5
+stall_time_sec = 60.0
+metadata/_custom_type_script = ExtResource("8_ukwr8")
+
+[sub_resource type="Resource" id="Resource_8henu"]
+script = ExtResource("8_ukwr8")
+enemies = Array[PackedScene]([ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7")])
+time_between_enemy_sec = 2.0
+stall_time_sec = 30.0
+metadata/_custom_type_script = ExtResource("8_ukwr8")
+
+[sub_resource type="Resource" id="Resource_dcgl2"]
+script = ExtResource("8_ukwr8")
+enemies = Array[PackedScene]([ExtResource("7_rtcij"), ExtResource("7_rtcij"), ExtResource("7_rtcij"), ExtResource("7_rtcij"), ExtResource("7_rtcij")])
+time_between_enemy_sec = 2.0
+stall_time_sec = 20.0
+metadata/_custom_type_script = ExtResource("8_ukwr8")
+
+[sub_resource type="Resource" id="Resource_rm7tw"]
+script = ExtResource("8_ukwr8")
+enemies = Array[PackedScene]([ExtResource("10_hy0rb"), ExtResource("10_hy0rb"), ExtResource("10_hy0rb")])
 time_between_enemy_sec = 2.0
 stall_time_sec = 0.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_rtcij"]
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_hy0rb"]
+plane = Plane(-1, 0, 0, 0)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_mxp4k"]
+plane = Plane(1, 0, 0, 0)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_d7v53"]
+plane = Plane(0, 0, 1, 0)
+
+[sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_0qmeg"]
+plane = Plane(0, 0, -1, 0)
 
 [node name="Level" type="Node3D" node_paths=PackedStringArray("wave_handler", "collectible_spawner")]
 script = ExtResource("1_rtcij")
@@ -125,7 +237,7 @@ WorldEnvRef = NodePath("../WorldEnvironment")
 [node name="WaveHandler" type="Node" parent="."]
 unique_name_in_owner = true
 script = ExtResource("5_vnv7o")
-waves = Array[ExtResource("8_ukwr8")]([SubResource("Resource_pb8y7"), SubResource("Resource_ukwr8"), SubResource("Resource_hy0rb"), SubResource("Resource_mxp4k"), SubResource("Resource_d7v53"), SubResource("Resource_0qmeg")])
+waves = Array[ExtResource("8_ukwr8")]([SubResource("Resource_hy0rb"), SubResource("Resource_mxp4k"), SubResource("Resource_d7v53"), SubResource("Resource_0qmeg"), SubResource("Resource_ta7ci"), SubResource("Resource_lh335"), SubResource("Resource_u6cys"), SubResource("Resource_368ro"), SubResource("Resource_3ca7f"), SubResource("Resource_kogck"), SubResource("Resource_574oa"), SubResource("Resource_tn76l"), SubResource("Resource_werwd"), SubResource("Resource_of21v"), SubResource("Resource_80cyg"), SubResource("Resource_mca5t"), SubResource("Resource_axqo2"), SubResource("Resource_8henu"), SubResource("Resource_dcgl2"), SubResource("Resource_rm7tw")])
 
 [node name="WaveTimer" type="Timer" parent="WaveHandler"]
 unique_name_in_owner = true
@@ -157,6 +269,40 @@ metadata/_custom_type_script = ExtResource("10_ukwr8")
 [node name="Collider" type="CollisionShape3D" parent="BottomBoundary"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, -20, 0)
 shape = SubResource("WorldBoundaryShape3D_rtcij")
+
+[node name="InvisibleWalls" type="Node3D" parent="."]
+
+[node name="InvisibleWallPosX" type="StaticBody3D" parent="InvisibleWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 0)
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InvisibleWalls/InvisibleWallPosX"]
+shape = SubResource("WorldBoundaryShape3D_hy0rb")
+
+[node name="InvisibleWallNegX" type="StaticBody3D" parent="InvisibleWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, 0)
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InvisibleWalls/InvisibleWallNegX"]
+shape = SubResource("WorldBoundaryShape3D_mxp4k")
+
+[node name="InvisibleWallNegZ" type="StaticBody3D" parent="InvisibleWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -48)
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InvisibleWalls/InvisibleWallNegZ"]
+shape = SubResource("WorldBoundaryShape3D_d7v53")
+
+[node name="InvisibleWallPosZ" type="StaticBody3D" parent="InvisibleWalls"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 48)
+collision_layer = 32
+collision_mask = 0
+
+[node name="CollisionShape3D" type="CollisionShape3D" parent="InvisibleWalls/InvisibleWallPosZ"]
+shape = SubResource("WorldBoundaryShape3D_0qmeg")
 
 [connection signal="timeout" from="WaveHandler/WaveTimer" to="WaveHandler" method="_spawn_next_enemy"]
 [connection signal="timeout" from="WaveHandler/WaveStallTimer" to="WaveHandler" method="change_wave"]

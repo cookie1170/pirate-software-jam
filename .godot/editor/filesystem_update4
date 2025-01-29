@@ -9,6 +9,7 @@ res://levels/level.tscn
 res://player/player.tscn
 res://enemies/basic_enemy/basic_enemy.tscn
 res://enemies/shooting_enemy/shooting_enemy.tscn
+res://enemies/elite_enemy/elite_enemy.tscn
 res://common/scenes/bullet.tscn
 res://common/collectible_block/collectible_block.tscn
 res://common/upgrades/upgrades_menu.tscn
@@ -20,6 +21,12 @@ res://addons/modular-settings-menu/scenes/settings-sections/controls.tscn
 res://addons/modular-settings-menu/scenes/settings-elements/graphics-elements/max_fps.tscn
 res://addons/modular-settings-menu/scenes/settings-elements/controls-elements/sensitivity.tscn
 res://common/scenes/main_menu.tscn
-res://common/scripts/hitbox.gd
-res://common/scripts/game.gd
-res://player/player.gd
+res://common/resources/wave.gd
+res://enemies/shooting_enemy/shooting_enemy.gd
+res://levels/wave_handler.gd
+res://common/ui/hud/hud.gd
+res://common/upgrades/upgrade_resources/base_upgrade.gd
+res://common/upgrades/upgrade_resources/shield.tres
+res://common/upgrades/upgrade_resources/piercing.tres
+res://common/upgrades/upgrade_resources/harderhits.tres
+res://enemies/fast_enemy/fast_enemy.tscn

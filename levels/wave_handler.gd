@@ -28,13 +28,9 @@ func _ready() -> void:
 
 func _physics_process(_delta: float) -> void:
 	if not wave_timer.is_stopped():
-		time_display_value = snappedf(
-				wave_timer.time_left, 0.05
-			)
+		time_display_value = wave_timer.time_left
 	else:
-		time_display_value = snappedf(
-			stall_timer.time_left, 0.05
-		)
+		time_display_value = stall_timer.time_left
 
 	if alive_enemies <= 0 and has_spawned_all_enemies and waves_started:
 		alive_enemies = 0
@@ -75,7 +71,8 @@ func change_wave() -> void:
 	if wave_timer.is_stopped():
 		wave_timer.wait_time = time_between_waves_sec
 		wave_timer.start()
-	if current_wave % 5 == 0 and current_wave > 1:
+	if current_wave % 5 == 0 and current_wave > 1 and current_wave < 19:
+		await get_tree().create_timer(0.5).timeout
 		UpgradesMenu.refresh_upgrades()
 	print_debug("changing wave to wave %s" % current_wave)
 

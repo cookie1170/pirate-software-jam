@@ -3,9 +3,10 @@ extends Enemy
 
 @export var damage : int
 @export_range(0.1, 10, 0.1) var accuracy : float
-@export_range(0.1, 10, 0.1) var attack_speed : float
-@export_range(1, 20, 0.5) var start_aim_dist : float
-@export_range(1, 20, 0.5) var stop_aim_dist : float
+@export_range(0.05, 10, 0.05) var attack_speed : float
+@export_range(1, 40, 0.5) var start_aim_dist : float
+@export_range(1, 40, 0.5) var stop_aim_dist : float
+@export_range(1, 50, 1) var bullet_vel : float
 @export_range(0, 1, 0.05) var notice_time : float
 @export var bullet_scene : PackedScene
 
@@ -31,7 +32,9 @@ func _physics_process(delta: float) -> void:
 		is_aiming = false
 	if is_aiming:
 		check_wall_raycast.target_position = target_pos - position
-		if not check_wall_raycast.is_colliding():
+		if (not check_wall_raycast.is_colliding()
+		and global_position.distance_to(target_pos)
+		<= lerpf(start_aim_dist, stop_aim_dist, 0.5)):
 			skip_nav_frame = true
 		if not has_noticed_player:
 			if notice_timer.is_stopped():
@@ -54,10 +57,10 @@ func shoot() -> void:
 	bullet_instance.hitbox.pierce = 1
 	bullet_instance.apply_impulse(global_position.direction_to(
 			target_pos + player.velocity * 0.5
-		) * 30 + Vector3(
-		randf_range(0.0 - spread, 0.0 + spread),
-		randf_range(0.0 - spread, 0.0 + spread),
-		randf_range(0.0 - spread, 0.0 + spread)
+		) * bullet_vel + Vector3(
+		randf_range(-spread, spread),
+		randf_range(-spread, spread),
+		randf_range(-spread, spread)
 	) + Vector3.UP * 2.5)
 	shooting_cooldown.start()
 

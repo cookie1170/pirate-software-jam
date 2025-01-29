@@ -1,5 +1,8 @@
-CPUParticles3D
+Node3D
 CollisionShape3D
+StaticBody3D
+Label3D
+CPUParticles3D
 Area3D
 AnimationPlayer
 Hitbox
@@ -10,6 +13,3 @@ CSGPolygon3D
 CSGCombiner3D
 MeshInstance3D
 Player
-CPUParticles2D
-Button
-Label
