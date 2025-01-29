@@ -20,6 +20,10 @@ run/main_scene="uid://bluj5us1vph6q"
 config/features=PackedStringArray("4.4", "Mobile")
 config/icon="res://icon.svg"
 
+[audio]
+
+buses/default_bus_layout="res://common/bg_music/default_bus_layout.tres"
+
 [autoload]
 
 SettingsDataManager="*res://addons/modular-settings-menu/singletons/settings_data_manager.gd"

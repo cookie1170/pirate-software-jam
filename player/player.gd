@@ -32,6 +32,11 @@ extends CharacterBody3D
 @onready var mesh: MeshInstance3D = %Mesh
 @onready var outline_mesh: MeshInstance3D = %OutlineMesh
 @onready var anim_player: AnimationPlayer = %AnimationPlayer
+@onready var hurt_sfx: AudioStreamPlayer = %Hurt
+@onready var pickup_sfx: AudioStreamPlayer = %PickupCollectible
+@onready var shoot_sfx: AudioStreamPlayer = %Shoot
+@onready var jump_sfx: AudioStreamPlayer = %Jump
+@onready var death_1_sfx: AudioStreamPlayer = %Death1
 @onready var game_scene : Node = GlobalReferences.game_scene
 #endregion
 
@@ -124,6 +129,8 @@ func handle_movement() -> void:
 		velocity.y += (blockless_jump_velocity if is_one_hit
 		else jump_velocity)
 		jump_particles.restart()
+		jump_sfx.pitch_scale = randf_range(0.75, 1.25)
+		jump_sfx.play()
 
 	move_and_slide()
 
@@ -196,15 +203,20 @@ func shoot() -> void:
 	if randf_range(0.0, 1.0) > bullet_save_chance:
 		_change_voxel_amt(-1)
 	shooting_cooldown.start()
+	shoot_sfx.pitch_scale = randf_range(0.75, 1.25)
+	shoot_sfx.play()
 #endregion
 
 #region virtual methods
 func _pickup_collectible(collectible : Collectible) -> void:
 	_change_voxel_amt(collectible.amount)
 	collectible.anim_player.play("collect")
+	pickup_sfx.pitch_scale = randf_range(0.75, 1.25)
+	pickup_sfx.play()
 	if collectible.name == "FirstCollectible":
 		game_scene.level.wave_handler.waves_started = true
 		Hud.visible = true
+		game_scene.switch_music("fight")
 
 
 # awful but i can't be bothered to fix it
@@ -239,10 +251,10 @@ func _on_enemy_killed(enemy : Enemy):
 
 
 func _get_hit(hitbox : Hitbox) -> void:
-	Engine.time_scale = 0.2
 	if is_one_hit or hitbox.is_one_shot:
-		_die()
+		die()
 		return
+	Engine.time_scale = 0.2
 	var dealt_damage : int = clampf(hitbox.damage - defense, 1, INF)
 	hurt_particles.amount = min(dealt_damage, block_amount)
 	block_amount -= dealt_damage
@@ -256,12 +268,16 @@ func _get_hit(hitbox : Hitbox) -> void:
 		hurt_particles.direction.y = 10
 		hurt_particles.direction.z = hitbox.owner.velocity.z
 	hurt_particles.restart()
+	hurt_sfx.pitch_scale = randf_range(0.75, 1.25)
+	hurt_sfx.play()
 	await get_tree().create_timer(0.5 * 0.2).timeout
 	Engine.time_scale = 1.0
 	handle_block_changes()
 
 
-func _die() -> void:
+func die() -> void:
+	game_scene.switch_music("none")
+	death_1_sfx.play()
 	Hud.visible = false
 	trail_particles.visible = false
 	Engine.time_scale = 1.0

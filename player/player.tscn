@@ -1,4 +1,4 @@
-[gd_scene load_steps=48 format=4 uid="uid://bi40akbu0hcyl"]
+[gd_scene load_steps=54 format=4 uid="uid://bi40akbu0hcyl"]
 
 [ext_resource type="Script" uid="uid://b1qqjj3erxy3i" path="res://player/player.gd" id="1_oul6g"]
 [ext_resource type="PackedScene" uid="uid://ciy177ajnquy0" path="res://common/scenes/bullet.tscn" id="2_boad6"]
@@ -14,6 +14,12 @@
 [ext_resource type="Script" uid="uid://cw2knxh8u7elo" path="res://addons/modular-settings-menu/scripts/settings-handler-scripts/camera_settings_handler.gd" id="6_g6k8r"]
 [ext_resource type="BoxMesh" uid="uid://bmjjnfg1hiqso" path="res://common/resources/meshes/block_3.tres" id="7_yllr7"]
 [ext_resource type="BoxMesh" uid="uid://ba2si1edpkedm" path="res://common/resources/meshes/block_4.tres" id="8_kb6p2"]
+[ext_resource type="AudioStream" uid="uid://brrhth7oro3ra" path="res://player/pickup_collectible.wav" id="15_32hag"]
+[ext_resource type="AudioStream" uid="uid://dqyn0ml7oemas" path="res://player/player_hurt.wav" id="15_tqiix"]
+[ext_resource type="AudioStream" uid="uid://deu3s1mauj6ww" path="res://player/shoot.wav" id="16_tqiix"]
+[ext_resource type="AudioStream" uid="uid://cuk5ao5i1qbte" path="res://player/jump.wav" id="18_e7oew"]
+[ext_resource type="AudioStream" uid="uid://c03gqpudc0trv" path="res://player/death_1.wav" id="19_c35mf"]
+[ext_resource type="AudioStream" uid="uid://dwvig53xgocfs" path="res://player/death_2.wav" id="20_65viv"]
 
 [sub_resource type="Shader" id="Shader_kb6p2"]
 code = "shader_type spatial;
@@ -413,6 +419,20 @@ tracks/7/keys = {
 "update": 1,
 "values": [false, true]
 }
+tracks/8/type = "method"
+tracks/8/imported = false
+tracks/8/enabled = true
+tracks/8/path = NodePath("Death2")
+tracks/8/interp = 1
+tracks/8/loop_wrap = true
+tracks/8/keys = {
+"times": PackedFloat32Array(0.3),
+"transitions": PackedFloat32Array(1),
+"values": [{
+"args": [0.0],
+"method": &"play"
+}]
+}
 
 [sub_resource type="AnimationLibrary" id="AnimationLibrary_32hag"]
 _data = {
@@ -599,5 +619,38 @@ unique_name_in_owner = true
 libraries = {
 &"": SubResource("AnimationLibrary_32hag")
 }
+
+[node name="Hurt" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("15_tqiix")
+bus = &"SFX"
+
+[node name="PickupCollectible" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("15_32hag")
+bus = &"SFX"
+
+[node name="Shoot" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("16_tqiix")
+pitch_scale = 1.5
+bus = &"SFX"
+
+[node name="Jump" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("18_e7oew")
+bus = &"SFX"
+
+[node name="Death1" type="AudioStreamPlayer" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("19_c35mf")
+bus = &"SFX"
+
+[node name="Death2" type="AudioStreamPlayer" parent="."]
+stream = ExtResource("20_65viv")
+bus = &"SFX"
+
+[node name="AudioListener3D" type="AudioListener3D" parent="."]
+current = true
 
 [connection signal="area_entered" from="CollectibleBox" to="." method="_pickup_collectible"]

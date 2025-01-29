@@ -13,10 +13,14 @@
 [ext_resource type="PackedScene" uid="uid://i6jc37py82lm" path="res://enemies/elite_enemy/elite_enemy.tscn" id="10_hy0rb"]
 [ext_resource type="Script" uid="uid://bh4s8tbbuep0u" path="res://common/scripts/hitbox.gd" id="10_ukwr8"]
 
-[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_wxewf"]
+[sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hy0rb"]
+sky_top_color = Color(0.0196078, 0.121569, 0.223529, 1)
+sky_horizon_color = Color(0.297, 0.427717, 0.55, 1)
+ground_bottom_color = Color(0.0196078, 0.121569, 0.223529, 1)
+ground_horizon_color = Color(0.512932, 0.484566, 0.611075, 1)
 
 [sub_resource type="Sky" id="Sky_hlfcq"]
-sky_material = SubResource("ProceduralSkyMaterial_wxewf")
+sky_material = SubResource("ProceduralSkyMaterial_hy0rb")
 
 [sub_resource type="Environment" id="Environment_7ua0a"]
 background_mode = 2
@@ -25,9 +29,13 @@ ambient_light_source = 3
 ambient_light_color = Color(1, 1, 1, 1)
 ambient_light_sky_contribution = 0.5
 ambient_light_energy = 1.2
+fog_enabled = true
 fog_mode = 1
-fog_density = 1.0
-fog_depth_curve = 0.148651
+fog_light_color = Color(0.0843334, 0, 0.23, 1)
+fog_light_energy = 0.5
+fog_density = 0.5
+fog_sky_affect = 0.9
+fog_depth_curve = 4.0
 
 [sub_resource type="NavigationMesh" id="NavigationMesh_ukwr8"]
 vertices = PackedVector3Array(-47.5, 0.5, -47.5, -47.5, 0.5, 47.5, 47.5, 0.5, 47.5, 47.5, 0.5, -47.5)
@@ -263,7 +271,7 @@ is_one_shot = true
 damage = 100
 has_pierce = false
 knockback = 0.0
-type = "Enemy"
+type = "Typeless"
 metadata/_custom_type_script = ExtResource("10_ukwr8")
 
 [node name="Collider" type="CollisionShape3D" parent="BottomBoundary"]
@@ -275,7 +283,7 @@ shape = SubResource("WorldBoundaryShape3D_rtcij")
 [node name="InvisibleWallPosX" type="StaticBody3D" parent="InvisibleWalls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 48, 0, 0)
 collision_layer = 32
-collision_mask = 0
+collision_mask = 32
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InvisibleWalls/InvisibleWallPosX"]
 shape = SubResource("WorldBoundaryShape3D_hy0rb")
@@ -283,7 +291,7 @@ shape = SubResource("WorldBoundaryShape3D_hy0rb")
 [node name="InvisibleWallNegX" type="StaticBody3D" parent="InvisibleWalls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, -48, 0, 0)
 collision_layer = 32
-collision_mask = 0
+collision_mask = 32
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InvisibleWalls/InvisibleWallNegX"]
 shape = SubResource("WorldBoundaryShape3D_mxp4k")
@@ -291,7 +299,7 @@ shape = SubResource("WorldBoundaryShape3D_mxp4k")
 [node name="InvisibleWallNegZ" type="StaticBody3D" parent="InvisibleWalls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, -48)
 collision_layer = 32
-collision_mask = 0
+collision_mask = 32
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InvisibleWalls/InvisibleWallNegZ"]
 shape = SubResource("WorldBoundaryShape3D_d7v53")
@@ -299,7 +307,7 @@ shape = SubResource("WorldBoundaryShape3D_d7v53")
 [node name="InvisibleWallPosZ" type="StaticBody3D" parent="InvisibleWalls"]
 transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 48)
 collision_layer = 32
-collision_mask = 0
+collision_mask = 32
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InvisibleWalls/InvisibleWallPosZ"]
 shape = SubResource("WorldBoundaryShape3D_0qmeg")

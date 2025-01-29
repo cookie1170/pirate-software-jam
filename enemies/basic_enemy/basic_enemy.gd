@@ -18,6 +18,7 @@ extends CharacterBody3D
 @onready var hurtbox: Hurtbox = %Hurtbox
 @onready var hurt_particles: CPUParticles3D = %HurtParticles
 @onready var nav_timer: Timer = %NavTimer
+@onready var hurt_sfx: AudioStreamPlayer3D = %Hurt
 @onready var player : Player = GlobalReferences.game_scene.player
 @onready var coin_amount = randi_range(coin_amount_min, coin_amount_max)
 #endregion
@@ -51,6 +52,8 @@ func _physics_process(delta: float) -> void:
 
 
 func _get_hit(attack_hitbox : Hitbox) -> void:
+	hurt_sfx.pitch_scale = randf_range(0.75, 1.25)
+	hurt_sfx.play()
 	var hitbox_horizontal_vel := Vector2(
 		attack_hitbox.owner.linear_velocity.x, 
 		attack_hitbox.owner.linear_velocity.z

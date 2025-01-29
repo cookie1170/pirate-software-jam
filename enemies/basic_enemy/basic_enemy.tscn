@@ -1,10 +1,11 @@
-[gd_scene load_steps=26 format=4 uid="uid://vkj15iayrnau"]
+[gd_scene load_steps=27 format=4 uid="uid://vkj15iayrnau"]
 
 [ext_resource type="Script" uid="uid://bsmce2pk6wm0s" path="res://enemies/basic_enemy/basic_enemy.gd" id="1_ubayq"]
 [ext_resource type="Script" uid="uid://cueoxdgpqrre6" path="res://common/scripts/hurtbox.gd" id="2_6ofcp"]
 [ext_resource type="BoxMesh" uid="uid://diyfhnaeex4bm" path="res://common/resources/meshes/block_0.tres" id="2_xuk7h"]
 [ext_resource type="Script" uid="uid://bh4s8tbbuep0u" path="res://common/scripts/hitbox.gd" id="3_5xrap"]
 [ext_resource type="Gradient" uid="uid://l5xjnpns02x8" path="res://common/resources/gradients/gradient_orange_particles.tres" id="3_m6spd"]
+[ext_resource type="AudioStream" uid="uid://d1o8ga7sxneub" path="res://enemies/basic_enemy/enemy_hurt.wav" id="6_u66kj"]
 
 [sub_resource type="Shader" id="Shader_6ofcp"]
 resource_local_to_scene = true
@@ -509,6 +510,11 @@ libraries = {
 unique_name_in_owner = true
 wait_time = 0.5
 autostart = true
+
+[node name="Hurt" type="AudioStreamPlayer3D" parent="."]
+unique_name_in_owner = true
+stream = ExtResource("6_u66kj")
+bus = &"SFX"
 
 [connection signal="navigation_finished" from="NavAgent" to="." method="_on_path_update"]
 [connection signal="timeout" from="NavTimer" to="." method="_on_path_update"]

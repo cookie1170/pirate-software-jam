@@ -10,4 +10,4 @@ func _apply_settings() -> void:
 	var busIndex: int = AudioServer.get_bus_index(AUDIO_BUS)
 	
 	 #Set the volume of the audio bus
-	#AudioServer.set_bus_volume_db(busIndex, linear_to_db(currentValue))
+	AudioServer.set_bus_volume_db(busIndex, linear_to_db(currentValue))

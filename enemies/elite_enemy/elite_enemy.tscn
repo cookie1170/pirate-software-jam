@@ -171,3 +171,6 @@ pixel_size = 0.01
 billboard = 1
 modulate = Color(1, 1, 0.921569, 1)
 text = "ELITE"
+
+[node name="Hurt" parent="." index="14"]
+bus = &"Master"

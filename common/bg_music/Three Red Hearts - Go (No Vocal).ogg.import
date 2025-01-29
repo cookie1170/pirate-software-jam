@@ -1,0 +1,19 @@
+[remap]
+
+importer="oggvorbisstr"
+type="AudioStreamOggVorbis"
+uid="uid://dt1ud54ul2v58"
+path="res://.godot/imported/Three Red Hearts - Go (No Vocal).ogg-8ddc9b14af3a43a54a3dff224eab61c1.oggvorbisstr"
+
+[deps]
+
+source_file="res://common/bg_music/Three Red Hearts - Go (No Vocal).ogg"
+dest_files=["res://.godot/imported/Three Red Hearts - Go (No Vocal).ogg-8ddc9b14af3a43a54a3dff224eab61c1.oggvorbisstr"]
+
+[params]
+
+loop=true
+loop_offset=0.0
+bpm=0.0
+beat_count=0
+bar_beats=4
