@@ -128,7 +128,6 @@ radius = 0.75
 height = 3.0
 
 [node name="Enemy" instance=ExtResource("1_egh6c")]
-collision_mask = 1
 script = ExtResource("2_uf8yh")
 damage = 16
 accuracy = 2.0

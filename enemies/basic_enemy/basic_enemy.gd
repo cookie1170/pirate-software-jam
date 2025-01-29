@@ -54,15 +54,17 @@ func _physics_process(delta: float) -> void:
 func _get_hit(attack_hitbox : Hitbox) -> void:
 	hurt_sfx.pitch_scale = randf_range(0.75, 1.25)
 	hurt_sfx.play()
-	var hitbox_horizontal_vel := Vector2(
+	var hitbox_horizontal_vel : Vector2
+	if "horizontal_velocity" in attack_hitbox.owner:
+		hitbox_horizontal_vel = Vector2(
 		attack_hitbox.owner.linear_velocity.x, 
 		attack_hitbox.owner.linear_velocity.z
 		).normalized()
-	hurt_particles.direction = Vector3(
-		hitbox_horizontal_vel.x,
-		1,
-		hitbox_horizontal_vel.y
-		)
+		hurt_particles.direction = Vector3(
+			hitbox_horizontal_vel.x,
+			1,
+			hitbox_horizontal_vel.y
+			)
 	velocity = Vector3(
 		hitbox_horizontal_vel.x * attack_hitbox.knockback,
 		5 * clampf(hitbox.knockback, 0, 1),
