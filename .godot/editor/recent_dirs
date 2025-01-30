@@ -1,3 +1,4 @@
+res://common/resources/gradients
 C:/Users/LiiiightYT/Documents/godot exports/pirate16
 res://enemies/fast_enemy
 res://enemies/elite_enemy
@@ -8,7 +9,6 @@ res://common/shaders
 res://addons/modular-settings-menu/scenes
 res://player
 res://common/scenes
-res://common/resources/gradients
 res://levels
 res://common/ui/theme
 res://

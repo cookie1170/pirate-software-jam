@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://vkj15iayrnau" path="res://enemies/basic_enemy/basic_enemy.tscn" id="1_j5r50"]
 [ext_resource type="Script" uid="uid://c1r5gfjembygi" path="res://enemies/shooting_enemy/shooting_enemy.gd" id="2_00urf"]
-[ext_resource type="PackedScene" uid="uid://ciy177ajnquy0" path="res://player/bullet.tscn" id="3_dueci"]
+[ext_resource type="PackedScene" uid="uid://cg7w5dcx4ilq8" path="res://enemies/shooting_enemy/enemy_bullet.tscn" id="3_00urf"]
 
 [sub_resource type="Shader" id="Shader_aser5"]
 resource_local_to_scene = true
@@ -75,7 +75,7 @@ noise = SubResource("FastNoiseLite_5xrap")
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_aser5")
-shader_parameter/albedo = Color(1, 1, 1, 1)
+shader_parameter/albedo = Color(0.501961, 0.584314, 1, 1)
 shader_parameter/albedo_texture_size = null
 shader_parameter/point_size = 1.0
 shader_parameter/roughness = 1.0
@@ -126,7 +126,7 @@ tracks/0/keys = {
 "times": PackedFloat32Array(0),
 "transitions": PackedFloat32Array(1),
 "update": 0,
-"values": [Color(1, 1, 1, 1)]
+"values": [Color(0.501961, 0.584314, 1, 1)]
 }
 
 [sub_resource type="Animation" id="Animation_00urf"]
@@ -175,7 +175,7 @@ start_aim_dist = 10.0
 stop_aim_dist = 20.0
 bullet_vel = 30.0
 notice_time = 0.2
-bullet_scene = ExtResource("3_dueci")
+bullet_scene = ExtResource("3_00urf")
 
 [node name="Mesh" parent="." index="1"]
 mesh = SubResource("CapsuleMesh_dueci")
