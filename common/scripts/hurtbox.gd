@@ -1,7 +1,7 @@
 class_name Hurtbox
 extends Area3D
 
-@export_enum("Player", "Enemy") var type : String
+@export_enum("Player", "Enemy") var type: String
 
 func _ready() -> void:
 	collision_layer = 0
@@ -9,15 +9,15 @@ func _ready() -> void:
 	monitorable = false
 
 
-func _physics_process(delta: float) -> void:
+func _physics_process(_delta: float) -> void:
 	if monitoring:
 		if has_overlapping_areas():
-			for hitbox : Hitbox in get_overlapping_areas():
+			for hitbox: Hitbox in get_overlapping_areas():
 				if not hitbox.local_i_frames:
 					_get_hit(hitbox)
 
 
-func _get_hit(hitbox : Hitbox):
+func _get_hit(hitbox: Hitbox):
 	owner._get_hit(hitbox)
 	if hitbox.has_pierce:
 		hitbox.pierce -= 1

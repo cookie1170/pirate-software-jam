@@ -1,7 +1,7 @@
 [gd_scene load_steps=54 format=4 uid="uid://bi40akbu0hcyl"]
 
 [ext_resource type="Script" uid="uid://b1qqjj3erxy3i" path="res://player/player.gd" id="1_oul6g"]
-[ext_resource type="PackedScene" uid="uid://ciy177ajnquy0" path="res://common/scenes/bullet.tscn" id="2_boad6"]
+[ext_resource type="PackedScene" uid="uid://ciy177ajnquy0" path="res://player/bullet.tscn" id="2_boad6"]
 [ext_resource type="Texture2D" uid="uid://b4mp0yqk1nqqq" path="res://common/resources/gradients/gradient1d_blue.tres" id="2_g1dw6"]
 [ext_resource type="Script" uid="uid://cox2ddvnlx17p" path="res://common/upgrades/upgrade_resources/base_upgrade.gd" id="3_kb6p2"]
 [ext_resource type="BoxMesh" uid="uid://diyfhnaeex4bm" path="res://common/resources/meshes/block_0.tres" id="3_yw30f"]
@@ -179,7 +179,7 @@ hue_variation_max = 0.05
 resource_name = "block_particles"
 script/source = "extends GPUParticles3D
 
-@export var BLOCKS : Dictionary[int, Mesh]
+@export var BLOCKS: Dictionary[int, Mesh]
 
 func _ready() -> void:
 	update_particles()
@@ -226,8 +226,10 @@ func _process(delta: float) -> void:
 resource_name = "hurtbox_collider"
 script/source = "extends CollisionShape3D
 
+@onready var collider: CollisionShape3D = %Collider
+
 func _physics_process(_delta: float) -> void:
-	scale = %Collider.scale
+	scale = collider.scale
 "
 
 [sub_resource type="SphereShape3D" id="SphereShape3D_boad6"]
@@ -649,8 +651,5 @@ bus = &"SFX"
 [node name="Death2" type="AudioStreamPlayer" parent="."]
 stream = ExtResource("20_65viv")
 bus = &"SFX"
-
-[node name="AudioListener3D" type="AudioListener3D" parent="."]
-current = true
 
 [connection signal="area_entered" from="CollectibleBox" to="." method="_pickup_collectible"]

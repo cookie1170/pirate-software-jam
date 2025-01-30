@@ -1,6 +1,6 @@
 extends Node
 
-@export var collectible_scene : PackedScene
+@export var collectible_scene: PackedScene
 
 
 func _spawn_collectible() -> void:

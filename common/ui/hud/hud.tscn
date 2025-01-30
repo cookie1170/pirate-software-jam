@@ -32,20 +32,21 @@ grow_horizontal = 2
 grow_vertical = 2
 texture = ExtResource("4_0pq1e")
 
-[node name="StatDisplay" type="VBoxContainer" parent="."]
+[node name="StatDisplay" type="HBoxContainer" parent="."]
 layout_mode = 1
 anchors_preset = -1
-anchor_top = 0.850309
+anchor_top = 0.95
 anchor_right = 0.15
 anchor_bottom = 1.00031
 offset_left = 20.0
 offset_top = -34.7994
-offset_right = 20.0
+offset_right = 153.2
 offset_bottom = -20.0
 grow_vertical = 0
 mouse_filter = 2
 
 [node name="CoinPanel" type="PanelContainer" parent="StatDisplay"]
+custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
@@ -73,9 +74,10 @@ unique_name_in_owner = true
 layout_mode = 2
 size_flags_horizontal = 8
 theme_override_font_sizes/font_size = 32
-text = "coins"
+text = "blocks"
 
 [node name="BlockPanel" type="PanelContainer" parent="StatDisplay"]
+custom_minimum_size = Vector2(160, 0)
 layout_mode = 2
 size_flags_vertical = 3
 mouse_filter = 2
@@ -132,8 +134,8 @@ unique_name_in_owner = true
 layout_mode = 2
 text = "Wave %s"
 
-[node name="StallTime" type="Label" parent="WaveInfo/MarginContainer/WaveVBox"]
+[node name="EnemyNumber" type="Label" parent="WaveInfo/MarginContainer/WaveVBox"]
 unique_name_in_owner = true
 layout_mode = 2
-text = "%s"
+text = "Enemies"
 horizontal_alignment = 1

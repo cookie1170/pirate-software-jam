@@ -1,3 +1,5 @@
+Label
+HBoxContainer
 AudioListener3D
 AnimationPlayer
 AudioStreamPlayer
@@ -10,6 +12,3 @@ CPUParticles3D
 Area3D
 Hitbox
 CSGBox3D
-CSGMesh3D
-CSGTorus3D
-CSGPolygon3D

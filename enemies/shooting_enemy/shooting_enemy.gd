@@ -1,22 +1,22 @@
 class_name ShootingEnemy
 extends Enemy
 
-@export var damage : int
-@export_range(0.1, 10, 0.1) var accuracy : float
-@export_range(0.05, 10, 0.05) var attack_speed : float
-@export_range(1, 40, 0.5) var start_aim_dist : float
-@export_range(1, 40, 0.5) var stop_aim_dist : float
-@export_range(1, 50, 1) var bullet_vel : float
-@export_range(0, 1, 0.05) var notice_time : float
-@export var bullet_scene : PackedScene
+@export var damage: int
+@export_range(0.1, 10, 0.1) var accuracy: float
+@export_range(0.05, 10, 0.05) var attack_speed: float
+@export_range(1, 40, 0.5) var start_aim_dist: float
+@export_range(1, 40, 0.5) var stop_aim_dist: float
+@export_range(1, 50, 1) var bullet_vel: float
+@export_range(0, 1, 0.05) var notice_time: float
+@export var bullet_scene: PackedScene
 
 @onready var shooting_cooldown: Timer = %ShootingCooldown
-@onready var notice_timer : Timer = %NoticeTimer
+@onready var notice_timer: Timer = %NoticeTimer
 @onready var check_wall_raycast: RayCast3D = %CheckWallRaycast
 @onready var shooting_anim_player: AnimationPlayer = %ShootingAnimPlayer
 
-var has_noticed_player : bool
-var is_aiming : bool
+var has_noticed_player: bool
+var is_aiming: bool
 
 func _ready() -> void:
 	super()
@@ -48,8 +48,8 @@ func _physics_process(delta: float) -> void:
 
 
 func shoot() -> void:
-	var bullet_instance : RigidBody3D = bullet_scene.instantiate()
-	var spread : float = 1.0 / clampf(accuracy, 0.1, INF)
+	var bullet_instance: RigidBody3D = bullet_scene.instantiate()
+	var spread: float = 1.0 / clampf(accuracy, 0.1, INF)
 	bullet_instance.hitbox.type = "Enemy"
 	get_parent().add_child(bullet_instance)
 	bullet_instance.global_position = global_position
@@ -69,7 +69,7 @@ func _on_notice_timer_timeout() -> void:
 	has_noticed_player = true
 
 
-func _get_hit(attack_hitbox : Hitbox) -> void:
+func _get_hit(attack_hitbox: Hitbox) -> void:
 	super(attack_hitbox)
 	shooting_anim_player.stop()
 	shooting_cooldown.stop()

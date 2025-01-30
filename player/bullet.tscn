@@ -1,16 +1,16 @@
 [gd_scene load_steps=19 format=4 uid="uid://ciy177ajnquy0"]
 
-[ext_resource type="Texture2D" uid="uid://b4mp0yqk1nqqq" path="res://common/resources/gradients/gradient1d_blue.tres" id="1_q1i2o"]
-[ext_resource type="BoxMesh" uid="uid://diyfhnaeex4bm" path="res://common/resources/meshes/block_0.tres" id="2_vw26v"]
-[ext_resource type="Gradient" uid="uid://doolqgh7pxcdh" path="res://common/resources/gradients/gradient_blue.tres" id="3_ma2uj"]
-[ext_resource type="Script" uid="uid://bh4s8tbbuep0u" path="res://common/scripts/hitbox.gd" id="4_vb0ah"]
+[ext_resource type="Texture2D" uid="uid://b4mp0yqk1nqqq" path="res://common/resources/gradients/gradient1d_blue.tres" id="1_42du2"]
+[ext_resource type="Script" uid="uid://bh4s8tbbuep0u" path="res://common/scripts/hitbox.gd" id="2_4kon0"]
+[ext_resource type="BoxMesh" uid="uid://diyfhnaeex4bm" path="res://common/resources/meshes/block_0.tres" id="3_risil"]
+[ext_resource type="Gradient" uid="uid://doolqgh7pxcdh" path="res://common/resources/gradients/gradient_blue.tres" id="4_yag3h"]
 
 [sub_resource type="GDScript" id="GDScript_q1i2o"]
 resource_name = "bullet"
 script/source = "extends RigidBody3D
 
-@export var anim_player : AnimationPlayer
-@export var hitbox : Hitbox
+@export var anim_player: AnimationPlayer
+@export var hitbox: Hitbox
 "
 
 [sub_resource type="Shader" id="Shader_1y6ct"]
@@ -28,7 +28,7 @@ void fragment() {
 resource_local_to_scene = true
 render_priority = 0
 shader = SubResource("Shader_1y6ct")
-shader_parameter/gradient = ExtResource("1_q1i2o")
+shader_parameter/gradient = ExtResource("1_42du2")
 shader_parameter/progress = 0.0
 
 [sub_resource type="BoxMesh" id="BoxMesh_6bq6f"]
@@ -190,10 +190,10 @@ shape = SubResource("BoxShape3D_6bq6f")
 
 [node name="Hitbox" type="Area3D" parent="."]
 unique_name_in_owner = true
-script = ExtResource("4_vb0ah")
+script = ExtResource("2_4kon0")
 total_i_frames = 0.5
 type = "Player"
-metadata/_custom_type_script = ExtResource("4_vb0ah")
+metadata/_custom_type_script = ExtResource("2_4kon0")
 
 [node name="Collider" type="CollisionShape3D" parent="Hitbox"]
 shape = SubResource("BoxShape3D_j40gx")
@@ -203,13 +203,13 @@ debug_color = Color(0.7, 0, 0.0116665, 0.419608)
 emitting = false
 one_shot = true
 explosiveness = 0.85
-mesh = ExtResource("2_vw26v")
+mesh = ExtResource("3_risil")
 particle_flag_align_y = true
 direction = Vector3(0, 1.775, 0)
 initial_velocity_min = 6.09
 initial_velocity_max = 6.09
 scale_amount_curve = SubResource("Curve_boyjm")
-color_ramp = ExtResource("3_ma2uj")
+color_ramp = ExtResource("4_yag3h")
 
 [node name="DespawnTimer" type="Timer" parent="."]
 unique_name_in_owner = true

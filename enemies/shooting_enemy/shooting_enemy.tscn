@@ -2,7 +2,7 @@
 
 [ext_resource type="PackedScene" uid="uid://vkj15iayrnau" path="res://enemies/basic_enemy/basic_enemy.tscn" id="1_j5r50"]
 [ext_resource type="Script" uid="uid://c1r5gfjembygi" path="res://enemies/shooting_enemy/shooting_enemy.gd" id="2_00urf"]
-[ext_resource type="PackedScene" uid="uid://ciy177ajnquy0" path="res://common/scenes/bullet.tscn" id="3_dueci"]
+[ext_resource type="PackedScene" uid="uid://ciy177ajnquy0" path="res://player/bullet.tscn" id="3_dueci"]
 
 [sub_resource type="Shader" id="Shader_aser5"]
 resource_local_to_scene = true

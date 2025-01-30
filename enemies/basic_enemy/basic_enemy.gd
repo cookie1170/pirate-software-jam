@@ -2,31 +2,31 @@ class_name Enemy
 extends CharacterBody3D
 
 #region exports
-@export var health : int
-@export var contact_damage : int
-@export_range(1, 20) var max_speed : float
-@export_range(0.05, 1, 0.05) var accel_sec : float
-@export var coin_amount_min : int
-@export var coin_amount_max : int
+@export var health: int
+@export var contact_damage: int
+@export_range(1, 20) var max_speed: float
+@export_range(0.05, 1, 0.05) var accel_sec: float
+@export var coin_amount_min: int
+@export var coin_amount_max: int
 #endregion
 
 #region nodes & misc @onready
-@onready var prev_color : Color = %Mesh.mesh.material.get_shader_parameter("albedo")
-@onready var nav : NavigationAgent3D = %NavAgent
-@onready var anim_player : AnimationPlayer = %BaseAnimPlayer
+@onready var prev_color: Color = %Mesh.mesh.material.get_shader_parameter("albedo")
+@onready var nav: NavigationAgent3D = %NavAgent
+@onready var anim_player: AnimationPlayer = %BaseAnimPlayer
 @onready var hitbox: Hitbox = %Hitbox
 @onready var hurtbox: Hurtbox = %Hurtbox
 @onready var hurt_particles: CPUParticles3D = %HurtParticles
 @onready var nav_timer: Timer = %NavTimer
 @onready var hurt_sfx: AudioStreamPlayer3D = %Hurt
-@onready var player : Player = GlobalReferences.game_scene.player
-@onready var coin_amount = randi_range(coin_amount_min, coin_amount_max)
+@onready var player: Player = GlobalReferences.game_scene.player
+@onready var coin_amount: int = randi_range(coin_amount_min, coin_amount_max)
 #endregion
 
 #region other vars
-var target_pos : Vector3
-var skip_nav_frame : bool
-var wave_index : int
+var target_pos: Vector3
+var skip_nav_frame: bool
+var wave_index: int
 #endregion
 
 func _ready() -> void:
@@ -36,7 +36,7 @@ func _ready() -> void:
 
 
 func _physics_process(delta: float) -> void:
-	var direction : Vector3 = nav.get_next_path_position() - global_position
+	var direction: Vector3 = nav.get_next_path_position() - global_position
 	direction = direction.normalized()
 	if skip_nav_frame:
 		skip_nav_frame = false
@@ -51,10 +51,10 @@ func _physics_process(delta: float) -> void:
 	move_and_slide()
 
 
-func _get_hit(attack_hitbox : Hitbox) -> void:
+func _get_hit(attack_hitbox: Hitbox) -> void:
 	hurt_sfx.pitch_scale = randf_range(0.75, 1.25)
 	hurt_sfx.play()
-	var hitbox_horizontal_vel : Vector2
+	var hitbox_horizontal_vel: Vector2
 	if "horizontal_velocity" in attack_hitbox.owner:
 		hitbox_horizontal_vel = Vector2(
 		attack_hitbox.owner.linear_velocity.x, 

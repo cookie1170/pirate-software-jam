@@ -1,16 +1,17 @@
 extends Node
 
-@export var waves : Array[Wave]
-@export var time_between_waves_sec : float = 5
+@export var waves: Array[Wave]
+@export var time_between_waves_sec: float = 5
 
-@onready var stall_timer : Timer = %WaveStallTimer
-@onready var wave_timer : Timer = %WaveTimer
+@onready var wave_timer: Timer = %WaveTimer
+@onready var next_wave_label: Label = %NextWaveLabel
+@onready var game_scene: = GlobalReferences.game_scene
 
-var current_wave : int = 0
-var current_enemy : int = 0
-var alive_enemies : int
-var has_spawned_all_enemies : bool
-var waves_started : bool :
+var current_wave: int = 0
+var current_enemy: int = 0
+var alive_enemies: int
+var has_spawned_all_enemies: bool
+var waves_started: bool:
 	set(value):
 		if value:
 			wave_timer.start()
@@ -19,7 +20,8 @@ var waves_started : bool :
 			wave_timer.stop()
 			%CollectibleSpawnTimer.stop()
 		waves_started = value
-var time_display_value : float
+var enemy_amount_display: int
+var is_wave_going: bool
 
 
 func _ready() -> void:
@@ -27,14 +29,16 @@ func _ready() -> void:
 
 
 func _physics_process(_delta: float) -> void:
-	if not wave_timer.is_stopped():
-		time_display_value = wave_timer.time_left
-	else:
-		time_display_value = stall_timer.time_left
-
 	if alive_enemies <= 0 and has_spawned_all_enemies and waves_started:
 		alive_enemies = 0
 		change_wave()
+	if not is_wave_going:
+		enemy_amount_display = 0
+	elif has_spawned_all_enemies:
+		enemy_amount_display = alive_enemies
+	else:
+		if not alive_enemies == current_enemy + 1:
+			enemy_amount_display = current_enemy + 1 - alive_enemies
 
 
 func _spawn_next_enemy() -> void:
@@ -43,9 +47,11 @@ func _spawn_next_enemy() -> void:
 	else:
 		wave_timer.wait_time = waves[current_wave].time_between_enemy_sec
 		wave_timer.start()
-	var enemy : PackedScene = waves[current_wave].enemies[current_enemy]
+	if not is_wave_going:
+		is_wave_going = true
+	var enemy: PackedScene = waves[current_wave].enemies[current_enemy]
 	var enemy_instance := enemy.instantiate()
-	var enemy_pos : Vector3 = NavigationServer3D.region_get_random_point(
+	var enemy_pos: Vector3 = NavigationServer3D.region_get_random_point(
 		%NavMesh.get_rid(), 1, true
 	)
 	add_sibling(enemy_instance)
@@ -54,20 +60,20 @@ func _spawn_next_enemy() -> void:
 	current_enemy += 1
 	if current_enemy > waves[current_wave].enemies.size() - 1:
 		has_spawned_all_enemies = true
-		if stall_timer.is_stopped():
-			if waves[current_wave].stall_time_sec != 0:
-				stall_timer.wait_time = waves[current_wave].stall_time_sec
-				stall_timer.start()
 
 
 func change_wave() -> void:
 	if current_wave >= waves.size() - 1:
 		print_debug("you won")
 		return
+	game_scene.show_label(
+			Vector2(576, 200), Vector2(576, 0),
+			"Next wave...", 32
+	)
+	is_wave_going = false
 	current_wave += 1
 	current_enemy = 0
 	has_spawned_all_enemies = false
-	stall_timer.stop()
 	if wave_timer.is_stopped():
 		wave_timer.wait_time = time_between_waves_sec
 		wave_timer.start()
@@ -77,7 +83,7 @@ func change_wave() -> void:
 	print_debug("changing wave to wave %s" % current_wave)
 
 
-func _on_enemy_killed(_enemy : Enemy) -> void:
+func _on_enemy_killed(_enemy: Enemy) -> void:
 	alive_enemies -= 1
 	if alive_enemies <= 0 and has_spawned_all_enemies:
 		alive_enemies = 0

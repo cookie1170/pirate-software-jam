@@ -56,140 +56,120 @@ data = PackedVector3Array(48, 0, 48, -48, 0, 48, 48, 0, -48, -48, 0, 48, -48, 0,
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("7_rtcij")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 20.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_mxp4k"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("7_rtcij"), ExtResource("7_rtcij")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 20.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_d7v53"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("8_pb8y7")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 20.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_0qmeg"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("9_pb8y7")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 20.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_ta7ci"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("9_pb8y7"), ExtResource("8_pb8y7")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 0.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_lh335"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7")])
 time_between_enemy_sec = 0.5
-stall_time_sec = 20.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_u6cys"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("9_pb8y7"), ExtResource("9_pb8y7")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 20.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_368ro"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 20.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_3ca7f"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("9_pb8y7"), ExtResource("7_rtcij"), ExtResource("7_rtcij"), ExtResource("9_pb8y7")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 20.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_kogck"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("10_hy0rb")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 0.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_574oa"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7")])
 time_between_enemy_sec = 0.5
-stall_time_sec = 40.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_tn76l"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 30.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_werwd"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("9_pb8y7")])
 time_between_enemy_sec = 1.0
-stall_time_sec = 30.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_of21v"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("8_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 40.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_80cyg"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("10_hy0rb"), ExtResource("10_hy0rb"), ExtResource("9_pb8y7")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 0.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_mca5t"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 30.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_axqo2"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7"), ExtResource("8_pb8y7")])
 time_between_enemy_sec = 0.5
-stall_time_sec = 60.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_8henu"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7"), ExtResource("9_pb8y7")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 30.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_dcgl2"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("7_rtcij"), ExtResource("7_rtcij"), ExtResource("7_rtcij"), ExtResource("7_rtcij"), ExtResource("7_rtcij")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 20.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="Resource" id="Resource_rm7tw"]
 script = ExtResource("8_ukwr8")
 enemies = Array[PackedScene]([ExtResource("10_hy0rb"), ExtResource("10_hy0rb"), ExtResource("10_hy0rb")])
 time_between_enemy_sec = 2.0
-stall_time_sec = 0.0
 metadata/_custom_type_script = ExtResource("8_ukwr8")
 
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_rtcij"]
@@ -252,11 +232,6 @@ unique_name_in_owner = true
 wait_time = 5.0
 one_shot = true
 
-[node name="WaveStallTimer" type="Timer" parent="WaveHandler"]
-unique_name_in_owner = true
-wait_time = 15.0
-one_shot = true
-
 [node name="CollectibleSpawner" type="Node" parent="."]
 script = ExtResource("6_gjl0y")
 collectible_scene = ExtResource("7_d5x7l")
@@ -313,5 +288,4 @@ collision_mask = 32
 shape = SubResource("WorldBoundaryShape3D_0qmeg")
 
 [connection signal="timeout" from="WaveHandler/WaveTimer" to="WaveHandler" method="_spawn_next_enemy"]
-[connection signal="timeout" from="WaveHandler/WaveStallTimer" to="WaveHandler" method="change_wave"]
 [connection signal="timeout" from="CollectibleSpawner/CollectibleSpawnTimer" to="CollectibleSpawner" method="_spawn_collectible"]
