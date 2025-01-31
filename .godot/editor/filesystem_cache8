@@ -1,6 +1,6 @@
 ea4bc82a6ad023ab7ee23ee620429895
-::res://::1738243996
-export_presets.cfg::TextFile::-1::1738141825::0::1::::<><><><>::
+::res://::1738306392
+export_presets.cfg::TextFile::-1::1738244031::0::1::::<><><><>::
 icon.svg::CompressedTexture2D::7944527866444779667::1734660116::1737270000::1::::<><><>e9d002f89e23083b07745d175228a3e3<>res://.godot/imported/icon.svg-218a8f2b3041327d8a5756f3a245f83b.s3tc.ctex::
 ::res://addons/::1737716467
 ::res://addons/modular-settings-menu/::1737162445
@@ -104,24 +104,24 @@ collectible.gd::GDScript::4544779960894171462::1738238105::0::1::::Collectible<>
 collectible_block.tscn::PackedScene::3422629031798321416::1738243496::0::1::::<><><><>::uid://b50r4koj36myo::::res://common/collectible_block/collectible.gd<>uid://dr1cjaw111atj::::res://common/shaders/color_change.gdshader<>uid://dwt5euhqkftkv::::res://common/resources/gradients/gradient1d_orange.tres<>uid://doolqgh7pxcdh::::res://common/resources/gradients/gradient_blue.tres<>uid://diyfhnaeex4bm::::res://common/resources/meshes/block_0.tres<>uid://l5xjnpns02x8::::res://common/resources/gradients/gradient_orange_particles.tres
 ::res://common/resources/::1738227875
 wave.gd::GDScript::9155342223459697028::1738227875::0::1::::Wave<>Resource<><><>::
-::res://common/resources/gradients/::1738243387
-gradient1d_blue.tres::GradientTexture1D::4447626367750779960::1738243311::0::1::::<><><><>::uid://doolqgh7pxcdh::::res://common/resources/gradients/gradient_blue.tres
-gradient1d_orange.tres::GradientTexture1D::8744469503422947645::1738243311::0::1::::<><><><>::
-gradient1d_red.tres::GradientTexture1D::9077387648122462457::1738243387::0::1::::<><><><>::uid://cfa4uwv4jnc52::::res://common/resources/gradients/gradient_red.tres
+::res://common/resources/gradients/::1738244022
+gradient1d_blue.tres::GradientTexture1D::4447626367750779960::1738244022::0::1::::<><><><>::uid://doolqgh7pxcdh::::res://common/resources/gradients/gradient_blue.tres
+gradient1d_orange.tres::GradientTexture1D::8744469503422947645::1738244022::0::1::::<><><><>::
+gradient1d_red.tres::GradientTexture1D::9077387648122462457::1738244022::0::1::::<><><><>::uid://cfa4uwv4jnc52::::res://common/resources/gradients/gradient_red.tres
 gradient_blue.tres::Gradient::8171503937620119645::1737851600::0::1::::<><><><>::
 gradient_orange.tres::Gradient::5951161413028658615::1737290144::0::1::::<><><><>::
 gradient_orange_particles.tres::Gradient::835421882210269539::1737852973::0::1::::<><><><>::
 gradient_red.tres::Gradient::5125583283529453943::1738243365::0::1::::<><><><>::
-pink_gradient.tres::Gradient::1474935172826832813::1738243311::0::1::::<><><><>::
-::res://common/resources/meshes/::1738243311
+pink_gradient.tres::Gradient::1474935172826832813::1738244022::0::1::::<><><><>::
+::res://common/resources/meshes/::1738244022
 block_0.tres::BoxMesh::7770634634793739930::1737290342::0::1::::<><><><>::uid://cy8o3t08d7ihi::::res://common/resources/meshes/block_material.tres
 block_1.tres::BoxMesh::6998012651640142594::1737290342::0::1::::<><><><>::uid://cy8o3t08d7ihi::::res://common/resources/meshes/block_material.tres
 block_2.tres::BoxMesh::6992470365455633446::1737290342::0::1::::<><><><>::uid://cy8o3t08d7ihi::::res://common/resources/meshes/block_material.tres
 block_3.tres::BoxMesh::3247836148468275618::1737290342::0::1::::<><><><>::uid://cy8o3t08d7ihi::::res://common/resources/meshes/block_material.tres
 block_4.tres::BoxMesh::2443267447216821026::1737290343::0::1::::<><><><>::uid://cy8o3t08d7ihi::::res://common/resources/meshes/block_material.tres
-block_material.tres::StandardMaterial3D::6526399158779427878::1738243311::0::1::::<><><><>::
-::res://common/scenes/::1738243497
-game.tscn::PackedScene::3200386625028163026::1738243494::0::1::::<><><><>::uid://bi40akbu0hcyl::::res://player/player.tscn<>uid://cisw20hf82soy::::res://common/scripts/game.gd<>uid://b311iowaksq5g::::res://levels/level.tscn<>uid://cox2ddvnlx17p::::res://common/upgrades/upgrade_resources/base_upgrade.gd<>uid://blppp01lenhb6::::res://common/bg_music/Sketchbook 2024-12-04.ogg<>uid://dt1ud54ul2v58::::res://common/bg_music/Three Red Hearts - Go (No Vocal).ogg
+block_material.tres::StandardMaterial3D::6526399158779427878::1738244022::0::1::::<><><><>::
+::res://common/scenes/::1738244022
+game.tscn::PackedScene::3200386625028163026::1738244022::0::1::::<><><><>::uid://bi40akbu0hcyl::::res://player/player.tscn<>uid://cisw20hf82soy::::res://common/scripts/game.gd<>uid://b311iowaksq5g::::res://levels/level.tscn<>uid://cox2ddvnlx17p::::res://common/upgrades/upgrade_resources/base_upgrade.gd<>uid://blppp01lenhb6::::res://common/bg_music/Sketchbook 2024-12-04.ogg<>uid://dt1ud54ul2v58::::res://common/bg_music/Three Red Hearts - Go (No Vocal).ogg
 main_menu.tscn::PackedScene::1399455646350068037::1738243497::0::1::::<><><><>::uid://cla4odtaq5w8r::::res://common/ui/pause_menu/circle.svg<>uid://vap74vlkmx22::::res://common/resources/gradients/pink_gradient.tres<>uid://px6a2dg8cawb::::res://addons/modular-settings-menu/scenes/settings.tscn
 ::res://common/scripts/::1738241792
 game.gd::GDScript::5372896230509574788::1738241792::0::1::::<>Node<><><>::
@@ -129,9 +129,9 @@ global_references.gd::GDScript::7230900580727395929::1738026552::0::1::::<>Node<
 hitbox.gd::GDScript::2938762380656513890::1738238285::0::1::::Hitbox<>Area3D<><><>::
 hurtbox.gd::GDScript::6185767029864109651::1738238295::0::1::::Hurtbox<>Area3D<><><>::
 signal_bus.gd::GDScript::5074725389004635766::1737638376::0::1::::<>Node<><><>::
-::res://common/shaders/::1738243923
-color_change.gdshader::Shader::8406283755864870335::1738243923::0::1::::<><><><>::
-dissolve.gdshader::Shader::2989250849296565461::1738243923::0::1::::<><><><>::
+::res://common/shaders/::1738244042
+color_change.gdshader::Shader::8406283755864870335::1738244042::0::1::::<><><><>::
+dissolve.gdshader::Shader::2989250849296565461::1738244042::0::1::::<><><><>::
 ::res://common/ui/::1737801870
 ::res://common/ui/fonts/::1737612545
 Rubik-Black.ttf::FontFile::2405305900528953837::1737540511::1737612545::1::::<><><>ae653fd0adf50526ef55446e7534a274<>res://.godot/imported/Rubik-Black.ttf-5fc48639b58301b3a432bee4dfeec2ab.fontdata::

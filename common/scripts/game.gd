@@ -64,7 +64,7 @@ func switch_music(type: String) -> void:
 
 func show_label(
 		init_pos: Vector2, final_pos: Vector2,
-		text: String = "", font_size: int = 0,
+		text: String = "", font_size: int = 0, time: float = 1
 	):
 	var label := Label.new()
 	var label_tween := get_tree().create_tween().set_parallel(true)
@@ -79,13 +79,13 @@ func show_label(
 	label.pivot_offset.y = label.size.y / 2
 	label.position = init_pos - label.pivot_offset
 	label_tween.tween_property(
-			label, "position", final_pos - label.pivot_offset, 1
+			label, "position", final_pos - label.pivot_offset, time
 		)
 	label_tween.tween_property(
-			label, "modulate", Color.html("ffffff00"), 1
+			label, "modulate", Color.html("ffffff00"), time
 		)
 	label_tween.tween_property(
-			label, "scale", Vector2.ZERO, 1
+			label, "scale", Vector2.ZERO, time
 		)
 	await label_tween.finished
 	label.queue_free()

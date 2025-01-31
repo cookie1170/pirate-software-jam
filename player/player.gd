@@ -48,10 +48,11 @@ extends CharacterBody3D
 var block_amount: int = 0:
 	set(value):
 		game_scene.show_label(
-			Vector2(260, 450), Vector2(260, 600),
-			"%s" % (value - block_amount), 32
+			Vector2(260, 500), Vector2(260, 600),
+			"%s" % (value - block_amount), 32, 0.5
 		)
 		block_amount = value
+		Hud.tween_scale("block_panel")
 var camera_input_dir: Vector2
 var attack_speed: float
 var move_speed: float
@@ -66,11 +67,12 @@ var is_one_hit: bool = true
 var coins: int = 0: 
 	set(value):
 		game_scene.show_label(
-			Vector2(100, 450), Vector2(100, 600),
-			"%s" % (value - coins), 32
+			Vector2(100, 500), Vector2(100, 600),
+			"%s" % (value - coins), 32, 0.5
 		)
 		coins = value
-@export var upgrades: Array[Upgrade]
+		Hud.tween_scale("coin_panel")
+var upgrades: Array[Upgrade]
 #endregion
 
 func _ready() -> void:
@@ -294,6 +296,7 @@ func die() -> void:
 	death_1_sfx.play()
 	Hud.visible = false
 	trail_particles.visible = false
+	coins = 0
 	Engine.time_scale = 1.0
 	%EnemyPushAwayer.monitoring = true
 	await get_tree().physics_frame

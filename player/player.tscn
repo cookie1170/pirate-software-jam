@@ -1,9 +1,8 @@
-[gd_scene load_steps=54 format=4 uid="uid://bi40akbu0hcyl"]
+[gd_scene load_steps=53 format=4 uid="uid://bi40akbu0hcyl"]
 
 [ext_resource type="Script" uid="uid://b1qqjj3erxy3i" path="res://player/player.gd" id="1_oul6g"]
 [ext_resource type="PackedScene" uid="uid://ciy177ajnquy0" path="res://player/bullet.tscn" id="2_boad6"]
 [ext_resource type="Texture2D" uid="uid://b4mp0yqk1nqqq" path="res://common/resources/gradients/gradient1d_blue.tres" id="2_g1dw6"]
-[ext_resource type="Script" uid="uid://cox2ddvnlx17p" path="res://common/upgrades/upgrade_resources/base_upgrade.gd" id="3_kb6p2"]
 [ext_resource type="BoxMesh" uid="uid://diyfhnaeex4bm" path="res://common/resources/meshes/block_0.tres" id="3_yw30f"]
 [ext_resource type="Texture2D" uid="uid://dwt5euhqkftkv" path="res://common/resources/gradients/gradient1d_orange.tres" id="4_yllr7"]
 [ext_resource type="Gradient" uid="uid://doolqgh7pxcdh" path="res://common/resources/gradients/gradient_blue.tres" id="4_yw30f"]
@@ -456,7 +455,6 @@ jump_velocity = 6.5
 blockless_jump_velocity = 10.0
 gravity = 24.0
 bullet_scene = ExtResource("2_boad6")
-upgrades = Array[ExtResource("3_kb6p2")]([null])
 
 [node name="Mesh" type="MeshInstance3D" parent="."]
 unique_name_in_owner = true

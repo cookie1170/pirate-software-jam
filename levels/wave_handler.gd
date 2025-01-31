@@ -70,6 +70,7 @@ func change_wave() -> void:
 			Vector2(576, 200), Vector2(576, 0),
 			"Next wave...", 32
 	)
+	Hud.tween_scale("wave_info")
 	is_wave_going = false
 	current_wave += 1
 	current_enemy = 0
@@ -88,3 +89,5 @@ func _on_enemy_killed(_enemy: Enemy) -> void:
 	if alive_enemies <= 0 and has_spawned_all_enemies:
 		alive_enemies = 0
 		change_wave()
+	else:
+		Hud.tween_scale("wave_info")

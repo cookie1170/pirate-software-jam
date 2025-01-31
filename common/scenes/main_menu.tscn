@@ -183,7 +183,7 @@ script = SubResource("GDScript_51xbr")
 [node name="NameLabel" type="Label" parent="ButtonsVBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 32
-text = "<UNNAMED GAME>"
+text = "NUCLEUS"
 
 [node name="Play" type="Button" parent="ButtonsVBox"]
 unique_name_in_owner = true
@@ -201,7 +201,6 @@ script = SubResource("GDScript_duh7t")
 [node name="Quit" type="Button" parent="ButtonsVBox"]
 layout_mode = 2
 theme_override_font_sizes/font_size = 24
-disabled = true
 text = "QUIT"
 script = SubResource("GDScript_p6akp")
 
