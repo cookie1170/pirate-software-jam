@@ -68,6 +68,7 @@ func show_label(
 	):
 	var label := Label.new()
 	var label_tween := get_tree().create_tween().set_parallel(true)
+	label_tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	label_tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_SINE)
 	add_child(label)
 	label.text = text

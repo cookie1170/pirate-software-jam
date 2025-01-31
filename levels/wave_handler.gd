@@ -4,7 +4,6 @@ extends Node
 @export var time_between_waves_sec: float = 5
 
 @onready var wave_timer: Timer = %WaveTimer
-@onready var next_wave_label: Label = %NextWaveLabel
 @onready var game_scene: = GlobalReferences.game_scene
 
 var current_wave: int = 0
@@ -16,9 +15,11 @@ var waves_started: bool:
 		if value:
 			wave_timer.start()
 			%CollectibleSpawnTimer.start()
+			%AmbientParticles.color_ramp = preload("res://common/resources/gradients/gradient_red.tres")
 		else:
 			wave_timer.stop()
 			%CollectibleSpawnTimer.stop()
+			%AmbientParticles.color_ramp = preload("res://common/resources/gradients/gradient_pink.tres")
 		waves_started = value
 var enemy_amount_display: int
 var is_wave_going: bool

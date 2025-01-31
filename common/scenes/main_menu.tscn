@@ -1,7 +1,8 @@
-[gd_scene load_steps=15 format=3 uid="uid://t653hrueci18"]
+[gd_scene load_steps=16 format=3 uid="uid://t653hrueci18"]
 
 [ext_resource type="Texture2D" uid="uid://cla4odtaq5w8r" path="res://common/ui/pause_menu/circle.svg" id="1_0ettg"]
-[ext_resource type="Gradient" uid="uid://vap74vlkmx22" path="res://common/resources/gradients/pink_gradient.tres" id="1_duh7t"]
+[ext_resource type="Gradient" uid="uid://vap74vlkmx22" path="res://common/resources/gradients/gradient_pink.tres" id="1_duh7t"]
+[ext_resource type="Texture2D" uid="uid://bk5p4a3kafpbo" path="res://common/scenes/logo_text.png" id="3_4dx00"]
 [ext_resource type="PackedScene" uid="uid://px6a2dg8cawb" path="res://addons/modular-settings-menu/scenes/settings.tscn" id="3_6ymyu"]
 
 [sub_resource type="GDScript" id="GDScript_4dx00"]
@@ -180,27 +181,26 @@ grow_horizontal = 2
 grow_vertical = 2
 script = SubResource("GDScript_51xbr")
 
-[node name="NameLabel" type="Label" parent="ButtonsVBox"]
+[node name="LogoText" type="TextureRect" parent="ButtonsVBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 32
-text = "NUCLEUS"
+texture = ExtResource("3_4dx00")
 
 [node name="Play" type="Button" parent="ButtonsVBox"]
 unique_name_in_owner = true
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 32
 text = "PLAY"
 script = SubResource("GDScript_6ymyu")
 
 [node name="Settings" type="Button" parent="ButtonsVBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 32
 text = "SETTINGS"
 script = SubResource("GDScript_duh7t")
 
 [node name="Quit" type="Button" parent="ButtonsVBox"]
 layout_mode = 2
-theme_override_font_sizes/font_size = 24
+theme_override_font_sizes/font_size = 32
 text = "QUIT"
 script = SubResource("GDScript_p6akp")
 

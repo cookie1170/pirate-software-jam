@@ -27,6 +27,7 @@ func _physics_process(_delta: float) -> void:
 
 func tween_scale(object: String):
 	var tween: Tween = get_tree().create_tween()
+	tween.set_pause_mode(Tween.TWEEN_PAUSE_PROCESS)
 	get(object).pivot_offset = get(object).size / 2
 	tween.set_ease(Tween.EASE_OUT).set_trans(Tween.TRANS_BOUNCE)
 	tween.tween_property(get(object), "scale", Vector2(1.2, 1.2), 0.1)

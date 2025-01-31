@@ -1,3 +1,5 @@
+TextureRect
+GPUParticles3D
 Label
 HBoxContainer
 AudioListener3D
@@ -11,4 +13,3 @@ Label3D
 CPUParticles3D
 Area3D
 Hitbox
-CSGBox3D

@@ -47,10 +47,11 @@ extends CharacterBody3D
 #region variables
 var block_amount: int = 0:
 	set(value):
-		game_scene.show_label(
-			Vector2(260, 500), Vector2(260, 600),
-			"%s" % (value - block_amount), 32, 0.5
-		)
+		if value > 0:
+			game_scene.show_label(
+				Vector2(260, 500), Vector2(260, 600),
+				"%s" % (value - block_amount), 32, 0.5
+			)
 		block_amount = value
 		Hud.tween_scale("block_panel")
 var camera_input_dir: Vector2

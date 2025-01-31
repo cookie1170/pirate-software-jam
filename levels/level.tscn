@@ -1,4 +1,4 @@
-[gd_scene load_steps=45 format=3 uid="uid://b311iowaksq5g"]
+[gd_scene load_steps=51 format=3 uid="uid://b311iowaksq5g"]
 
 [ext_resource type="Script" uid="uid://c4pk7vmh2ycgs" path="res://levels/level.gd" id="1_rtcij"]
 [ext_resource type="Texture2D" uid="uid://bv187shpkefdy" path="res://textures/prototype_materials/Dark/texture_01.png" id="2_rtcij"]
@@ -12,6 +12,8 @@
 [ext_resource type="PackedScene" uid="uid://cgwc0hxoneo7e" path="res://enemies/shooting_enemy/shooting_enemy.tscn" id="9_pb8y7"]
 [ext_resource type="PackedScene" uid="uid://i6jc37py82lm" path="res://enemies/elite_enemy/elite_enemy.tscn" id="10_hy0rb"]
 [ext_resource type="Script" uid="uid://bh4s8tbbuep0u" path="res://common/scripts/hitbox.gd" id="10_ukwr8"]
+[ext_resource type="BoxMesh" uid="uid://diyfhnaeex4bm" path="res://common/resources/meshes/block_0.tres" id="13_d7v53"]
+[ext_resource type="Gradient" uid="uid://vap74vlkmx22" path="res://common/resources/gradients/gradient_pink.tres" id="14_0qmeg"]
 
 [sub_resource type="ProceduralSkyMaterial" id="ProceduralSkyMaterial_hy0rb"]
 sky_top_color = Color(0.0196078, 0.121569, 0.223529, 1)
@@ -186,6 +188,27 @@ plane = Plane(0, 0, 1, 0)
 [sub_resource type="WorldBoundaryShape3D" id="WorldBoundaryShape3D_0qmeg"]
 plane = Plane(0, 0, -1, 0)
 
+[sub_resource type="Curve" id="Curve_ta7ci"]
+_data = [Vector2(1e-05, 0), 0.0, 0.0, 0, 0, Vector2(0.433526, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_lh335"]
+_data = [Vector2(0, 0), 0.0, 0.0, 0, 0, Vector2(0.083815, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="Curve" id="Curve_u6cys"]
+_data = [Vector2(1e-05, 0), 0.0, 0.0, 0, 0, Vector2(0.719653, 1), 0.0, 0.0, 0, 0, Vector2(1, 0), 0.0, 0.0, 0, 0]
+point_count = 3
+
+[sub_resource type="GDScript" id="GDScript_d7v53"]
+resource_name = "ambient_particles"
+script/source = "extends CPUParticles3D
+
+
+func _process(_delta: float) -> void:
+	position = GlobalReferences.game_scene.player.position
+"
+
 [node name="Level" type="Node3D" node_paths=PackedStringArray("wave_handler", "collectible_spawner")]
 script = ExtResource("1_rtcij")
 wave_handler = NodePath("WaveHandler")
@@ -286,6 +309,34 @@ collision_mask = 32
 
 [node name="CollisionShape3D" type="CollisionShape3D" parent="InvisibleWalls/InvisibleWallPosZ"]
 shape = SubResource("WorldBoundaryShape3D_0qmeg")
+
+[node name="AmbientParticles" type="CPUParticles3D" parent="."]
+unique_name_in_owner = true
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 10, 0)
+custom_aabb = AABB(-10000, -10000, -10000, 100000, 100000, 100000)
+ignore_occlusion_culling = true
+amount = 256
+preprocess = 1.0
+explosiveness = 0.02
+randomness = 0.54
+lifetime_randomness = 0.33
+fixed_fps = 30
+visibility_aabb = AABB(-4, -4, -4, 8, 8, 8)
+mesh = ExtResource("13_d7v53")
+emission_shape = 6
+emission_ring_axis = Vector3(0, 1, 0)
+emission_ring_height = 24.0
+emission_ring_radius = 69.0
+emission_ring_inner_radius = 16.0
+emission_ring_cone_angle = 90.0
+gravity = Vector3(0, 0, 0)
+scale_amount_max = 2.0
+split_scale = true
+scale_curve_x = SubResource("Curve_ta7ci")
+scale_curve_y = SubResource("Curve_lh335")
+scale_curve_z = SubResource("Curve_u6cys")
+color_ramp = ExtResource("14_0qmeg")
+script = SubResource("GDScript_d7v53")
 
 [connection signal="timeout" from="WaveHandler/WaveTimer" to="WaveHandler" method="_spawn_next_enemy"]
 [connection signal="timeout" from="CollectibleSpawner/CollectibleSpawnTimer" to="CollectibleSpawner" method="_spawn_collectible"]
